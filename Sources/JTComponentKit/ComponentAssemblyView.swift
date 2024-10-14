@@ -35,16 +35,60 @@ public class ComponentAssemblyView: UIView, UICollectionViewDataSource, UICollec
     }
     
     @objc public func register(components: [Component]) {
-        
+        self.components = components
+        components.forEach { component in
+            component.collectionView = self.collectionView
+            component.registerViews()
+        }
+        collectionView.reloadData()
     }
     
+    // MARK: - section
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return components.count
     }
     
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let component = components[section]
+        return component.collectionView(collectionView, layout: collectionViewLayout, insetForSectionAt: section)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        let component = components[section]
+        return component.collectionView(collectionView, layout: collectionViewLayout, minimumLineSpacingForSectionAt: section)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        let component = components[section]
+        return component.collectionView(collectionView, layout: collectionViewLayout, minimumInteritemSpacingForSectionAt: section)
+    }
+    
+    // MARK: - Header & Footer
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let component = components[section]
+        return component.collectionView(collectionView, layout: collectionViewLayout, referenceSizeForHeaderInSection: section)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        let component = components[section]
+        return component.collectionView(collectionView, layout: collectionViewLayout, referenceSizeForFooterInSection: section)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let component = components[indexPath.section]
+        return component.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
+    }
+    
+    // MARK: - Cell
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let component = components[section]
+        component.section = section
         return component.collectionView(collectionView, numberOfItemsInSection: section)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let component = components[indexPath.section]
+        return component.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath)
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

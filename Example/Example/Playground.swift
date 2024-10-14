@@ -6,3 +6,14 @@
 //
 
 import Foundation
+import UIKit
+
+class ABC {
+    
+}
+
+@objc class Playground: NSObject {
+    @objc static func play() {
+        print("\(ABC.self)")
+    }
+}
