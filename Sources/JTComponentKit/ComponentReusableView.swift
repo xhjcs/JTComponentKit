@@ -1,5 +1,5 @@
 //
-//  ComponentCell.swift
+//  ComponentReuseView.swift
 //  JTComponentKit
 //
 //  Created by xinghanjie on 2024/10/14.
@@ -7,17 +7,17 @@
 
 import Foundation
 
-class ComponentCell: UICollectionViewCell {
+class ComponentReusableView: UICollectionReusableView {
     var renderView: UIView? {
         didSet {
             if let renderView = renderView {
-                contentView.addSubview(renderView)
+                addSubview(renderView)
             }
         }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        renderView?.frame = contentView.bounds
+        renderView?.frame = bounds
     }
 }

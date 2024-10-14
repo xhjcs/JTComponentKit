@@ -38,7 +38,13 @@ public class ComponentAssemblyView: UIView, UICollectionViewDataSource, UICollec
         self.components = components
         components.forEach { component in
             component.collectionView = self.collectionView
-            component.registerViews()
+            let header = component.registerHeader()
+            self.collectionView.register(header, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "\(header)")
+            component.registerItemViews().forEach { itemType in
+                self.collectionView.register(itemType, forCellWithReuseIdentifier: "\(itemType)")
+            }
+            let footer = component.registerFooter()
+            self.collectionView.register(footer, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "\(footer)")
         }
         collectionView.reloadData()
     }
