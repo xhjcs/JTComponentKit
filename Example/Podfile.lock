@@ -1,0 +1,16 @@
+PODS:
+  - JTComponentKit (1.0.0)
+
+DEPENDENCIES:
+  - JTComponentKit (from `../`)
+
+EXTERNAL SOURCES:
+  JTComponentKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  JTComponentKit: 9027cb9e90a1d05b8aa3287ad3357e9f4a0079eb
+
+PODFILE CHECKSUM: ff6c5e83d58bb9525a3d9c28e869aa07d7baf43c
+
+COCOAPODS: 1.15.2
