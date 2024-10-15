@@ -7,8 +7,8 @@
 
 import Foundation
 
-@objc
-public class Component: NSObject {
+@objc(JTComponent)
+open class Component: NSObject {
     var collectionView: UICollectionView?
 
     var section: Int?
@@ -16,11 +16,11 @@ public class Component: NSObject {
     @objc public func registerHeader() -> UIView.Type {
         return UIView.self
     }
-    
+
     @objc public func registerItemViews() -> [UIView.Type] {
         return [UIView.Type]()
     }
-    
+
     @objc public func registerFooter() -> UIView.Type {
         return UIView.self
     }
@@ -31,7 +31,21 @@ public class Component: NSObject {
         }
     }
 
+    private func dequeueReusableView(ofKind elementKind: String, withViewType viewType: UIView.Type, for indexPath: IndexPath) -> UIView {
+        let reusableView = collectionView?.dequeueReusableSupplementaryView(ofKind: elementKind, withReuseIdentifier: "\(viewType)", for: indexPath)
+        guard let reusableView = reusableView as? ComponentReusableView else {
+            return UIView()
+        }
+        if let renderView = reusableView.renderView {
+            return renderView
+        }
+        let renderView = viewType.init(frame: .zero)
+        reusableView.renderView = renderView
+        return renderView
+    }
+
     // MARK: - section
+
     @objc public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .zero
     }
@@ -44,25 +58,17 @@ public class Component: NSObject {
         return .zero
     }
 
-    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let renderView = kind == UICollectionView.elementKindSectionHeader ?
-            self.collectionView(collectionView, headerForSectionAt: indexPath.section)
-            : self.collectionView(collectionView, footerForSectionAt: indexPath.section)
-        if let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(renderView.self)", for: indexPath) as? ComponentReusableView {
-            if supplementaryView.renderView == nil {
-                supplementaryView.renderView = renderView
-            }
-        }
-        return UICollectionReusableView()
-    }
-
     // MARK: - Header
 
     @objc public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return .zero
     }
 
-    @objc public func collectionView(_ collectionView: UICollectionView, headerForSectionAt section: Int) -> UIView {
+    @objc public func dequeueReusableHeader(withHeaderType headerType: UIView.Type, for indexPath: IndexPath) -> UIView {
+        return dequeueReusableView(ofKind: UICollectionView.elementKindSectionHeader, withViewType: headerType, for: indexPath)
+    }
+
+    @objc public func collectionView(_ collectionView: UICollectionView, headerForSectionAt indexPath: IndexPath) -> UIView {
         return UIView()
     }
 
@@ -76,15 +82,17 @@ public class Component: NSObject {
         return .zero
     }
 
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let renderView = self.collectionView(collectionView, itemViewForItemAt: indexPath)
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(renderView.self)", for: indexPath) as? ComponentCell {
-            if cell.renderView == nil {
-                cell.renderView = renderView
-            }
-            return cell
+    @objc public func dequeueReusableView(withItemViewType viewType: UIView.Type, for indexPath: IndexPath) -> UIView {
+        let cell = collectionView?.dequeueReusableCell(withReuseIdentifier: "\(viewType)", for: indexPath)
+        guard let cell = cell as? ComponentCell else {
+            return UIView()
         }
-        return UICollectionViewCell()
+        if let renderView = cell.renderView {
+            return renderView
+        }
+        let renderView = viewType.init(frame: .zero)
+        cell.renderView = renderView
+        return renderView
     }
 
     @objc public func collectionView(_ collectionView: UICollectionView, itemViewForItemAt indexPath: IndexPath) -> UIView {
@@ -97,7 +105,11 @@ public class Component: NSObject {
         return .zero
     }
 
-    @objc public func collectionView(_ collectionView: UICollectionView, footerForSectionAt section: Int) -> UIView {
+    @objc public func dequeueReusableFooter(withFooterType footerType: UIView.Type, for indexPath: IndexPath) -> UIView {
+        return dequeueReusableView(ofKind: UICollectionView.elementKindSectionFooter, withViewType: footerType, for: indexPath)
+    }
+
+    @objc public func collectionView(_ collectionView: UICollectionView, footerForSectionAt indexPath: IndexPath) -> UIView {
         return UIView()
     }
 }

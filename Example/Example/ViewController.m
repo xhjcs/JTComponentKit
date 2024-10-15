@@ -7,6 +7,7 @@
 
 #import "ViewController.h"
 #import "Example-Swift.h"
+@import JTComponentKit;
 
 @interface ViewController ()
 
@@ -18,7 +19,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [Playground play];
+    JTComponentAssemblyView *componentAssemblyView = [[JTComponentAssemblyView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:componentAssemblyView];
+//    componentAssemblyView
 }
 
 
