@@ -8,6 +8,7 @@
 #import "JTComponentAssemblyView.h"
 #import "JTComponent.h"
 #import "JTComponentCell.h"
+#import "JTComponentReusableView.h"
 
 @interface JTComponentAssemblyView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
@@ -59,6 +60,33 @@
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     JTComponent *component = self.components[section];
     return [component collectionView:collectionView layout:collectionViewLayout insetForSectionAtIndex:section];
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    JTComponent *component = self.components[section];
+    return [component collectionView:collectionView layout:collectionViewLayout minimumLineSpacingForSectionAtIndex:section];
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    JTComponent *component = self.components[section];
+    return [component collectionView:collectionView layout:collectionViewLayout minimumInteritemSpacingForSectionAtIndex:section];
+}
+
+#pragma mark - Header & Footer
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    JTComponent *component = self.components[section];
+    return [component collectionView:collectionView layout:collectionViewLayout referenceSizeForHeaderInSection:section];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    JTComponent *component = self.components[section];
+    return [component collectionView:collectionView layout:collectionViewLayout referenceSizeForFooterInSection:section];
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    JTComponent *component = self.components[indexPath.section];
+    UIView *renderView = kind == UICollectionElementKindSectionHeader ? [component collectionView:collectionView viewForHeaderAtIndexPath:indexPath] : [component collectionView:collectionView viewForFooterAtIndexPath:indexPath];
+    return (JTComponentReusableView *)renderView.superview;
 }
 
 @end
