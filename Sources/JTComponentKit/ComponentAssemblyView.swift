@@ -7,7 +7,7 @@
 
 import Foundation
 
-@objc(JTComponentAssemblyView)
+@objc
 public class ComponentAssemblyView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     let collectionView: UICollectionView
 

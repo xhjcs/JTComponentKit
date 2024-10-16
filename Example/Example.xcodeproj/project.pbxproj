@@ -21,7 +21,11 @@
 		D25AEAE22CBD111F00A0BBDA /* ExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D25AEAE12CBD111F00A0BBDA /* ExampleUITests.m */; };
 		D25AEAE42CBD111F00A0BBDA /* ExampleUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D25AEAE32CBD111F00A0BBDA /* ExampleUITestsLaunchTests.m */; };
 		D27696592CBEA81700B425B5 /* JTAComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = D27696582CBEA81700B425B5 /* JTAComponent.m */; };
+		D27F572E2CBFEE56003308C4 /* JTComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = D27F572D2CBFEE56003308C4 /* JTComponent.m */; };
 		D28D0F4C2CBD1D4D008DF366 /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28D0F4B2CBD1D4D008DF366 /* Playground.swift */; };
+		D2C17C2D2CBFF2940040BF2A /* JTComponentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C17C2C2CBFF2940040BF2A /* JTComponentCell.m */; };
+		D2C17C302CBFF3CC0040BF2A /* JTComponentReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C17C2F2CBFF3CC0040BF2A /* JTComponentReusableView.m */; };
+		D2C17C332CBFFA1D0040BF2A /* JTComponentAssemblyView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C17C322CBFFA1D0040BF2A /* JTComponentAssemblyView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,8 +73,17 @@
 		D25AEAE32CBD111F00A0BBDA /* ExampleUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExampleUITestsLaunchTests.m; sourceTree = "<group>"; };
 		D27696572CBEA81700B425B5 /* JTAComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTAComponent.h; sourceTree = "<group>"; };
 		D27696582CBEA81700B425B5 /* JTAComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTAComponent.m; sourceTree = "<group>"; };
+		D27F572C2CBFEE56003308C4 /* JTComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTComponent.h; sourceTree = "<group>"; };
+		D27F572D2CBFEE56003308C4 /* JTComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTComponent.m; sourceTree = "<group>"; };
 		D28D0F4A2CBD1D4C008DF366 /* Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Example-Bridging-Header.h"; sourceTree = "<group>"; };
 		D28D0F4B2CBD1D4D008DF366 /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
+		D2C17C2B2CBFF2940040BF2A /* JTComponentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTComponentCell.h; sourceTree = "<group>"; };
+		D2C17C2C2CBFF2940040BF2A /* JTComponentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTComponentCell.m; sourceTree = "<group>"; };
+		D2C17C2E2CBFF3CC0040BF2A /* JTComponentReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTComponentReusableView.h; sourceTree = "<group>"; };
+		D2C17C2F2CBFF3CC0040BF2A /* JTComponentReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTComponentReusableView.m; sourceTree = "<group>"; };
+		D2C17C312CBFFA1D0040BF2A /* JTComponentAssemblyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTComponentAssemblyView.h; sourceTree = "<group>"; };
+		D2C17C322CBFFA1D0040BF2A /* JTComponentAssemblyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTComponentAssemblyView.m; sourceTree = "<group>"; };
+		D2C17C342CBFFBB60040BF2A /* JTComponent_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTComponent_Private.h; sourceTree = "<group>"; };
 		E0035286768C887F548766A0 /* Pods-ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-ExampleTests/Pods-ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,6 +163,7 @@
 		D25AEABA2CBD111E00A0BBDA /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				D27F57252CBFEDBA003308C4 /* JTComponentKit */,
 				D27696532CBEA63A00B425B5 /* Components */,
 				D25AEABB2CBD111E00A0BBDA /* AppDelegate.h */,
 				D25AEABC2CBD111E00A0BBDA /* AppDelegate.m */,
@@ -192,6 +206,22 @@
 				D27696582CBEA81700B425B5 /* JTAComponent.m */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		D27F57252CBFEDBA003308C4 /* JTComponentKit */ = {
+			isa = PBXGroup;
+			children = (
+				D2C17C342CBFFBB60040BF2A /* JTComponent_Private.h */,
+				D27F572C2CBFEE56003308C4 /* JTComponent.h */,
+				D27F572D2CBFEE56003308C4 /* JTComponent.m */,
+				D2C17C2B2CBFF2940040BF2A /* JTComponentCell.h */,
+				D2C17C2C2CBFF2940040BF2A /* JTComponentCell.m */,
+				D2C17C2E2CBFF3CC0040BF2A /* JTComponentReusableView.h */,
+				D2C17C2F2CBFF3CC0040BF2A /* JTComponentReusableView.m */,
+				D2C17C312CBFFA1D0040BF2A /* JTComponentAssemblyView.h */,
+				D2C17C322CBFFA1D0040BF2A /* JTComponentAssemblyView.m */,
+			);
+			path = JTComponentKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -453,9 +483,13 @@
 			files = (
 				D25AEAC32CBD111E00A0BBDA /* ViewController.m in Sources */,
 				D27696592CBEA81700B425B5 /* JTAComponent.m in Sources */,
+				D2C17C332CBFFA1D0040BF2A /* JTComponentAssemblyView.m in Sources */,
 				D28D0F4C2CBD1D4D008DF366 /* Playground.swift in Sources */,
+				D27F572E2CBFEE56003308C4 /* JTComponent.m in Sources */,
 				D25AEABD2CBD111E00A0BBDA /* AppDelegate.m in Sources */,
+				D2C17C2D2CBFF2940040BF2A /* JTComponentCell.m in Sources */,
 				D25AEACE2CBD111F00A0BBDA /* main.m in Sources */,
+				D2C17C302CBFF3CC0040BF2A /* JTComponentReusableView.m in Sources */,
 				D25AEAC02CBD111E00A0BBDA /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

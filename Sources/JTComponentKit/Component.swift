@@ -7,7 +7,7 @@
 
 import Foundation
 
-@objc(JTComponent)
+@objc
 open class Component: NSObject {
     var collectionView: UICollectionView?
 
