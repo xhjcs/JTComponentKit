@@ -11,8 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JTEventHub : NSObject
 
-- (void)on:(NSString *)event callback:(void (^)(id arg1, id arg2, id arg3))callback;
-- (void)off:(NSString *)event callback:(void (^)(id arg1, id arg2, id arg3))callback;
+- (NSString *)on:(NSString *)event callback:(void (^)(id arg1, id arg2, id arg3))callback;
+- (void)off:(NSString *)event identifier:(NSString *)identifier;
 - (void)emit:(NSString *)event args:(id)arg1, ... NS_REQUIRES_NIL_TERMINATION;
 
 @end

@@ -7,9 +7,13 @@
 
 #import "JTEventHub.h"
 
-@implementation JTEventHub {
-    NSMutableDictionary<NSString *, NSMutableArray<void (^)(id, id, id)> *> *_eventCallbacks;
-}
+@interface JTEventHub ()
+
+@property (nonatomic) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, void (^)(id, id, id)> *> *eventCallbacks;
+
+@end
+
+@implementation JTEventHub
 
 - (instancetype)init {
     self = [super init];
@@ -21,39 +25,38 @@
     return self;
 }
 
-- (void)on:(NSString *)event callback:(void (^)(id arg1, id arg2, id arg3))callback {
-    if (!event || !callback) {
-        [NSException raise:@"BusinessError" format:@"Parameter error. Event or callback cannot be nil."];
-    }
+- (NSString *)on:(NSString *)event callback:(void (^)(id arg1, id arg2, id arg3))callback {
+    NSCParameterAssert(event);
+    NSCParameterAssert(callback);
 
-    NSMutableArray *callbacks = _eventCallbacks[event];
+    NSMutableDictionary<NSString *, void (^)(id, id, id)> *callbacks = self.eventCallbacks[event];
 
     if (!callbacks) {
-        callbacks = [NSMutableArray array];
+        callbacks = [NSMutableDictionary new];
         _eventCallbacks[event] = callbacks;
     }
 
-    [callbacks addObject:callback];
+    NSString *identifier = [[NSUUID UUID] UUIDString];
+    callbacks[identifier] = callback;
+    return identifier;
 }
 
-- (void)off:(NSString *)event callback:(void (^)(id arg1, id arg2, id arg3))callback {
-    if (!event) {
-        [NSException raise:@"BusinessError" format:@"Parameter error. Event cannot be nil."];
-    }
+- (void)off:(NSString *)event identifier:(NSString *)identifier {
+    NSCParameterAssert(event);
+    NSCParameterAssert(identifier);
 
-    NSMutableArray *callbacks = _eventCallbacks[event];
+    NSMutableDictionary<NSString *, void (^)(id, id, id)> *callbacks = self.eventCallbacks[event];
+    callbacks[identifier] = nil;
 
-    if (callbacks && callback) {
-        [callbacks removeObject:callback];
+    if (callbacks.count <= 0) {
+        self.eventCallbacks[event] = nil;
     }
 }
 
 - (void)emit:(NSString *)event args:(id)arg1, ... {
-    if (!event) {
-        [NSException raise:@"BusinessError" format:@"Parameter error. Event cannot be nil."];
-    }
+    NSCParameterAssert(event);
 
-    NSArray *callbacks = _eventCallbacks[event];
+    NSArray *callbacks = _eventCallbacks[event].allValues;
 
     for (void (^callback)(id, id, id) in callbacks) {
         va_list args;
