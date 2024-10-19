@@ -26,6 +26,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/xhjcs/JTComponentKit.git", :tag => "#{s.version}" }
 
   s.source_files  = "Sources/#{s.name}/**/*"
+  s.private_header_files = "Sources/JTComponentKit/Private/*.h"
 
   s.swift_version = '5.0'
 

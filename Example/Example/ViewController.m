@@ -7,9 +7,8 @@
 
 #import "ViewController.h"
 #import "Example-Swift.h"
-//@import JTComponentKit;
-#import "JTComponentAssemblyView.h"
 #import "JTAComponent.h"
+#import <JTComponentKit/JTComponentKit.h>
 
 @interface ViewController ()
 
