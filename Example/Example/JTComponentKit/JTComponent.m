@@ -10,10 +10,27 @@
 #import "JTComponentCell.h"
 #import "JTComponentReusableView.h"
 
+@interface JTComponent ()
+
+@property (nonatomic) BOOL isRegistedHeader;
+@property (nonatomic) NSMutableSet<Class> *registedCells;
+@property (nonatomic) BOOL isRegistedFooter;
+
+@end
+
 @implementation JTComponent
 
+- (instancetype)init {
+    if (self = [super init]) {
+        if (@available(iOS 14.0, tvOS 14.0, *)) {
+            _registedCells = [NSMutableSet new];
+        }
+    }
+
+    return self;
+}
+
 - (void)setup {
-    
 }
 
 - (void)reloadData {
@@ -26,11 +43,11 @@
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 0.0;
+    return 10.0;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 0.0;
+    return 10.0;
 }
 
 #pragma mark - Header
@@ -39,7 +56,23 @@
 }
 
 - (__kindof UIView *)dequeueReusableHeaderViewWithClass:(Class)viewClass forIndexPath:(NSIndexPath *)indexPath {
-    JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:indexPath];
+    NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
+    JTComponentReusableView *reusableView = nil;
+
+//    if (@available(iOS 14.0, tvOS 14.0, *)) {
+//        UICollectionViewSupplementaryRegistration *registration = [UICollectionViewSupplementaryRegistration registrationWithSupplementaryClass:[JTComponentReusableView class]
+//                                                                                                                                    elementKind:UICollectionElementKindSectionHeader
+//                                                                                                                           configurationHandler:^(__kindof UICollectionReusableView *_Nonnull supplementaryView, NSString *_Nonnull elementKind, NSIndexPath *_Nonnull indexPath) {
+//        }];
+//        reusableView = [self.collectionView dequeueConfiguredReusableSupplementaryViewWithRegistration:registration forIndexPath:indexPath];
+//    } else {
+        if (!self.isRegistedHeader) {
+            [self.collectionView registerClass:[JTComponentReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass(viewClass)];
+            self.isRegistedHeader = YES;
+        }
+
+        reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:indexPath];
+//    }
 
     if (!reusableView.renderView) {
         reusableView.renderView = [viewClass new];
@@ -58,11 +91,29 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeZero;
+    return CGSizeMake(50.0, 50.0);
 }
 
 - (__kindof UIView *)dequeueReusableViewWithClass:(Class)viewClass forIndexPath:(NSIndexPath *)indexPath {
-    JTComponentCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:indexPath];
+    NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
+    JTComponentCell *cell = nil;
+
+//    if (@available(iOS 14.0, tvOS 14.0, *)) {
+//        UICollectionViewCellRegistration *registration = [UICollectionViewCellRegistration registrationWithCellClass:[JTComponentCell class]
+//                                                                                                configurationHandler:^(__kindof UICollectionViewCell *_Nonnull cell, NSIndexPath *_Nonnull indexPath, id _Nonnull item) {
+//        }];
+//        cell = [self.collectionView dequeueConfiguredReusableCellWithRegistration:registration forIndexPath:indexPath item:indexPath];
+//    } else {
+        if (![self.registedCells containsObject:viewClass]) {
+            [self.collectionView registerClass:[JTComponentCell class] forCellWithReuseIdentifier:NSStringFromClass(viewClass)];
+
+            if (viewClass) {
+                [self.registedCells addObject:viewClass];
+            }
+        }
+
+        cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:indexPath];
+//    }
 
     if (!cell.renderView) {
         cell.renderView = [viewClass new];
@@ -81,7 +132,29 @@
 }
 
 - (__kindof UIView *)dequeueReusableFooterWithClass:(Class)viewClass forIndexPath:(NSIndexPath *)indexPath {
-    return [UIView new];
+    NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
+    JTComponentReusableView *reusableView = nil;
+
+//    if (@available(iOS 14.0, tvOS 14.0, *)) {
+//        UICollectionViewSupplementaryRegistration *registration = [UICollectionViewSupplementaryRegistration registrationWithSupplementaryClass:[JTComponentReusableView class]
+//                                                                                                                                    elementKind:UICollectionElementKindSectionFooter
+//                                                                                                                           configurationHandler:^(__kindof UICollectionReusableView *_Nonnull supplementaryView, NSString *_Nonnull elementKind, NSIndexPath *_Nonnull indexPath) {
+//        }];
+//        reusableView = [self.collectionView dequeueConfiguredReusableSupplementaryViewWithRegistration:registration forIndexPath:indexPath];
+//    } else {
+        if (!self.isRegistedFooter) {
+            [self.collectionView registerClass:[JTComponentReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:NSStringFromClass(viewClass)];
+            self.isRegistedFooter = YES;
+        }
+
+        reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:indexPath];
+//    }
+
+    if (!reusableView.renderView) {
+        reusableView.renderView = [viewClass new];
+    }
+
+    return reusableView.renderView;
 }
 
 - (__kindof UIView *)collectionView:(UICollectionView *)collectionView viewForFooterAtIndexPath:(NSIndexPath *)indexPath {

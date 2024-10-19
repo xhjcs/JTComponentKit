@@ -11,6 +11,8 @@
 		8D37418EDCA37874FDFF6366 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6EDB99276F05EBF8CDD62D /* Pods_Example.framework */; };
 		98405583272B057F545161EE /* Pods_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 192A49D9D76E6C2F561E097A /* Pods_ExampleTests.framework */; };
 		D20D3EEE2CC363AE00A67D78 /* JTAComponentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D20D3EED2CC363AE00A67D78 /* JTAComponentHeaderView.m */; };
+		D20D3EF12CC3704000A67D78 /* JTAComponentItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = D20D3EF02CC3704000A67D78 /* JTAComponentItemView.m */; };
+		D20D3EF42CC3706E00A67D78 /* JTAComponentFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = D20D3EF32CC3706E00A67D78 /* JTAComponentFooterView.m */; };
 		D25AEABD2CBD111E00A0BBDA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D25AEABC2CBD111E00A0BBDA /* AppDelegate.m */; };
 		D25AEAC02CBD111E00A0BBDA /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D25AEABF2CBD111E00A0BBDA /* SceneDelegate.m */; };
 		D25AEAC32CBD111E00A0BBDA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D25AEAC22CBD111E00A0BBDA /* ViewController.m */; };
@@ -57,6 +59,10 @@
 		C3B74206BC7E36A4241135B3 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		D20D3EEC2CC363AE00A67D78 /* JTAComponentHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTAComponentHeaderView.h; sourceTree = "<group>"; };
 		D20D3EED2CC363AE00A67D78 /* JTAComponentHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTAComponentHeaderView.m; sourceTree = "<group>"; };
+		D20D3EEF2CC3704000A67D78 /* JTAComponentItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTAComponentItemView.h; sourceTree = "<group>"; };
+		D20D3EF02CC3704000A67D78 /* JTAComponentItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTAComponentItemView.m; sourceTree = "<group>"; };
+		D20D3EF22CC3706E00A67D78 /* JTAComponentFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTAComponentFooterView.h; sourceTree = "<group>"; };
+		D20D3EF32CC3706E00A67D78 /* JTAComponentFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTAComponentFooterView.m; sourceTree = "<group>"; };
 		D25AEAB82CBD111E00A0BBDA /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D25AEABB2CBD111E00A0BBDA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D25AEABC2CBD111E00A0BBDA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -209,6 +215,10 @@
 				D27696582CBEA81700B425B5 /* JTAComponent.m */,
 				D20D3EEC2CC363AE00A67D78 /* JTAComponentHeaderView.h */,
 				D20D3EED2CC363AE00A67D78 /* JTAComponentHeaderView.m */,
+				D20D3EEF2CC3704000A67D78 /* JTAComponentItemView.h */,
+				D20D3EF02CC3704000A67D78 /* JTAComponentItemView.m */,
+				D20D3EF22CC3706E00A67D78 /* JTAComponentFooterView.h */,
+				D20D3EF32CC3706E00A67D78 /* JTAComponentFooterView.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -491,10 +501,12 @@
 				D2C17C332CBFFA1D0040BF2A /* JTComponentAssemblyView.m in Sources */,
 				D20D3EEE2CC363AE00A67D78 /* JTAComponentHeaderView.m in Sources */,
 				D28D0F4C2CBD1D4D008DF366 /* Playground.swift in Sources */,
+				D20D3EF12CC3704000A67D78 /* JTAComponentItemView.m in Sources */,
 				D27F572E2CBFEE56003308C4 /* JTComponent.m in Sources */,
 				D25AEABD2CBD111E00A0BBDA /* AppDelegate.m in Sources */,
 				D2C17C2D2CBFF2940040BF2A /* JTComponentCell.m in Sources */,
 				D25AEACE2CBD111F00A0BBDA /* main.m in Sources */,
+				D20D3EF42CC3706E00A67D78 /* JTAComponentFooterView.m in Sources */,
 				D2C17C302CBFF3CC0040BF2A /* JTComponentReusableView.m in Sources */,
 				D25AEAC02CBD111E00A0BBDA /* SceneDelegate.m in Sources */,
 			);

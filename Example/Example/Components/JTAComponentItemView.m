@@ -1,17 +1,17 @@
 //
-//  JTAComponentHeaderView.m
+//  JTAComponentItemView.m
 //  Example
 //
 //  Created by xinghanjie on 2024/10/19.
 //
 
-#import "JTAComponentHeaderView.h"
+#import "JTAComponentItemView.h"
 
-@implementation JTAComponentHeaderView
+@implementation JTAComponentItemView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor greenColor];
     }
     return self;
 }

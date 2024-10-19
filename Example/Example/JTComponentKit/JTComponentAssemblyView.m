@@ -11,7 +11,12 @@
 #import "JTComponentCell.h"
 #import "JTComponentReusableView.h"
 
-@interface JTComponentAssemblyView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface JTComponentAssemblyView ()
+<
+    UICollectionViewDelegate,
+    UICollectionViewDataSource,
+    UICollectionViewDelegateFlowLayout
+>
 
 @property (nonatomic) UICollectionView *collectionView;
 
@@ -38,6 +43,7 @@
     UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
 
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
+    self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     [self addSubview:self.collectionView];
 }
@@ -49,6 +55,7 @@
         component.collectionView = self.collectionView;
         [component setup];
     }];
+    [self.collectionView reloadData];
 }
 
 - (JTComponentCell *)findCellFromRenderView:(UIView *)renderView {

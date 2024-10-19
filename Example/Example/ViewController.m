@@ -9,6 +9,7 @@
 #import "Example-Swift.h"
 //@import JTComponentKit;
 #import "JTComponentAssemblyView.h"
+#import "JTAComponent.h"
 
 @interface ViewController ()
 
@@ -22,7 +23,7 @@
     
     JTComponentAssemblyView *componentAssemblyView = [[JTComponentAssemblyView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:componentAssemblyView];
-    [componentAssemblyView assembleComponents:@[]];
+    [componentAssemblyView assembleComponents:@[[JTAComponent new], [JTAComponent new]]];
 }
 
 
