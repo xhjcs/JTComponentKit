@@ -45,6 +45,7 @@
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
+    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     [self addSubview:self.collectionView];
 }
 

@@ -20,7 +20,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     JTComponentAssemblyView *componentAssemblyView = [[JTComponentAssemblyView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:componentAssemblyView];
     [componentAssemblyView assembleComponents:@[[JTAComponent new], [JTAComponent new]]];
