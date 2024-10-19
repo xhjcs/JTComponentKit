@@ -70,8 +70,16 @@
     return reusableView.renderView;
 }
 
+- (void)willDisplayHeader {
+    
+}
+
 - (__kindof UIView *)viewForHeaderAtIndex:(NSInteger)index {
     return [UIView new];
+}
+
+- (void)didEndDisplayingHeader {
+    
 }
 
 #pragma mark - Item
@@ -104,8 +112,16 @@
     return cell.renderView;
 }
 
+- (void)willDisplayView {
+    
+}
+
 - (__kindof UIView *)viewForItemAtIndex:(NSInteger)index {
     return [UIView new];
+}
+
+- (void)didEndDisplayingView {
+    
 }
 
 #pragma mark - Footer
@@ -130,8 +146,16 @@
     return reusableView.renderView;
 }
 
+- (void)willDisplayFooter {
+    
+}
+
 - (__kindof UIView *)viewForFooterAtIndex:(NSInteger)index {
     return [UIView new];
+}
+
+- (void)didEndDisplayingFooter {
+    
 }
 
 @end

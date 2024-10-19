@@ -106,11 +106,29 @@
     return CGSizeMake(collectionView.frame.size.width, [component footerHeight]);
 }
 
+- (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
+    JTComponent *component = self.components[indexPath.section];
+    if (elementKind == UICollectionElementKindSectionHeader) {
+        [component willDisplayHeader];
+    } else {
+        [component willDisplayFooter];
+    }
+}
+
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
     UIView *renderView = kind == UICollectionElementKindSectionHeader ? [component viewForHeaderAtIndex:indexPath.item] : [component viewForFooterAtIndex:indexPath.item];
 
     return (JTComponentReusableView *)renderView.superview;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingSupplementaryView:(UICollectionReusableView *)view forElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
+    JTComponent *component = self.components[indexPath.section];
+    if (elementKind == UICollectionElementKindSectionHeader) {
+        [component didEndDisplayingHeader];
+    } else {
+        [component didEndDisplayingFooter];
+    }
 }
 
 #pragma mark - Cell
@@ -126,11 +144,21 @@
     return [component sizeForItemAtIndex:indexPath.item];
 }
 
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    JTComponent *component = self.components[indexPath.section];
+    [component willDisplayView];
+}
+
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
     UIView *renderView = [component viewForItemAtIndex:indexPath.item];
 
     return [self findCellFromRenderView:renderView];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    JTComponent *component = self.components[indexPath.section];
+    [component didEndDisplayingView];
 }
 
 @end
