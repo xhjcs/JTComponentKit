@@ -34,11 +34,6 @@
     return self;
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.collectionView.frame = self.bounds;
-}
-
 - (void)setupViews {
     UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
 
@@ -48,7 +43,14 @@
     self.collectionView.showsVerticalScrollIndicator = NO;
     self.collectionView.showsHorizontalScrollIndicator = NO;
     self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    self.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.collectionView];
+    [NSLayoutConstraint activateConstraints:@[
+         [self.collectionView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+         [self.collectionView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+         [self.collectionView.topAnchor constraintEqualToAnchor:self.topAnchor],
+         [self.collectionView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor]
+    ]];
 }
 
 - (void)assembleComponents:(NSArray<JTComponent *> *)components {
@@ -108,6 +110,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
+
     if (elementKind == UICollectionElementKindSectionHeader) {
         [component willDisplayHeader];
     } else {
@@ -124,6 +127,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingSupplementaryView:(UICollectionReusableView *)view forElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
+
     if (elementKind == UICollectionElementKindSectionHeader) {
         [component didEndDisplayingHeader];
     } else {
@@ -146,6 +150,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
+
     [component willDisplayView];
 }
 
@@ -158,6 +163,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
+
     [component didEndDisplayingView];
 }
 

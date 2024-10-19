@@ -12,12 +12,14 @@
 - (void)setRenderView:(UIView *)renderView {
     [_renderView removeFromSuperview];
     _renderView = renderView;
+    renderView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:renderView];
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.renderView.frame = self.bounds;
+    [NSLayoutConstraint activateConstraints:@[
+         [renderView.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor],
+         [renderView.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor],
+         [renderView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor],
+         [renderView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor]
+    ]];
 }
 
 @end

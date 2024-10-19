@@ -1,8 +1,14 @@
 PODS:
   - JTComponentKit (1.0.0)
+  - Masonry (1.1.0)
 
 DEPENDENCIES:
   - JTComponentKit (from `../`)
+  - Masonry
+
+SPEC REPOS:
+  trunk:
+    - Masonry
 
 EXTERNAL SOURCES:
   JTComponentKit:
@@ -10,7 +16,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   JTComponentKit: 7f5244c4928db7630e4933c1085b77637ded93e1
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
 
-PODFILE CHECKSUM: ff6c5e83d58bb9525a3d9c28e869aa07d7baf43c
+PODFILE CHECKSUM: 9b09defbb3175a507f81a0cc8c7eab9de5a76512
 
 COCOAPODS: 1.15.2
