@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Header
 - (CGFloat)headerHeight;
-- (__kindof UIView *)dequeueReusableHeaderViewWithClass:(Class)viewClass forIndex:(NSInteger)index;
+- (__kindof UIView *)dequeueReusableHeaderViewOfClass:(Class)viewClass forIndex:(NSInteger)index;
 - (void)willDisplayHeaderView;
 - (__kindof UIView *)headerViewForIndex:(NSInteger)index;
 - (void)didEndDisplayingHeaderView;

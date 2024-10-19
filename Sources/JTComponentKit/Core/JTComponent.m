@@ -53,7 +53,7 @@
     return 0.0;
 }
 
-- (__kindof UIView *)dequeueReusableHeaderViewWithClass:(Class)viewClass forIndex:(NSInteger)index {
+- (__kindof UIView *)dequeueReusableHeaderViewOfClass:(Class)viewClass forIndex:(NSInteger)index {
     NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
 
     if (!self.isRegistedHeader) {

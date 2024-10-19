@@ -21,7 +21,7 @@
 }
 
 - (__kindof UIView *)headerViewForIndex:(NSInteger)index {
-    return [self dequeueReusableHeaderViewWithClass:[JTAComponentHeaderView class] forIndex:index];
+    return [self dequeueReusableHeaderViewOfClass:[JTAComponentHeaderView class] forIndex:index];
 }
 
 - (NSInteger)numberOfItems {
