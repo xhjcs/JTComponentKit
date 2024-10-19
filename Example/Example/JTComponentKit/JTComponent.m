@@ -12,6 +12,10 @@
 
 @implementation JTComponent
 
+- (void)setup {
+    
+}
+
 - (void)reloadData {
     [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:self.section]];
 }

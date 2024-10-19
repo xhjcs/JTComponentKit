@@ -10,6 +10,7 @@
 		46BBEC6A224DD9954BC4135E /* Pods_Example_ExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C2BE127E7D69E29839E2BE /* Pods_Example_ExampleUITests.framework */; };
 		8D37418EDCA37874FDFF6366 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6EDB99276F05EBF8CDD62D /* Pods_Example.framework */; };
 		98405583272B057F545161EE /* Pods_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 192A49D9D76E6C2F561E097A /* Pods_ExampleTests.framework */; };
+		D20D3EEE2CC363AE00A67D78 /* JTAComponentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D20D3EED2CC363AE00A67D78 /* JTAComponentHeaderView.m */; };
 		D25AEABD2CBD111E00A0BBDA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D25AEABC2CBD111E00A0BBDA /* AppDelegate.m */; };
 		D25AEAC02CBD111E00A0BBDA /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D25AEABF2CBD111E00A0BBDA /* SceneDelegate.m */; };
 		D25AEAC32CBD111E00A0BBDA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D25AEAC22CBD111E00A0BBDA /* ViewController.m */; };
@@ -54,6 +55,8 @@
 		99FF9FDBA0C29D146373EF7C /* Pods-ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTests.release.xcconfig"; path = "Target Support Files/Pods-ExampleTests/Pods-ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		B9E2D80F4A84E8141370A288 /* Pods-Example-ExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example-ExampleUITests.debug.xcconfig"; path = "Target Support Files/Pods-Example-ExampleUITests/Pods-Example-ExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C3B74206BC7E36A4241135B3 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
+		D20D3EEC2CC363AE00A67D78 /* JTAComponentHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTAComponentHeaderView.h; sourceTree = "<group>"; };
+		D20D3EED2CC363AE00A67D78 /* JTAComponentHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTAComponentHeaderView.m; sourceTree = "<group>"; };
 		D25AEAB82CBD111E00A0BBDA /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D25AEABB2CBD111E00A0BBDA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D25AEABC2CBD111E00A0BBDA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -204,6 +207,8 @@
 			children = (
 				D27696572CBEA81700B425B5 /* JTAComponent.h */,
 				D27696582CBEA81700B425B5 /* JTAComponent.m */,
+				D20D3EEC2CC363AE00A67D78 /* JTAComponentHeaderView.h */,
+				D20D3EED2CC363AE00A67D78 /* JTAComponentHeaderView.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -484,6 +489,7 @@
 				D25AEAC32CBD111E00A0BBDA /* ViewController.m in Sources */,
 				D27696592CBEA81700B425B5 /* JTAComponent.m in Sources */,
 				D2C17C332CBFFA1D0040BF2A /* JTComponentAssemblyView.m in Sources */,
+				D20D3EEE2CC363AE00A67D78 /* JTAComponentHeaderView.m in Sources */,
 				D28D0F4C2CBD1D4D008DF366 /* Playground.swift in Sources */,
 				D27F572E2CBFEE56003308C4 /* JTComponent.m in Sources */,
 				D25AEABD2CBD111E00A0BBDA /* AppDelegate.m in Sources */,

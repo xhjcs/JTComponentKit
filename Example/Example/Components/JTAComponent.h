@@ -6,12 +6,11 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import <JTComponentKit/JTComponentKit.h>
-//@import JTComponentKit;
+#import "JTComponent.h"
 NS_ASSUME_NONNULL_BEGIN
 
-//@interface JTAComponent : JTComponent
-//
-//@end
+@interface JTAComponent : JTComponent
+
+@end
 
 NS_ASSUME_NONNULL_END

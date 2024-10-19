@@ -6,10 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JTComponent.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface JTComponentAssemblyView : UIView
+
+- (void)assembleComponents:(NSArray<JTComponent *> *)components;
 
 @end
 

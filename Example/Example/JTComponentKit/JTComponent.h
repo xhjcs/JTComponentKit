@@ -11,6 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JTComponent : NSObject
 
+- (void)setup;
 - (void)reloadData;
 
 #pragma mark - Section
