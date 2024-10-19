@@ -22,9 +22,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        if (@available(iOS 14.0, tvOS 14.0, *)) {
-            _registedCells = [NSMutableSet new];
-        }
+        _registedCells = [NSMutableSet new];
     }
 
     return self;
@@ -38,24 +36,24 @@
 }
 
 #pragma mark - Section
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+- (UIEdgeInsets)inset {
     return UIEdgeInsetsZero;
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+- (CGFloat)minimumLineSpacing {
     return 10.0;
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+- (CGFloat)minimumInteritemSpacing {
     return 10.0;
 }
 
 #pragma mark - Header
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return CGSizeZero;
+- (CGFloat)headerHeight {
+    return 0.0;
 }
 
-- (__kindof UIView *)dequeueReusableHeaderViewWithClass:(Class)viewClass forIndexPath:(NSIndexPath *)indexPath {
+- (__kindof UIView *)dequeueReusableHeaderViewWithClass:(Class)viewClass forIndex:(NSInteger)index {
     NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
 
     if (!self.isRegistedHeader) {
@@ -63,7 +61,7 @@
         self.isRegistedHeader = YES;
     }
 
-    JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:indexPath];
+    JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:index inSection:self.section]];
 
     if (!reusableView.renderView) {
         reusableView.renderView = [viewClass new];
@@ -72,20 +70,21 @@
     return reusableView.renderView;
 }
 
-- (__kindof UIView *)collectionView:(UICollectionView *)collectionView viewForHeaderAtIndexPath:(NSIndexPath *)indexPath {
+- (__kindof UIView *)viewForHeaderAtIndex:(NSInteger)index {
     return [UIView new];
 }
 
 #pragma mark - Item
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+
+- (NSInteger)itemsCount {
     return 0;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (CGSize)sizeForItemAtIndex:(NSInteger)index {
     return CGSizeMake(50.0, 50.0);
 }
 
-- (__kindof UIView *)dequeueReusableViewWithClass:(Class)viewClass forIndexPath:(NSIndexPath *)indexPath {
+- (__kindof UIView *)dequeueReusableViewWithClass:(Class)viewClass forIndex:(NSInteger)index {
     NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
 
     if (![self.registedCells containsObject:viewClass]) {
@@ -96,7 +95,7 @@
         }
     }
 
-    JTComponentCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:indexPath];
+    JTComponentCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:index inSection:self.section]];
 
     if (!cell.renderView) {
         cell.renderView = [viewClass new];
@@ -105,16 +104,16 @@
     return cell.renderView;
 }
 
-- (__kindof UIView *)collectionView:(UICollectionView *)collectionView viewForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (__kindof UIView *)viewForItemAtIndex:(NSInteger)index {
     return [UIView new];
 }
 
 #pragma mark - Footer
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    return CGSizeZero;
+- (CGFloat)footerHeight {
+    return 0.0;
 }
 
-- (__kindof UIView *)dequeueReusableFooterWithClass:(Class)viewClass forIndexPath:(NSIndexPath *)indexPath {
+- (__kindof UIView *)dequeueReusableFooterWithClass:(Class)viewClass forIndex:(NSInteger)index {
     NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
 
     if (!self.isRegistedFooter) {
@@ -122,7 +121,7 @@
         self.isRegistedFooter = YES;
     }
 
-    JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:indexPath];
+    JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:index inSection:self.section]];
 
     if (!reusableView.renderView) {
         reusableView.renderView = [viewClass new];
@@ -131,7 +130,7 @@
     return reusableView.renderView;
 }
 
-- (__kindof UIView *)collectionView:(UICollectionView *)collectionView viewForFooterAtIndexPath:(NSIndexPath *)indexPath {
+- (__kindof UIView *)viewForFooterAtIndex:(NSInteger)index {
     return [UIView new];
 }
 

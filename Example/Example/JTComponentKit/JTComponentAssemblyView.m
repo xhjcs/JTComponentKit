@@ -45,6 +45,8 @@
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
+    self.collectionView.showsVerticalScrollIndicator = NO;
+    self.collectionView.showsHorizontalScrollIndicator = NO;
     self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     [self addSubview:self.collectionView];
 }
@@ -54,6 +56,7 @@
     [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         component.section = idx;
         component.collectionView = self.collectionView;
+        component.width = self.collectionView.bounds.size.width;
         [component setup];
     }];
     [self.collectionView reloadData];
@@ -75,37 +78,37 @@
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     JTComponent *component = self.components[section];
 
-    return [component collectionView:collectionView layout:collectionViewLayout insetForSectionAtIndex:section];
+    return [component inset];
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     JTComponent *component = self.components[section];
 
-    return [component collectionView:collectionView layout:collectionViewLayout minimumLineSpacingForSectionAtIndex:section];
+    return [component minimumLineSpacing];
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     JTComponent *component = self.components[section];
 
-    return [component collectionView:collectionView layout:collectionViewLayout minimumInteritemSpacingForSectionAtIndex:section];
+    return [component minimumInteritemSpacing];
 }
 
 #pragma mark - Header & Footer
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
 
-    return [component collectionView:collectionView layout:collectionViewLayout referenceSizeForHeaderInSection:section];
+    return CGSizeMake(collectionView.frame.size.width, [component headerHeight]);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
 
-    return [component collectionView:collectionView layout:collectionViewLayout referenceSizeForFooterInSection:section];
+    return CGSizeMake(collectionView.frame.size.width, [component footerHeight]);
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
-    UIView *renderView = kind == UICollectionElementKindSectionHeader ? [component collectionView:collectionView viewForHeaderAtIndexPath:indexPath] : [component collectionView:collectionView viewForFooterAtIndexPath:indexPath];
+    UIView *renderView = kind == UICollectionElementKindSectionHeader ? [component viewForHeaderAtIndex:indexPath.item] : [component viewForFooterAtIndex:indexPath.item];
 
     return (JTComponentReusableView *)renderView.superview;
 }
@@ -114,18 +117,18 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
 
-    return [component numberOfSectionsInCollectionView:collectionView];
+    return [component itemsCount];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
 
-    return [component collectionView:collectionView layout:collectionViewLayout sizeForItemAtIndexPath:indexPath];
+    return [component sizeForItemAtIndex:indexPath.item];
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
-    UIView *renderView = [component collectionView:collectionView viewForItemAtIndexPath:indexPath];
+    UIView *renderView = [component viewForItemAtIndex:indexPath.item];
 
     return [self findCellFromRenderView:renderView];
 }
