@@ -70,21 +70,21 @@
     return reusableView.renderView;
 }
 
-- (void)willDisplayHeader {
+- (void)willDisplayHeaderView {
     
 }
 
-- (__kindof UIView *)viewForHeaderAtIndex:(NSInteger)index {
+- (__kindof UIView *)headerViewForIndex:(NSInteger)index {
     return [UIView new];
 }
 
-- (void)didEndDisplayingHeader {
+- (void)didEndDisplayingHeaderView {
     
 }
 
 #pragma mark - Item
 
-- (NSInteger)itemsCount {
+- (NSInteger)numberOfItems {
     return 0;
 }
 
@@ -92,7 +92,7 @@
     return CGSizeMake(50.0, 50.0);
 }
 
-- (__kindof UIView *)dequeueReusableViewWithClass:(Class)viewClass forIndex:(NSInteger)index {
+- (__kindof UIView *)dequeueReusableItemViewOfClass:(Class)viewClass forIndex:(NSInteger)index {
     NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
 
     if (![self.registedCells containsObject:viewClass]) {
@@ -112,15 +112,15 @@
     return cell.renderView;
 }
 
-- (void)willDisplayView {
+- (void)willDisplayItemView {
     
 }
 
-- (__kindof UIView *)viewForItemAtIndex:(NSInteger)index {
+- (__kindof UIView *)itemViewForIndex:(NSInteger)index {
     return [UIView new];
 }
 
-- (void)didEndDisplayingView {
+- (void)didEndDisplayingItemView {
     
 }
 
@@ -129,7 +129,7 @@
     return 0.0;
 }
 
-- (__kindof UIView *)dequeueReusableFooterWithClass:(Class)viewClass forIndex:(NSInteger)index {
+- (__kindof UIView *)dequeueReusableFooterViewOfClass:(Class)viewClass forIndex:(NSInteger)index {
     NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
 
     if (!self.isRegistedFooter) {
@@ -146,15 +146,15 @@
     return reusableView.renderView;
 }
 
-- (void)willDisplayFooter {
+- (void)willDisplayFooterView {
     
 }
 
-- (__kindof UIView *)viewForFooterAtIndex:(NSInteger)index {
+- (__kindof UIView *)footerViewForIndex:(NSInteger)index {
     return [UIView new];
 }
 
-- (void)didEndDisplayingFooter {
+- (void)didEndDisplayingFooterView {
     
 }
 

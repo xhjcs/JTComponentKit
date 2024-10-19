@@ -20,11 +20,11 @@
     return 100;
 }
 
-- (__kindof UIView *)viewForHeaderAtIndex:(NSInteger)index {
+- (__kindof UIView *)headerViewForIndex:(NSInteger)index {
     return [self dequeueReusableHeaderViewWithClass:[JTAComponentHeaderView class] forIndex:index];
 }
 
-- (NSInteger)itemsCount {
+- (NSInteger)numberOfItems {
     return 100;
 }
 
@@ -32,16 +32,16 @@
     return CGSizeMake(50, 50);
 }
 
-- (__kindof UIView *)viewForItemAtIndex:(NSInteger)index {
-    return [self dequeueReusableViewWithClass:[JTAComponentItemView class] forIndex:index];
+- (__kindof UIView *)itemViewForIndex:(NSInteger)index {
+    return [self dequeueReusableItemViewOfClass:[JTAComponentItemView class] forIndex:index];
 }
 
 - (CGFloat)footerHeight {
     return 100;
 }
 
-- (__kindof UIView *)viewForFooterAtIndex:(NSInteger)index {
-    return [self dequeueReusableFooterWithClass:[JTAComponentFooterView class] forIndex:index];
+- (__kindof UIView *)footerViewForIndex:(NSInteger)index {
+    return [self dequeueReusableFooterViewOfClass:[JTAComponentFooterView class] forIndex:index];
 }
 
 @end

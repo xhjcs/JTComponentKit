@@ -23,24 +23,24 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Header
 - (CGFloat)headerHeight;
 - (__kindof UIView *)dequeueReusableHeaderViewWithClass:(Class)viewClass forIndex:(NSInteger)index;
-- (void)willDisplayHeader;
-- (__kindof UIView *)viewForHeaderAtIndex:(NSInteger)index;
-- (void)didEndDisplayingHeader;
+- (void)willDisplayHeaderView;
+- (__kindof UIView *)headerViewForIndex:(NSInteger)index;
+- (void)didEndDisplayingHeaderView;
 
 #pragma mark - Item
-- (NSInteger)itemsCount;
+- (NSInteger)numberOfItems;
 - (CGSize)sizeForItemAtIndex:(NSInteger)index;
-- (__kindof UIView *)dequeueReusableViewWithClass:(Class)viewClass forIndex:(NSInteger)index;
-- (void)willDisplayView;
-- (__kindof UIView *)viewForItemAtIndex:(NSInteger)index;
-- (void)didEndDisplayingView;
+- (__kindof UIView *)dequeueReusableItemViewOfClass:(Class)viewClass forIndex:(NSInteger)index;
+- (void)willDisplayItemView;
+- (__kindof UIView *)itemViewForIndex:(NSInteger)index;
+- (void)didEndDisplayingItemView;
 
 #pragma mark - Footer
 - (CGFloat)footerHeight;
-- (__kindof UIView *)dequeueReusableFooterWithClass:(Class)viewClass forIndex:(NSInteger)index;
-- (void)willDisplayFooter;
-- (__kindof UIView *)viewForFooterAtIndex:(NSInteger)index;
-- (void)didEndDisplayingFooter;
+- (__kindof UIView *)dequeueReusableFooterViewOfClass:(Class)viewClass forIndex:(NSInteger)index;
+- (void)willDisplayFooterView;
+- (__kindof UIView *)footerViewForIndex:(NSInteger)index;
+- (void)didEndDisplayingFooterView;
 
 @end
 

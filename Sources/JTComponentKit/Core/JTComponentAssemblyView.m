@@ -112,15 +112,15 @@
     JTComponent *component = self.components[indexPath.section];
 
     if (elementKind == UICollectionElementKindSectionHeader) {
-        [component willDisplayHeader];
+        [component willDisplayHeaderView];
     } else {
-        [component willDisplayFooter];
+        [component willDisplayFooterView];
     }
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
-    UIView *renderView = kind == UICollectionElementKindSectionHeader ? [component viewForHeaderAtIndex:indexPath.item] : [component viewForFooterAtIndex:indexPath.item];
+    UIView *renderView = kind == UICollectionElementKindSectionHeader ? [component headerViewForIndex:indexPath.item] : [component footerViewForIndex:indexPath.item];
 
     return (JTComponentReusableView *)renderView.superview;
 }
@@ -129,9 +129,9 @@
     JTComponent *component = self.components[indexPath.section];
 
     if (elementKind == UICollectionElementKindSectionHeader) {
-        [component didEndDisplayingHeader];
+        [component didEndDisplayingHeaderView];
     } else {
-        [component didEndDisplayingFooter];
+        [component didEndDisplayingFooterView];
     }
 }
 
@@ -139,7 +139,7 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
 
-    return [component itemsCount];
+    return [component numberOfItems];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -151,12 +151,12 @@
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
 
-    [component willDisplayView];
+    [component willDisplayItemView];
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
-    UIView *renderView = [component viewForItemAtIndex:indexPath.item];
+    UIView *renderView = [component itemViewForIndex:indexPath.item];
 
     return [self findCellFromRenderView:renderView];
 }
@@ -164,7 +164,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
 
-    [component didEndDisplayingView];
+    [component didEndDisplayingItemView];
 }
 
 @end

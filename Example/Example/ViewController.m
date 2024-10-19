@@ -19,9 +19,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    JTComponentAssemblyView *componentAssemblyView = [[JTComponentAssemblyView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 3 * 2, self.view.frame.size.height)];
+    JTComponentAssemblyView *componentAssemblyView = [[JTComponentAssemblyView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:componentAssemblyView];
     [componentAssemblyView assembleComponents:@[[JTAComponent new], [JTAComponent new]]];
+    
+    NSLog(@"sssss %lf", UITableViewAutomaticDimension);
 }
 
 
