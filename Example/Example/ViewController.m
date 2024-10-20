@@ -23,6 +23,12 @@
     [self.view addSubview:componentAssemblyView];
     [componentAssemblyView assembleComponents:@[[JTAComponent new], [JTAComponent new]]];
     
+    
+    NSMutableDictionary *parmas = [NSMutableDictionary new];
+    NSString *key = nil;
+//    parmas[key];
+//    
+//    parmas[key] = @"123";
     NSLog(@"sssss %lf", UITableViewAutomaticDimension);
 }
 

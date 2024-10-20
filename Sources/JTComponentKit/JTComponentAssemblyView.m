@@ -54,10 +54,12 @@
 }
 
 - (void)assembleComponents:(NSArray<JTComponent *> *)components {
+    JTEventHub *eventHub = [JTEventHub new];
     self.components = [components copy];
     [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         component.section = idx;
         component.collectionView = self.collectionView;
+        component.eventHub = eventHub;
         component.width = self.collectionView.bounds.size.width;
         [component setup];
     }];

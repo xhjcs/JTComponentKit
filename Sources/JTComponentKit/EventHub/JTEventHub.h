@@ -6,12 +6,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JTEventHubArgs.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface JTEventHub : NSObject
 
-- (NSString *)on:(NSString *)event callback:(void (^)(id arg1, id arg2, id arg3))callback;
+- (NSString *)on:(NSString *)event callback:(void (^)(JTEventHubArgs *args))callback;
 - (void)off:(NSString *)event identifier:(NSString *)identifier;
 - (void)emit:(NSString *)event args:(id)arg1, ... NS_REQUIRES_NIL_TERMINATION;
 

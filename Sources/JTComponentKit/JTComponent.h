@@ -6,10 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JTEventHub.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface JTComponent : NSObject
+
+@property (nonatomic, readonly) JTEventHub *eventHub;
 
 @property (nonatomic, readonly) CGFloat width;
 - (void)setup;

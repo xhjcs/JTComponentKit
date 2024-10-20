@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JTComponent ()
 
+@property (nonatomic) JTEventHub *eventHub;
+
 @property (nonatomic) CGFloat width;
 @property (nonatomic) NSInteger section;
 @property (nonatomic) UICollectionView *collectionView;

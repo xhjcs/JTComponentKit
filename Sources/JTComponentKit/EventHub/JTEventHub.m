@@ -6,10 +6,11 @@
 //
 
 #import "JTEventHub.h"
+#import "JTEventHubArgs_Private.h"
 
 @interface JTEventHub ()
 
-@property (nonatomic) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, void (^)(id, id, id)> *> *eventCallbacks;
+@property (nonatomic) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, void (^)(JTEventHubArgs *args)> *> *eventCallbacks;
 
 @end
 
@@ -25,11 +26,15 @@
     return self;
 }
 
-- (NSString *)on:(NSString *)event callback:(void (^)(id arg1, id arg2, id arg3))callback {
+- (NSString *)on:(NSString *)event callback:(void (^)(JTEventHubArgs *args))callback {
     NSCParameterAssert(event);
     NSCParameterAssert(callback);
 
-    NSMutableDictionary<NSString *, void (^)(id, id, id)> *callbacks = self.eventCallbacks[event];
+    if (!event) {
+        return nil;
+    }
+
+    NSMutableDictionary<NSString *, void (^)(JTEventHubArgs *args)> *callbacks = self.eventCallbacks[event];
 
     if (!callbacks) {
         callbacks = [NSMutableDictionary new];
@@ -45,7 +50,11 @@
     NSCParameterAssert(event);
     NSCParameterAssert(identifier);
 
-    NSMutableDictionary<NSString *, void (^)(id, id, id)> *callbacks = self.eventCallbacks[event];
+    if (!event || !identifier) {
+        return;
+    }
+
+    NSMutableDictionary<NSString *, void (^)(JTEventHubArgs *args)> *callbacks = self.eventCallbacks[event];
     callbacks[identifier] = nil;
 
     if (callbacks.count <= 0) {
@@ -58,16 +67,19 @@
 
     NSArray *callbacks = _eventCallbacks[event].allValues;
 
-    for (void (^callback)(id, id, id) in callbacks) {
-        va_list args;
-        va_start(args, arg1);
+    NSMutableArray *argsArray = [NSMutableArray array];
 
-        id arg2 = va_arg(args, id);
-        id arg3 = va_arg(args, id);
+    va_list args;
+    va_start(args, arg1);
 
-        callback(arg1, arg2, arg3);
+    for (id arg = arg1; arg != nil; arg = va_arg(args, id)) {
+        [argsArray addObject:arg];
+    }
 
-        va_end(args);
+    va_end(args);
+
+    for (void (^callback)(JTEventHubArgs *args) in callbacks) {
+        callback([[JTEventHubArgs alloc] initWithArgs:argsArray]);
     }
 }
 
