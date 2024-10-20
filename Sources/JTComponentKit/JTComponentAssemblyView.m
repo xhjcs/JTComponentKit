@@ -100,13 +100,13 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
 
-    return CGSizeMake(collectionView.frame.size.width, [component headerHeight]);
+    return [component headerSize];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
 
-    return CGSizeMake(collectionView.frame.size.width, [component footerHeight]);
+    return [component footerSize];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {

@@ -53,8 +53,8 @@
 }
 
 #pragma mark - Header
-- (CGFloat)headerHeight {
-    return 0.0;
+- (CGSize)headerSize {
+    return CGSizeZero;
 }
 
 - (__kindof UIView *)dequeueReusableHeaderViewOfClass:(Class)viewClass forIndex:(NSInteger)index {
@@ -129,8 +129,8 @@
 }
 
 #pragma mark - Footer
-- (CGFloat)footerHeight {
-    return 0.0;
+- (CGSize)footerSize {
+    return CGSizeZero;
 }
 
 - (__kindof UIView *)dequeueReusableFooterViewOfClass:(Class)viewClass forIndex:(NSInteger)index {

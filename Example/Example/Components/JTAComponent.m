@@ -16,8 +16,8 @@
     return UIEdgeInsetsMake(20, 20, 20, 20);
 }
 
-- (CGFloat)headerHeight {
-    return 100;
+- (CGSize)headerSize {
+    return CGSizeMake(self.size.width, 100);
 }
 
 - (__kindof UIView *)headerViewForIndex:(NSInteger)index {
@@ -36,8 +36,8 @@
     return [self dequeueReusableItemViewOfClass:[JTAComponentItemView class] forIndex:index];
 }
 
-- (CGFloat)footerHeight {
-    return 100;
+- (CGSize)footerSize {
+    return CGSizeMake(self.size.width, 100);
 }
 
 - (__kindof UIView *)footerViewForIndex:(NSInteger)index {

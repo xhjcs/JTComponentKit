@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (CGFloat)minimumInteritemSpacing;
 
 #pragma mark - Header
-- (CGFloat)headerHeight;
+- (CGSize)headerSize;
 - (__kindof UIView *)dequeueReusableHeaderViewOfClass:(Class)viewClass forIndex:(NSInteger)index;
 - (void)willDisplayHeaderView;
 - (__kindof UIView *)headerViewForIndex:(NSInteger)index;
@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)didEndDisplayingItemView;
 
 #pragma mark - Footer
-- (CGFloat)footerHeight;
+- (CGSize)footerSize;
 - (__kindof UIView *)dequeueReusableFooterViewOfClass:(Class)viewClass forIndex:(NSInteger)index;
 - (void)willDisplayFooterView;
 - (__kindof UIView *)footerViewForIndex:(NSInteger)index;
