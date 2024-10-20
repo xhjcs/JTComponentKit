@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) JTEventHub *eventHub;
 
-@property (nonatomic, readonly) CGFloat width;
+@property (nonatomic, readonly) CGSize size;
 - (void)setup;
 - (void)reloadData;
 

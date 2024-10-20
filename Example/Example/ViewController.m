@@ -9,6 +9,8 @@
 #import "Example-Swift.h"
 #import "JTAComponent.h"
 #import <JTComponentKit/JTComponentKit.h>
+#import "JTEventHubArgs.h"
+#import <Masonry/Masonry.h>
 
 @interface ViewController ()
 
@@ -19,16 +21,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    JTComponentAssemblyView *componentAssemblyView = [[JTComponentAssemblyView alloc] initWithFrame:self.view.bounds];
+    JTComponentAssemblyView *componentAssemblyView = [[JTComponentAssemblyView alloc] init];
     [self.view addSubview:componentAssemblyView];
+    [componentAssemblyView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
     [componentAssemblyView assembleComponents:@[[JTAComponent new], [JTAComponent new]]];
-    
-    
-    NSMutableDictionary *parmas = [NSMutableDictionary new];
-    NSString *key = nil;
-//    parmas[key];
-//    
-//    parmas[key] = @"123";
     NSLog(@"sssss %lf", UITableViewAutomaticDimension);
 }
 

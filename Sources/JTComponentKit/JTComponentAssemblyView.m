@@ -60,7 +60,6 @@
         component.section = idx;
         component.collectionView = self.collectionView;
         component.eventHub = eventHub;
-        component.width = self.collectionView.bounds.size.width;
         [component setup];
     }];
     [self.collectionView reloadData];
