@@ -27,8 +27,8 @@
         make.edges.equalTo(self.view);
     }];
     [componentAssemblyView assembleComponents:@[[JTAComponent new], [JTAComponent new]]];
-    componentAssemblyView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    NSLog(@"sssss %lf", UITableViewAutomaticDimension);
+//    componentAssemblyView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    NSLog(@"sssss %@", NSStringFromCGSize(UICollectionViewFlowLayoutAutomaticSize));
 }
 
 

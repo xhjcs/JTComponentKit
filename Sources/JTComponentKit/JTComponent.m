@@ -54,7 +54,7 @@
 
 #pragma mark - Header
 - (CGSize)headerSize {
-    return CGSizeZero;
+    return UICollectionViewFlowLayoutAutomaticSize;
 }
 
 - (__kindof UIView *)dequeueReusableHeaderViewOfClass:(Class)viewClass forIndex:(NSInteger)index {
@@ -93,7 +93,7 @@
 }
 
 - (CGSize)sizeForItemAtIndex:(NSInteger)index {
-    return CGSizeMake(50.0, 50.0);
+    return UICollectionViewFlowLayoutAutomaticSize;
 }
 
 - (__kindof UIView *)dequeueReusableItemViewOfClass:(Class)viewClass forIndex:(NSInteger)index {
@@ -130,7 +130,7 @@
 
 #pragma mark - Footer
 - (CGSize)footerSize {
-    return CGSizeZero;
+    return UICollectionViewFlowLayoutAutomaticSize;
 }
 
 - (__kindof UIView *)dequeueReusableFooterViewOfClass:(Class)viewClass forIndex:(NSInteger)index {
