@@ -18,6 +18,7 @@
     UICollectionViewDelegateFlowLayout
 >
 
+@property (nonatomic) UICollectionViewFlowLayout *layout;
 @property (nonatomic) UICollectionView *collectionView;
 
 @property (nonatomic) NSArray<JTComponent *> *components;
@@ -35,9 +36,9 @@
 }
 
 - (void)setupViews {
-    UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
+    self.layout = [UICollectionViewFlowLayout new];
 
-    self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:self.layout];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     self.collectionView.showsVerticalScrollIndicator = NO;
@@ -63,6 +64,14 @@
         [component setup];
     }];
     [self.collectionView reloadData];
+}
+
+- (void)setScrollDirection:(UICollectionViewScrollDirection)scrollDirection {
+    self.layout.scrollDirection = scrollDirection;
+}
+
+- (UICollectionViewScrollDirection)scrollDirection {
+    return self.layout.scrollDirection;
 }
 
 - (JTComponentCell *)findCellFromRenderView:(UIView *)renderView {

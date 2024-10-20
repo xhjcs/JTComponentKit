@@ -17,7 +17,7 @@
 }
 
 - (CGSize)headerSize {
-    return CGSizeMake(self.size.width, 100);
+    return CGSizeMake(100, 100);
 }
 
 - (__kindof UIView *)headerViewForIndex:(NSInteger)index {
@@ -37,7 +37,7 @@
 }
 
 - (CGSize)footerSize {
-    return CGSizeMake(self.size.width, 100);
+    return CGSizeMake(100, 100);
 }
 
 - (__kindof UIView *)footerViewForIndex:(NSInteger)index {

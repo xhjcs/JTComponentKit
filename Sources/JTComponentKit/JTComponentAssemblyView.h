@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JTComponentAssemblyView : UIView
 
+@property (nonatomic) UICollectionViewScrollDirection scrollDirection;
+
 - (void)assembleComponents:(NSArray<JTComponent *> *)components;
 
 @end
