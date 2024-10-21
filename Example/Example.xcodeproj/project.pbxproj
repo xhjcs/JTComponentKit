@@ -197,6 +197,14 @@
 		D27696532CBEA63A00B425B5 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				D285AADE2CC66F22006687BF /* A */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		D285AADE2CC66F22006687BF /* A */ = {
+			isa = PBXGroup;
+			children = (
 				D27696572CBEA81700B425B5 /* JTAComponent.h */,
 				D27696582CBEA81700B425B5 /* JTAComponent.m */,
 				D20D3EEC2CC363AE00A67D78 /* JTAComponentHeaderView.h */,
@@ -206,7 +214,7 @@
 				D20D3EF22CC3706E00A67D78 /* JTAComponentFooterView.h */,
 				D20D3EF32CC3706E00A67D78 /* JTAComponentFooterView.m */,
 			);
-			path = Components;
+			path = A;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
