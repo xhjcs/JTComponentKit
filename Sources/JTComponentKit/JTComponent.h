@@ -25,9 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Header
 - (CGSize)headerSize;
-- (__kindof UIView *)dequeueReusableHeaderViewOfClass:(Class)viewClass forIndex:(NSInteger)index;
+- (__kindof UIView *)dequeueReusableHeaderViewOfClass:(Class)viewClass;
 - (void)willDisplayHeaderView;
-- (__kindof UIView *)headerViewForIndex:(NSInteger)index;
+- (__kindof UIView *)headerView;
 - (void)didEndDisplayingHeaderView;
 
 #pragma mark - Item
@@ -40,9 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Footer
 - (CGSize)footerSize;
-- (__kindof UIView *)dequeueReusableFooterViewOfClass:(Class)viewClass forIndex:(NSInteger)index;
+- (__kindof UIView *)dequeueReusableFooterViewOfClass:(Class)viewClass;
 - (void)willDisplayFooterView;
-- (__kindof UIView *)footerViewForIndex:(NSInteger)index;
+- (__kindof UIView *)footerView;
 - (void)didEndDisplayingFooterView;
 
 @end

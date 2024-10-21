@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSInteger section;
 @property (nonatomic) UICollectionView *collectionView;
 
+- (__kindof UIView *)headerViewForIndex:(NSInteger)index;
+- (__kindof UIView *)footerViewForIndex:(NSInteger)index;
+
 @end
 
 NS_ASSUME_NONNULL_END

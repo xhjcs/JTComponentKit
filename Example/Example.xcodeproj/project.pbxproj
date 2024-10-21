@@ -24,6 +24,10 @@
 		D25AEAE22CBD111F00A0BBDA /* ExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D25AEAE12CBD111F00A0BBDA /* ExampleUITests.m */; };
 		D25AEAE42CBD111F00A0BBDA /* ExampleUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D25AEAE32CBD111F00A0BBDA /* ExampleUITestsLaunchTests.m */; };
 		D27696592CBEA81700B425B5 /* JTAComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = D27696582CBEA81700B425B5 /* JTAComponent.m */; };
+		D285AAE22CC66FD2006687BF /* JTBComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = D285AAE12CC66FD2006687BF /* JTBComponent.m */; };
+		D285AAE52CC66FF4006687BF /* JTBComponentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D285AAE42CC66FF4006687BF /* JTBComponentHeaderView.m */; };
+		D285AAE82CC67002006687BF /* JTBComponentItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = D285AAE72CC67002006687BF /* JTBComponentItemView.m */; };
+		D285AAEB2CC67010006687BF /* JTBComponentFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = D285AAEA2CC67010006687BF /* JTBComponentFooterView.m */; };
 		D28D0F4C2CBD1D4D008DF366 /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28D0F4B2CBD1D4D008DF366 /* Playground.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +82,14 @@
 		D25AEAE32CBD111F00A0BBDA /* ExampleUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExampleUITestsLaunchTests.m; sourceTree = "<group>"; };
 		D27696572CBEA81700B425B5 /* JTAComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTAComponent.h; sourceTree = "<group>"; };
 		D27696582CBEA81700B425B5 /* JTAComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTAComponent.m; sourceTree = "<group>"; };
+		D285AAE02CC66FD2006687BF /* JTBComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTBComponent.h; sourceTree = "<group>"; };
+		D285AAE12CC66FD2006687BF /* JTBComponent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTBComponent.m; sourceTree = "<group>"; };
+		D285AAE32CC66FF4006687BF /* JTBComponentHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTBComponentHeaderView.h; sourceTree = "<group>"; };
+		D285AAE42CC66FF4006687BF /* JTBComponentHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTBComponentHeaderView.m; sourceTree = "<group>"; };
+		D285AAE62CC67002006687BF /* JTBComponentItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTBComponentItemView.h; sourceTree = "<group>"; };
+		D285AAE72CC67002006687BF /* JTBComponentItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTBComponentItemView.m; sourceTree = "<group>"; };
+		D285AAE92CC67010006687BF /* JTBComponentFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTBComponentFooterView.h; sourceTree = "<group>"; };
+		D285AAEA2CC67010006687BF /* JTBComponentFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTBComponentFooterView.m; sourceTree = "<group>"; };
 		D28D0F4A2CBD1D4C008DF366 /* Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Example-Bridging-Header.h"; sourceTree = "<group>"; };
 		D28D0F4B2CBD1D4D008DF366 /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
 		E0035286768C887F548766A0 /* Pods-ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-ExampleTests/Pods-ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -197,6 +209,7 @@
 		D27696532CBEA63A00B425B5 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				D285AADF2CC66FB8006687BF /* B */,
 				D285AADE2CC66F22006687BF /* A */,
 			);
 			path = Components;
@@ -215,6 +228,21 @@
 				D20D3EF32CC3706E00A67D78 /* JTAComponentFooterView.m */,
 			);
 			path = A;
+			sourceTree = "<group>";
+		};
+		D285AADF2CC66FB8006687BF /* B */ = {
+			isa = PBXGroup;
+			children = (
+				D285AAE02CC66FD2006687BF /* JTBComponent.h */,
+				D285AAE12CC66FD2006687BF /* JTBComponent.m */,
+				D285AAE32CC66FF4006687BF /* JTBComponentHeaderView.h */,
+				D285AAE42CC66FF4006687BF /* JTBComponentHeaderView.m */,
+				D285AAE62CC67002006687BF /* JTBComponentItemView.h */,
+				D285AAE72CC67002006687BF /* JTBComponentItemView.m */,
+				D285AAE92CC67010006687BF /* JTBComponentFooterView.h */,
+				D285AAEA2CC67010006687BF /* JTBComponentFooterView.m */,
+			);
+			path = B;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -474,7 +502,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D285AAE22CC66FD2006687BF /* JTBComponent.m in Sources */,
+				D285AAEB2CC67010006687BF /* JTBComponentFooterView.m in Sources */,
 				D25AEAC32CBD111E00A0BBDA /* ViewController.m in Sources */,
+				D285AAE52CC66FF4006687BF /* JTBComponentHeaderView.m in Sources */,
 				D27696592CBEA81700B425B5 /* JTAComponent.m in Sources */,
 				D20D3EEE2CC363AE00A67D78 /* JTAComponentHeaderView.m in Sources */,
 				D28D0F4C2CBD1D4D008DF366 /* Playground.swift in Sources */,
@@ -482,6 +513,7 @@
 				D25AEABD2CBD111E00A0BBDA /* AppDelegate.m in Sources */,
 				D25AEACE2CBD111F00A0BBDA /* main.m in Sources */,
 				D20D3EF42CC3706E00A67D78 /* JTAComponentFooterView.m in Sources */,
+				D285AAE82CC67002006687BF /* JTBComponentItemView.m in Sources */,
 				D25AEAC02CBD111E00A0BBDA /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

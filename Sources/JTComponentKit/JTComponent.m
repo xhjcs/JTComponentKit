@@ -12,8 +12,10 @@
 
 @interface JTComponent ()
 
+@property (nonatomic) NSInteger headerIndex;
 @property (nonatomic) BOOL isRegistedHeader;
 @property (nonatomic) NSMutableSet<Class> *registedCells;
+@property (nonatomic) NSInteger footerIndex;
 @property (nonatomic) BOOL isRegistedFooter;
 
 @end
@@ -57,7 +59,7 @@
     return UICollectionViewFlowLayoutAutomaticSize;
 }
 
-- (__kindof UIView *)dequeueReusableHeaderViewOfClass:(Class)viewClass forIndex:(NSInteger)index {
+- (__kindof UIView *)dequeueReusableHeaderViewOfClass:(Class)viewClass {
     NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
 
     if (!self.isRegistedHeader) {
@@ -65,7 +67,7 @@
         self.isRegistedHeader = YES;
     }
 
-    JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:index inSection:self.section]];
+    JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:self.headerIndex inSection:self.section]];
 
     if (!reusableView.renderView) {
         reusableView.renderView = [viewClass new];
@@ -79,6 +81,11 @@
 }
 
 - (__kindof UIView *)headerViewForIndex:(NSInteger)index {
+    self.headerIndex = index;
+    return [self headerView];
+}
+
+- (__kindof UIView *)headerView {
     return [UIView new];
 }
 
@@ -133,7 +140,7 @@
     return UICollectionViewFlowLayoutAutomaticSize;
 }
 
-- (__kindof UIView *)dequeueReusableFooterViewOfClass:(Class)viewClass forIndex:(NSInteger)index {
+- (__kindof UIView *)dequeueReusableFooterViewOfClass:(Class)viewClass {
     NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
 
     if (!self.isRegistedFooter) {
@@ -141,7 +148,7 @@
         self.isRegistedFooter = YES;
     }
 
-    JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:index inSection:self.section]];
+    JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:self.footerIndex inSection:self.section]];
 
     if (!reusableView.renderView) {
         reusableView.renderView = [viewClass new];
@@ -155,6 +162,11 @@
 }
 
 - (__kindof UIView *)footerViewForIndex:(NSInteger)index {
+    self.footerIndex = index;
+    return [self footerView];
+}
+
+- (__kindof UIView *)footerView {
     return [UIView new];
 }
 

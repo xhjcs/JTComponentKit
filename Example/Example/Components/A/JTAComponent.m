@@ -20,8 +20,8 @@
     return CGSizeMake(100, 100);
 }
 
-- (__kindof UIView *)headerViewForIndex:(NSInteger)index {
-    return [self dequeueReusableHeaderViewOfClass:[JTAComponentHeaderView class] forIndex:index];
+- (__kindof UIView *)headerView {
+    return [self dequeueReusableHeaderViewOfClass:[JTAComponentHeaderView class]];
 }
 
 - (NSInteger)numberOfItems {
@@ -40,8 +40,8 @@
     return CGSizeMake(100, 100);
 }
 
-- (__kindof UIView *)footerViewForIndex:(NSInteger)index {
-    return [self dequeueReusableFooterViewOfClass:[JTAComponentFooterView class] forIndex:index];
+- (__kindof UIView *)footerView {
+    return [self dequeueReusableFooterViewOfClass:[JTAComponentFooterView class]];
 }
 
 @end
