@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   s.author       = { "xinghanjie" => "xinghanjie@gmail.com" }
 
   s.ios.deployment_target = "11.0"
-  s.osx.deployment_target = "10.15"
+  s.ios.frameworks = 'Foundation', 'UIKit'
 
 
   s.source       = { :git => "https://github.com/xhjcs/JTComponentKit.git", :tag => "#{s.version}" }
