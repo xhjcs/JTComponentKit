@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (__kindof UIView *)dequeueReusableItemViewOfClass:(Class)viewClass forIndex:(NSInteger)index;
 - (void)willDisplayItemView;
 - (__kindof UIView *)itemViewForIndex:(NSInteger)index;
+- (void)didSelectItemAtIndex:(NSInteger)index;
 - (void)didEndDisplayingItemView;
 
 #pragma mark - Footer

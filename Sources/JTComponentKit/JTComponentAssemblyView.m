@@ -220,6 +220,12 @@
     return [self findCellFromRenderView:renderView];
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    JTComponent *component = self.components[indexPath.section];
+    
+    [component didSelectItemAtIndex:indexPath.item];
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
 

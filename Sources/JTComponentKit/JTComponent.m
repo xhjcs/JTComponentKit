@@ -128,6 +128,9 @@
     return [self dequeueReusableItemViewOfClass:[UIView class] forIndex:index];
 }
 
+- (void)didSelectItemAtIndex:(NSInteger)index {
+}
+
 - (void)didEndDisplayingItemView {
 }
 
