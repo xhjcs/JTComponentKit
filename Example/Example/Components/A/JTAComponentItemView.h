@@ -11,8 +11,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JTAComponentItemView : UIView
 
-@property (nonatomic, copy) dispatch_block_t onTopHander;
-
 @end
 
 NS_ASSUME_NONNULL_END

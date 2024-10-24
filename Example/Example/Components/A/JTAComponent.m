@@ -33,15 +33,11 @@
 }
 
 - (__kindof UIView *)itemViewForIndex:(NSInteger)index {
-    JTAComponentItemView *itemView = [self dequeueReusableItemViewOfClass:[JTAComponentItemView class] forIndex:index];
-    __weak __typeof(self) weakSelf = self;
-    itemView.onTopHander = ^{
-        __strong __typeof(weakSelf) strongSelf = weakSelf;
-        static int i = 0;
-        [strongSelf.eventHub emit:@"com.heikki.example" arg0:@(i).stringValue];
-        i++;
-    };
-    return itemView;
+    return [self dequeueReusableItemViewOfClass:[JTAComponentItemView class] forIndex:index];
+}
+
+- (void)didSelectItemAtIndex:(NSInteger)index {
+    [self.eventHub emit:@"com.heikki.example" arg0:@(index).stringValue];
 }
 
 - (CGSize)footerSize {
