@@ -15,6 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL shouldEstimateItemSize;
 @property (nonatomic) UICollectionViewScrollDirection scrollDirection;
 
+@property (nonatomic) BOOL bounces;
+@property (nonatomic) BOOL pagingEnabled;
+@property (nonatomic) BOOL scrollEnabled;
+
 @property (nonatomic) BOOL componentHeadersPinToVisibleBounds;
 @property (nonatomic) BOOL componentFootersPinToVisibleBounds;
 

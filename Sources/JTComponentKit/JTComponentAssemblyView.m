@@ -98,6 +98,30 @@
     return self.layout.scrollDirection;
 }
 
+- (void)setBounces:(BOOL)bounces {
+    self.collectionView.bounces = bounces;
+}
+
+- (BOOL)bounces {
+    return self.collectionView.bounces;
+}
+
+- (void)setPagingEnabled:(BOOL)pagingEnabled {
+    self.collectionView.pagingEnabled = pagingEnabled;
+}
+
+- (BOOL)pagingEnabled {
+    return self.collectionView.pagingEnabled;
+}
+
+- (void)setScrollEnabled:(BOOL)scrollEnabled {
+    self.collectionView.scrollEnabled = scrollEnabled;
+}
+
+- (BOOL)scrollEnabled {
+    return self.collectionView.scrollEnabled;
+}
+
 - (JTComponentCell *)findCellFromRenderView:(UIView *)renderView {
     UIView *currentView = renderView.superview;
 
