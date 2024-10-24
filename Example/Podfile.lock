@@ -1,5 +1,5 @@
 PODS:
-  - JTComponentKit (1.0.0)
+  - JTComponentKit (1.0.6)
   - Masonry (1.1.0)
 
 DEPENDENCIES:
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  JTComponentKit: 43458c96711472162b36b888280733db3b03ff89
+  JTComponentKit: d79ef804bf02165ea8c13ef3cdfd10c1120c731e
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
 
 PODFILE CHECKSUM: 9424dcbc06a5941a8e142e059a03d54eefa35ca9

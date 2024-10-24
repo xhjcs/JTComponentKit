@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "JTComponentKit"
-  s.version      = "1.0.5"
+  s.version      = "1.0.6"
   s.summary      = "A modular framework for abstracting sections of UICollectionView into individual components, enabling better decoupling and reusability in iOS applications."
 
   s.description  = <<-DESC
@@ -31,8 +31,6 @@ Pod::Spec.new do |s|
   s.private_header_files = "Sources/#{s.name}/**/*_Private.h",
                             "JTComponentCell.h",
                             "JTComponentReusableView.h"
-
-  s.swift_version = '5.0'
 
   s.requires_arc = true
 
