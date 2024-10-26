@@ -38,7 +38,6 @@ static const NSString *const kEventIdentifierKey = @"identifier";
 }
 
 - (void)componentDidMount {
-    
 }
 
 - (void)componentWillUnmount {

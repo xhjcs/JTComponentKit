@@ -7,9 +7,9 @@
 
 #import "JTComponent.h"
 #import "JTComponent_Private.h"
-#import "JTComponentsAssemblyView.h"
 #import "JTComponentCell.h"
 #import "JTComponentReusableView.h"
+#import "JTComponentsAssemblyView.h"
 
 static const NSString *const kEventNameKey = @"event";
 static const NSString *const kEventIdentifierKey = @"identifier";

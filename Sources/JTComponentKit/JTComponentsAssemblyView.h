@@ -6,8 +6,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JTComponent.h"
 #import "JTCommunicationProtocol.h"
+#import "JTComponent.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
