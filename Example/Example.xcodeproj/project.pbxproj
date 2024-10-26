@@ -14,7 +14,6 @@
 		D20D3EF12CC3704000A67D78 /* JTAComponentItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = D20D3EF02CC3704000A67D78 /* JTAComponentItemView.m */; };
 		D20D3EF42CC3706E00A67D78 /* JTAComponentFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = D20D3EF32CC3706E00A67D78 /* JTAComponentFooterView.m */; };
 		D25AEABD2CBD111E00A0BBDA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D25AEABC2CBD111E00A0BBDA /* AppDelegate.m */; };
-		D25AEAC02CBD111E00A0BBDA /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D25AEABF2CBD111E00A0BBDA /* SceneDelegate.m */; };
 		D25AEAC32CBD111E00A0BBDA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D25AEAC22CBD111E00A0BBDA /* ViewController.m */; };
 		D25AEAC62CBD111E00A0BBDA /* Base in Resources */ = {isa = PBXBuildFile; fileRef = D25AEAC52CBD111E00A0BBDA /* Base */; };
 		D25AEAC82CBD111F00A0BBDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D25AEAC72CBD111F00A0BBDA /* Assets.xcassets */; };
@@ -66,8 +65,6 @@
 		D25AEAB82CBD111E00A0BBDA /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D25AEABB2CBD111E00A0BBDA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D25AEABC2CBD111E00A0BBDA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D25AEABE2CBD111E00A0BBDA /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		D25AEABF2CBD111E00A0BBDA /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		D25AEAC12CBD111E00A0BBDA /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		D25AEAC22CBD111E00A0BBDA /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		D25AEAC52CBD111E00A0BBDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -174,8 +171,6 @@
 				D27696532CBEA63A00B425B5 /* Components */,
 				D25AEABB2CBD111E00A0BBDA /* AppDelegate.h */,
 				D25AEABC2CBD111E00A0BBDA /* AppDelegate.m */,
-				D25AEABE2CBD111E00A0BBDA /* SceneDelegate.h */,
-				D25AEABF2CBD111E00A0BBDA /* SceneDelegate.m */,
 				D25AEAC12CBD111E00A0BBDA /* ViewController.h */,
 				D25AEAC22CBD111E00A0BBDA /* ViewController.m */,
 				D25AEAC42CBD111E00A0BBDA /* Main.storyboard */,
@@ -514,7 +509,6 @@
 				D25AEACE2CBD111F00A0BBDA /* main.m in Sources */,
 				D20D3EF42CC3706E00A67D78 /* JTAComponentFooterView.m in Sources */,
 				D285AAE82CC67002006687BF /* JTBComponentItemView.m in Sources */,
-				D25AEAC02CBD111E00A0BBDA /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
