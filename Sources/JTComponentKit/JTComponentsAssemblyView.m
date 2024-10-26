@@ -1,5 +1,5 @@
 //
-//  JTComponentAssemblyView.m
+//  JTComponentsAssemblyView.m
 //  Example
 //
 //  Created by xinghanjie on 2024/10/16.
@@ -7,11 +7,11 @@
 
 #import "JTComponent.h"
 #import "JTComponent_Private.h"
-#import "JTComponentAssemblyView.h"
+#import "JTComponentsAssemblyView.h"
 #import "JTComponentCell.h"
 #import "JTComponentReusableView.h"
 
-@interface JTComponentAssemblyView ()
+@interface JTComponentsAssemblyView ()
 <
     UICollectionViewDelegate,
     UICollectionViewDataSource,
@@ -25,7 +25,7 @@
 
 @end
 
-@implementation JTComponentAssemblyView
+@implementation JTComponentsAssemblyView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {

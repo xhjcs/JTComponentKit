@@ -6,5 +6,5 @@
 //
 
 #import <JTComponentKit/JTComponent.h>
-#import <JTComponentKit/JTComponentAssemblyView.h>
+#import <JTComponentKit/JTComponentsAssemblyView.h>
 #import <UIKit/UIKit.h>

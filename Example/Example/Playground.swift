@@ -8,12 +8,8 @@
 import Foundation
 import UIKit
 
-class ABC {
-    
-}
-
-@objc class Playground: NSObject {
-    @objc static func play() {
-        print("\(ABC.self)")
+@objc class JTViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
 }

@@ -22,7 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    JTComponentAssemblyView *componentAssemblyView = [[JTComponentAssemblyView alloc] init];
+    JTComponentsAssemblyView *componentAssemblyView = [[JTComponentsAssemblyView alloc] init];
     [self.view addSubview:componentAssemblyView];
     [componentAssemblyView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);

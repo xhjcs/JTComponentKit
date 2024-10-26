@@ -1,5 +1,5 @@
 //
-//  JTComponentAssemblyView.h
+//  JTComponentsAssemblyView.h
 //  Example
 //
 //  Created by xinghanjie on 2024/10/16.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface JTComponentAssemblyView : UIView
+@interface JTComponentsAssemblyView : UIView
 
 @property (nonatomic) BOOL shouldEstimateItemSize;
 @property (nonatomic) UICollectionViewScrollDirection scrollDirection;
