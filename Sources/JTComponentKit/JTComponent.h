@@ -6,17 +6,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JTEventHub.h"
+#import "JTCommunicationProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface JTComponent : NSObject
+@interface JTComponent : NSObject <JTCommunicationProtocol>
 
-@property (nonatomic, readonly) JTEventHub *eventHub;
-
+#pragma mark - Public
 @property (nonatomic, readonly) CGSize size;
-- (void)setup;
 - (void)reloadData;
+
+#pragma mark - Life Cycle
+- (void)componentDidMount;
+- (void)componentWillUnmount;
 
 #pragma mark - Section
 - (UIEdgeInsets)inset;

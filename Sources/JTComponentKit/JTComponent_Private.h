@@ -6,6 +6,7 @@
 //
 
 #import "JTComponent.h"
+#import "JTEventHub.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JTAComponentHeaderView : UIView
 
+@property (nonatomic, copy) dispatch_block_t onClickHandler;
+
 @end
 
 NS_ASSUME_NONNULL_END

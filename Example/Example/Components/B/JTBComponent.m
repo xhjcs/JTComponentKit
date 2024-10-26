@@ -18,9 +18,9 @@
 
 @implementation JTBComponent
 
-- (void)setup {
+- (void)componentDidMount {
     __weak __typeof(self) weakSelf = self;
-    [self.eventHub on:@"com.heikki.example"
+    [self on:@"com.heikki.example"
              callback:^(JTEventHubArgs *_Nonnull args) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         strongSelf.title = args.arg0;

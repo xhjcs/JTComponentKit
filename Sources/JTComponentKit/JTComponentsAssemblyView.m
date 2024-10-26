@@ -11,6 +11,9 @@
 #import "JTComponentCell.h"
 #import "JTComponentReusableView.h"
 
+static const NSString *const kEventNameKey = @"event";
+static const NSString *const kEventIdentifierKey = @"identifier";
+
 @interface JTComponentsAssemblyView ()
 <
     UICollectionViewDelegate,
@@ -21,14 +24,23 @@
 @property (nonatomic) UICollectionViewFlowLayout *layout;
 @property (nonatomic) UICollectionView *collectionView;
 
+@property (nonatomic) JTEventHub *eventHub;
 @property (nonatomic) NSArray<JTComponent *> *components;
+
+@property (nonatomic) NSMutableSet<NSDictionary *> *eventHubTokens;
 
 @end
 
 @implementation JTComponentsAssemblyView
 
+- (void)dealloc {
+    [self offEvents];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
+        _eventHub = [JTEventHub new];
+        _eventHubTokens = [NSMutableSet new];
         [self setupViews];
     }
 
@@ -54,14 +66,15 @@
 }
 
 - (void)assembleComponents:(NSArray<JTComponent *> *)components {
-    JTEventHub *eventHub = [JTEventHub new];
-
+    [components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+        [component componentWillUnmount];
+    }];
     self.components = [components copy];
     [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         component.section = idx;
         component.collectionView = self.collectionView;
-        component.eventHub = eventHub;
-        [component setup];
+        component.eventHub = self.eventHub;
+        [component componentDidMount];
     }];
     [self.collectionView reloadData];
 }
@@ -230,6 +243,50 @@
     JTComponent *component = self.components[indexPath.section];
 
     [component didEndDisplayingItemView];
+}
+
+#pragma mark - JTCommunicationProtocol
+- (void)on:(NSString *)event callback:(void (^)(JTEventHubArgs * _Nonnull))callback {
+    NSString *identifier = [self.eventHub on:event callback:callback];
+    NSMutableDictionary *token = [NSMutableDictionary new];
+    token[kEventNameKey] = event;
+    token[kEventIdentifierKey] = identifier;
+    [self.eventHubTokens addObject:[token copy]];
+}
+
+- (void)emit:(NSString *)event arg0:(nullable id)arg0 {
+    [self.eventHub emit:event arg0:arg0];
+}
+
+- (void)emit:(NSString *)event arg0:(nullable id)arg0 arg1:(nullable id)arg1 {
+    [self.eventHub emit:event arg0:arg0 arg1:arg1];
+}
+
+- (void)emit:(NSString *)event arg0:(nullable id)arg0 arg1:(nullable id)arg1 arg2:(nullable id)arg2 {
+    [self.eventHub emit:event arg0:arg0 arg1:arg1 arg2:arg2];
+}
+
+- (void)emit:(NSString *)event arg0:(nullable id)arg0 arg1:(nullable id)arg1 arg2:(nullable id)arg2 arg3:(nullable id)arg3 {
+    [self.eventHub emit:event arg0:arg0 arg1:arg1 arg2:arg2 arg3:arg3];
+}
+
+- (void)emit:(NSString *)event arg0:(nullable id)arg0 arg1:(nullable id)arg1 arg2:(nullable id)arg2 arg3:(nullable id)arg3 arg4:(nullable id)arg4 {
+    [self.eventHub emit:event arg0:arg0 arg1:arg1 arg2:arg2 arg3:arg3 arg4:arg4];
+}
+
+- (void)emit:(NSString *)event arg0:(nullable id)arg0 arg1:(nullable id)arg1 arg2:(nullable id)arg2 arg3:(nullable id)arg3 arg4:(nullable id)arg4 arg5:(nullable id)arg5 {
+    [self.eventHub emit:event arg0:arg0 arg1:arg1 arg2:arg2 arg3:arg3 arg4:arg4 arg5:arg5];
+}
+
+#pragma mark - Private
+- (void)offEvents {
+    [self.eventHubTokens enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, BOOL * _Nonnull stop) {
+        NSString *eventName = obj[kEventNameKey];
+        NSString *identifier = obj[kEventIdentifierKey];
+        NSCParameterAssert(eventName);
+        NSCParameterAssert(identifier);
+        [self.eventHub off:eventName identifier:identifier];
+    }];
 }
 
 @end

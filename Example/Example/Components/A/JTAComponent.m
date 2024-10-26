@@ -21,11 +21,18 @@
 }
 
 - (__kindof UIView *)headerView {
-    return [self dequeueReusableHeaderViewOfClass:[JTAComponentHeaderView class]];
+    JTAComponentHeaderView *header = [self dequeueReusableHeaderViewOfClass:[JTAComponentHeaderView class]];
+
+    __weak __typeof(self) weakSelf = self;
+    header.onClickHandler = ^{
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf emit:@"com.heikki.jumptoswiftexamplepage" arg0:nil];
+    };
+    return header;
 }
 
 - (NSInteger)numberOfItems {
-    return 50;
+    return 20;
 }
 
 - (CGSize)sizeForItemAtIndex:(NSInteger)index {
@@ -37,7 +44,7 @@
 }
 
 - (void)didSelectItemAtIndex:(NSInteger)index {
-    [self.eventHub emit:@"com.heikki.example" arg0:@(index).stringValue];
+    [self emit:@"com.heikki.example" arg0:@(index).stringValue];
 }
 
 - (CGSize)footerSize {
