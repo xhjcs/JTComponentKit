@@ -12,7 +12,14 @@ let package = Package(
     targets: [
         .target(
             name: "JTComponentKit",
-            path: "Sources/JTComponentKit"
+            dependencies: [],
+            path: "Sources/JTComponentKit",
+            sources: ["**/*.m", "**/*.h"],
+            publicHeadersPath: ".",
+            privateHeadersPath: ".",
+            cSettings: [
+                .headerSearchPath(".", .when(platforms: [.iOS]))
+            ]
         )
     ]
 )
