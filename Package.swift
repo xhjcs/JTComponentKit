@@ -10,6 +10,9 @@ let package = Package(
         .library(name: "JTComponentKit", targets: ["JTComponentKit"]),
     ],
     targets: [
-        .target(name: "JTComponentKit")
+        .target(
+            name: "JTComponentKit",
+            path: "Sources/JTComponentKit"
+        )
     ]
 )
