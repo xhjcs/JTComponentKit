@@ -46,20 +46,24 @@
     return identifier;
 }
 
-- (void)off:(NSString *)event identifier:(NSString *)identifier {
-    NSCParameterAssert(event);
+- (void)offByIdentifier:(NSString *)identifier {
     NSCParameterAssert(identifier);
 
-    if (!event || !identifier) {
+    if (!identifier) {
         return;
     }
 
-    NSMutableDictionary<NSString *, void (^)(JTEventHubArgs *args)> *callbacks = self.eventCallbacks[event];
-    callbacks[identifier] = nil;
+    NSMutableSet<NSString *> *shouldRemoveEvents = [NSMutableSet new];
+    [self.eventCallbacks enumerateKeysAndObjectsUsingBlock:^(NSString *_Nonnull event, NSMutableDictionary<NSString *, void (^)(JTEventHubArgs *)> *_Nonnull callback, BOOL *_Nonnull stop) {
+        callback[identifier] = nil;
 
-    if (callbacks.count <= 0) {
+        if (callback.count <= 0) {
+            [shouldRemoveEvents addObject:event];
+        }
+    }];
+    [shouldRemoveEvents enumerateObjectsUsingBlock:^(NSString *_Nonnull event, BOOL *_Nonnull stop) {
         self.eventCallbacks[event] = nil;
-    }
+    }];
 }
 
 - (void)emit:(NSString *)event arg0:(nullable id)arg0 {

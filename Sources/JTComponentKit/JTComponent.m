@@ -10,9 +10,6 @@
 #import "JTComponentCell.h"
 #import "JTComponentReusableView.h"
 
-static const NSString *const kEventNameKey = @"event";
-static const NSString *const kEventIdentifierKey = @"identifier";
-
 @interface JTComponent ()
 
 @property (nonatomic) NSInteger headerIndex;
@@ -21,7 +18,7 @@ static const NSString *const kEventIdentifierKey = @"identifier";
 @property (nonatomic) NSInteger footerIndex;
 @property (nonatomic) BOOL isRegistedFooter;
 
-@property (nonatomic) NSMutableSet<NSDictionary *> *eventHubTokens;
+@property (nonatomic) NSMutableSet<NSString *> *eventHubIdentifiers;
 
 @end
 
@@ -31,7 +28,7 @@ static const NSString *const kEventIdentifierKey = @"identifier";
 - (instancetype)init {
     if (self = [super init]) {
         _registedCells = [NSMutableSet new];
-        _eventHubTokens = [NSMutableSet new];
+        _eventHubIdentifiers = [NSMutableSet new];
     }
 
     return self;
@@ -188,12 +185,14 @@ static const NSString *const kEventIdentifierKey = @"identifier";
 }
 
 #pragma mark - JTCommunicationProtocol
-- (void)on:(NSString *)event callback:(void (^)(JTEventHubArgs * _Nonnull))callback {
+- (void)on:(NSString *)event callback:(void (^)(JTEventHubArgs *_Nonnull))callback {
     NSString *identifier = [self.eventHub on:event callback:callback];
-    NSMutableDictionary *token = [NSMutableDictionary new];
-    token[kEventNameKey] = event;
-    token[kEventIdentifierKey] = identifier;
-    [self.eventHubTokens addObject:[token copy]];
+
+    NSCParameterAssert(identifier);
+
+    if (identifier) {
+        [self.eventHubIdentifiers addObject:identifier];
+    }
 }
 
 - (void)emit:(NSString *)event arg0:(nullable id)arg0 {
@@ -222,13 +221,10 @@ static const NSString *const kEventIdentifierKey = @"identifier";
 
 #pragma mark - Private
 - (void)offEvents {
-    [self.eventHubTokens enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, BOOL * _Nonnull stop) {
-        NSString *eventName = obj[kEventNameKey];
-        NSString *identifier = obj[kEventIdentifierKey];
-        NSCParameterAssert(eventName);
-        NSCParameterAssert(identifier);
-        [self.eventHub off:eventName identifier:identifier];
+    [self.eventHubIdentifiers enumerateObjectsUsingBlock:^(NSString *_Nonnull identifier, BOOL *_Nonnull stop) {
+        [self.eventHub offByIdentifier:identifier];
     }];
+    [self.eventHubIdentifiers removeAllObjects];
 }
 
 @end

@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface JTEventHub : NSObject
 
 - (NSString *)on:(NSString *)event callback:(void (^)(JTEventHubArgs *args))callback;
-- (void)off:(NSString *)event identifier:(NSString *)identifier;
+- (void)offByIdentifier:(NSString *)identifier;
 
 - (void)emit:(NSString *)event arg0:(nullable id)arg0;
 - (void)emit:(NSString *)event arg0:(nullable id)arg0 arg1:(nullable id)arg1;
