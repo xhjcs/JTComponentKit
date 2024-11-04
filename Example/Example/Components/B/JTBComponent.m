@@ -48,7 +48,7 @@
 }
 
 - (CGSize)sizeForItemAtIndex:(NSInteger)index {
-    return CGSizeMake(self.size.width - 20, 44);
+    return CGSizeMake(self.collectionView.bounds.size.width - 20, 44);
 }
 
 - (__kindof UIView *)itemViewForIndex:(NSInteger)index {

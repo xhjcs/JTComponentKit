@@ -50,10 +50,6 @@
     [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:self.section]];
 }
 
-- (CGSize)size {
-    return self.collectionView.bounds.size;
-}
-
 #pragma mark - Section
 - (UIEdgeInsets)inset {
     return UIEdgeInsetsZero;

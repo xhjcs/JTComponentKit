@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface JTComponent : NSObject <JTCommunicationProtocol>
 
 #pragma mark - Public
-@property (nonatomic, readonly) CGSize size;
+@property (nonatomic, readonly) UICollectionView *collectionView;
 - (void)reloadData;
 
 #pragma mark - Life Cycle
