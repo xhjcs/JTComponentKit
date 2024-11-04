@@ -46,8 +46,47 @@
 }
 
 #pragma mark - Public
+- (CGSize)size {
+    return self.collectionView.bounds.size;
+}
+
 - (void)reloadData {
     [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:self.section]];
+}
+
+- (void)scrollToSelf:(BOOL)animated {
+    UICollectionViewLayoutAttributes *headerAttributes = [self.collectionView.collectionViewLayout layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader atIndexPath:[NSIndexPath indexPathForRow:0 inSection:self.section]];
+
+    if (!headerAttributes) {
+        NSCAssert(NO, @"headerAttributes is nil");
+        return;
+    }
+
+    CGPoint offset = headerAttributes.frame.origin;
+
+    if (self.layout.scrollDirection == UICollectionViewScrollDirectionVertical) {
+        CGFloat maxY = self.collectionView.contentSize.height - self.size.height;
+
+        if (maxY <= 0.0) {
+            return;
+        }
+
+        if (offset.y > maxY) {
+            offset.y = maxY;
+        }
+    } else {
+        CGFloat maxX = self.collectionView.contentSize.width - self.size.width;
+
+        if (maxX <= 0.0) {
+            return;
+        }
+
+        if (offset.x > maxX) {
+            offset.x = maxX;
+        }
+    }
+
+    [self.collectionView setContentOffset:offset animated:animated];
 }
 
 #pragma mark - Section

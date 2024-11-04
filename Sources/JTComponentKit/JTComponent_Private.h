@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) JTEventHub *eventHub;
 
 @property (nonatomic) NSInteger section;
+@property (nonatomic) UICollectionViewFlowLayout *layout;
 @property (nonatomic) UICollectionView *collectionView;
 
 - (__kindof UIView *)headerViewForIndex:(NSInteger)index;

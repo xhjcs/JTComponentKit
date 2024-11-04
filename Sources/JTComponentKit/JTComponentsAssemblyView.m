@@ -69,6 +69,7 @@
     self.components = [components copy];
     [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         component.section = idx;
+        component.layout = self.layout;
         component.collectionView = self.collectionView;
         component.eventHub = self.eventHub;
         [component componentDidMount];
