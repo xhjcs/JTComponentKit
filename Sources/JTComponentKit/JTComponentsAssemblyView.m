@@ -203,7 +203,18 @@
     [component didEndDisplayingItemView];
 }
 
-#pragma mark - JTCommunicationProtocol
+#pragma mark - Private
+- (void)offEvents {
+    [self.eventHubIdentifiers enumerateObjectsUsingBlock:^(NSString *_Nonnull identifier, BOOL *_Nonnull stop) {
+        [self.eventHub offByIdentifier:identifier];
+    }];
+    [self.eventHubIdentifiers removeAllObjects];
+}
+
+@end
+
+@implementation JTComponentsAssemblyView (Communication)
+
 - (void)on:(NSString *)event callback:(void (^)(JTEventHubArgs *_Nonnull))callback {
     NSString *identifier = [self.eventHub on:event callback:callback];
 
@@ -236,14 +247,6 @@
 
 - (void)emit:(NSString *)event arg0:(nullable id)arg0 arg1:(nullable id)arg1 arg2:(nullable id)arg2 arg3:(nullable id)arg3 arg4:(nullable id)arg4 arg5:(nullable id)arg5 {
     [self.eventHub emit:event arg0:arg0 arg1:arg1 arg2:arg2 arg3:arg3 arg4:arg4 arg5:arg5];
-}
-
-#pragma mark - Private
-- (void)offEvents {
-    [self.eventHubIdentifiers enumerateObjectsUsingBlock:^(NSString *_Nonnull identifier, BOOL *_Nonnull stop) {
-        [self.eventHub offByIdentifier:identifier];
-    }];
-    [self.eventHubIdentifiers removeAllObjects];
 }
 
 @end

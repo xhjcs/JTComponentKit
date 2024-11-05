@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface JTComponent : NSObject <JTCommunicationProtocol>
+@interface JTComponent : NSObject
 
 #pragma mark - Public
 @property (nonatomic, readonly) CGSize size;
@@ -49,6 +49,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)willDisplayFooterView;
 - (__kindof UIView *)footerView;
 - (void)didEndDisplayingFooterView;
+
+@end
+
+@interface JTComponent (Communication) <JTCommunicationProtocol>
 
 @end
 
