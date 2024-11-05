@@ -250,3 +250,83 @@
 }
 
 @end
+
+@interface JTComponentsAssemblyView (Scroll) <UIScrollViewDelegate>
+
+@end
+
+@implementation JTComponentsAssemblyView (Scroll)
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([component respondsToSelector:@selector(scrollViewDidScroll:)]) {
+            [component scrollViewDidScroll:scrollView];
+        }
+    }];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([component respondsToSelector:@selector(scrollViewWillBeginDragging:)]) {
+            [component scrollViewWillBeginDragging:scrollView];
+        }
+    }];
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([component respondsToSelector:@selector(scrollViewWillEndDragging:withVelocity:targetContentOffset:)]) {
+            [component scrollViewWillEndDragging:scrollView withVelocity:velocity targetContentOffset:targetContentOffset];
+        }
+    }];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([component respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:)]) {
+            [component scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+        }
+    }];
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([component respondsToSelector:@selector(scrollViewWillBeginDecelerating:)]) {
+            [component scrollViewWillBeginDecelerating:scrollView];
+        }
+    }];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([component respondsToSelector:@selector(scrollViewDidEndDecelerating:)]) {
+            [component scrollViewDidEndDecelerating:scrollView];
+        }
+    }];
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([component respondsToSelector:@selector(scrollViewDidEndScrollingAnimation:)]) {
+            [component scrollViewDidEndScrollingAnimation:scrollView];
+        }
+    }];
+}
+
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([component respondsToSelector:@selector(scrollViewDidScrollToTop:)]) {
+            [component scrollViewDidScrollToTop:scrollView];
+        }
+    }];
+}
+
+- (void)scrollViewDidChangeAdjustedContentInset:(UIScrollView *)scrollView {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([component respondsToSelector:@selector(scrollViewDidChangeAdjustedContentInset:)]) {
+            [component scrollViewDidChangeAdjustedContentInset:scrollView];
+        }
+    }];
+}
+
+@end

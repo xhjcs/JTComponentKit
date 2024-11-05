@@ -56,4 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface JTComponent (Scroll) <UIScrollViewDelegate>
+
+@end
+
 NS_ASSUME_NONNULL_END

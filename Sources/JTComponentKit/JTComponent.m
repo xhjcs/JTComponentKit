@@ -266,3 +266,7 @@
 }
 
 @end
+
+@implementation JTComponent (Scroll)
+
+@end
