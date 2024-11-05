@@ -13,7 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JTComponentsAssemblyView : UIView <JTCommunicationProtocol>
 
-@property (nonatomic, readonly) UICollectionViewFlowLayout *layout;
+@property (nonatomic) BOOL shouldEstimateItemSize;
+@property (nonatomic) UICollectionViewScrollDirection scrollDirection;
+
 @property (nonatomic, readonly) UICollectionView *collectionView;
 
 - (void)assembleComponents:(NSArray<JTComponent *> *)components;

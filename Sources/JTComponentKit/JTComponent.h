@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Public
 @property (nonatomic, readonly) CGSize size;
-@property (nonatomic, readonly) UICollectionViewFlowLayout *layout;
 @property (nonatomic, readonly) UICollectionView *collectionView;
 - (void)reloadData;
 - (void)scrollToSelf:(BOOL)animated;

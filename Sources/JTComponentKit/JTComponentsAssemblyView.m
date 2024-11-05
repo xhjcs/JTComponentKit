@@ -62,6 +62,22 @@
     ]];
 }
 
+- (void)setShouldEstimateItemSize:(BOOL)shouldEstimateItemSize {
+    self.layout.estimatedItemSize = shouldEstimateItemSize ? UICollectionViewFlowLayoutAutomaticSize : CGSizeZero;
+}
+
+- (BOOL)shouldEstimateItemSize {
+    return !CGSizeEqualToSize(self.layout.estimatedItemSize, CGSizeZero);
+}
+
+- (void)setScrollDirection:(UICollectionViewScrollDirection)scrollDirection {
+    self.layout.scrollDirection = scrollDirection;
+}
+
+- (UICollectionViewScrollDirection)scrollDirection {
+    return self.layout.scrollDirection;
+}
+
 - (void)assembleComponents:(NSArray<JTComponent *> *)components {
     [components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         [component componentWillUnmount];
