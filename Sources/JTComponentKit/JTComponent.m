@@ -270,3 +270,11 @@
 @implementation JTComponent (Scroll)
 
 @end
+
+@implementation JTComponent (Pin)
+
+- (JTComponentHeaderPinningBehavior)pinningBehaviorForHeader {
+    return JTComponentHeaderPinningBehaviorNone;
+}
+
+@end

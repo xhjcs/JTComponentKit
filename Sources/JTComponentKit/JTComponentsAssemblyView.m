@@ -10,6 +10,11 @@
 #import "JTComponentCell.h"
 #import "JTComponentReusableView.h"
 #import "JTComponentsAssemblyView.h"
+#import "JTComponentLayout.h"
+
+@interface JTComponentsAssemblyView (Pin) <JTComponentLayoutDelegate>
+
+@end
 
 @interface JTComponentsAssemblyView ()
 <
@@ -45,7 +50,9 @@
 }
 
 - (void)setupViews {
-    self.layout = [UICollectionViewFlowLayout new];
+    JTComponentLayout *layout = [JTComponentLayout new];
+    layout.delegate = self;
+    self.layout = layout;
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:self.layout];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -327,6 +334,15 @@
             [component scrollViewDidChangeAdjustedContentInset:scrollView];
         }
     }];
+}
+
+@end
+
+@implementation JTComponentsAssemblyView (Pin)
+
+- (JTComponentHeaderPinningBehavior)collectionView:(UICollectionView *)collectionView pinningBehaviorForHeaderInSection:(NSInteger)section {
+    JTComponent *component = self.components[section];
+    return [component pinningBehaviorForHeader];
 }
 
 @end

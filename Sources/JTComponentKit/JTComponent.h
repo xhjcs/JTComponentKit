@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JTCommunicationProtocol.h"
+#import "JTComponentDefines.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -57,6 +58,12 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface JTComponent (Scroll) <UIScrollViewDelegate>
+
+@end
+
+@interface JTComponent (Pin)
+
+- (JTComponentHeaderPinningBehavior)pinningBehaviorForHeader;
 
 @end
 
