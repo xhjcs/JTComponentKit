@@ -21,7 +21,7 @@
 }
 
 - (CGSize)headerSize {
-    return CGSizeMake(100, 100);
+    return self.headerTitle ? CGSizeMake(100, 100) : CGSizeZero;
 }
 
 - (__kindof UIView *)headerView {

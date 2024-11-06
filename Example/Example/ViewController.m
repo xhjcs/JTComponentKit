@@ -46,6 +46,7 @@
     JTAComponent *a4 = [JTAComponent new];
     a4.pinningBehavior = JTComponentHeaderPinningBehaviorPinUntilNextPinHeader;
     a4.headerTitle = @"a4 直到下一个吸顶的header前一直吸顶";
+    JTAComponent *a5 = [JTAComponent new];
     
     JTBComponent *b1 = [JTBComponent new];
     b1.pinningBehavior = JTComponentHeaderPinningBehaviorPinUntilNextPinHeader;
@@ -59,15 +60,16 @@
     JTBComponent *b4 = [JTBComponent new];
     b4.pinningBehavior = JTComponentHeaderPinningBehaviorPin;
     b4.headerTitle = @"b4 吸顶";
+    JTBComponent *b5 = [JTBComponent new];
     
-    [componentAssemblyView assembleComponents:@[a1, b1, a2, b2, a3, b3, a4, b4]];
+    [componentAssemblyView assembleComponents:@[a1, b1, b5, a2, b2, a5, a3, b3, a4, b4]];
     __weak __typeof(self) weakSelf = self;
     [componentAssemblyView on:@"com.heikki.jumptoswiftexamplepage" callback:^(JTEventHubArgs * _Nonnull args) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         JTViewController *vc = [JTViewController new];
         [strongSelf.navigationController pushViewController:vc animated:YES];
     }];
-    componentAssemblyView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+//    componentAssemblyView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
 //    componentAssemblyView.componentHeadersPinToVisibleBounds = YES;
 }
 

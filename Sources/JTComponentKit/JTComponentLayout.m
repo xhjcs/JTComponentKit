@@ -127,11 +127,7 @@
         }
     }
 
-    if (!firstAttr) {
-        return nil;
-    }
-
-    NSInteger firstSection = firstAttr.indexPath.section;
+    NSInteger firstSection = firstAttr ? firstAttr.indexPath.section : self.collectionView.numberOfSections - 1;
 
     if (firstSection <= 0) {
         return nil;
