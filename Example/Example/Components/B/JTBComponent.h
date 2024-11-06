@@ -11,6 +11,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JTBComponent : JTComponent
 
+@property (nonatomic) JTComponentHeaderPinningBehavior pinningBehavior;
+@property (nonatomic, copy) NSString *headerTitle;
+
 @end
 
 NS_ASSUME_NONNULL_END

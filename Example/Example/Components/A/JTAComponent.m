@@ -12,6 +12,10 @@
 
 @implementation JTAComponent
 
+- (JTComponentHeaderPinningBehavior)pinningBehaviorForHeader {
+    return self.pinningBehavior;
+}
+
 - (UIEdgeInsets)inset {
     return UIEdgeInsetsMake(20, 20, 20, 20);
 }
@@ -21,13 +25,17 @@
 }
 
 - (__kindof UIView *)headerView {
-    JTAComponentHeaderView *header = [self dequeueReusableHeaderViewOfClass:[JTAComponentHeaderView class]];
-
-    __weak __typeof(self) weakSelf = self;
-    header.onClickHandler = ^{
-        __strong __typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf emit:@"com.heikki.jumptoswiftexamplepage" arg0:nil];
-    };
+    UILabel *header = [self dequeueReusableHeaderViewOfClass:[UILabel class]];
+//    __weak __typeof(self) weakSelf = self;
+//    header.onClickHandler = ^{
+//        __strong __typeof(weakSelf) strongSelf = weakSelf;
+//        [strongSelf emit:@"com.heikki.jumptoswiftexamplepage" arg0:nil];
+//    };
+    header.textColor = [UIColor blackColor];
+    header.text = self.headerTitle;
+    header.textAlignment = NSTextAlignmentCenter;
+    header.numberOfLines = 0;
+    header.backgroundColor = [UIColor yellowColor];
     return header;
 }
 

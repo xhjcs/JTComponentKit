@@ -33,14 +33,41 @@
         make.left.equalTo(self.view.mas_safeAreaLayoutGuideLeft);
         make.right.equalTo(self.view.mas_safeAreaLayoutGuideRight);
     }];
-    [componentAssemblyView assembleComponents:@[[JTAComponent new], [JTBComponent new]]];
+    
+    JTAComponent *a1 = [JTAComponent new];
+    a1.pinningBehavior = JTComponentHeaderPinningBehaviorPin;
+    a1.headerTitle = @"a1 吸顶";
+    JTAComponent *a2 = [JTAComponent new];
+    a2.pinningBehavior = JTComponentHeaderPinningBehaviorNone;
+    a2.headerTitle = @"a2 不吸顶";
+    JTAComponent *a3 = [JTAComponent new];
+    a3.pinningBehavior = JTComponentHeaderPinningBehaviorAlwaysPin;
+    a3.headerTitle = @"a3 一直吸顶";
+    JTAComponent *a4 = [JTAComponent new];
+    a4.pinningBehavior = JTComponentHeaderPinningBehaviorPinUntilNextPinHeader;
+    a4.headerTitle = @"a4 直到下一个吸顶的header前一直吸顶";
+    
+    JTBComponent *b1 = [JTBComponent new];
+    b1.pinningBehavior = JTComponentHeaderPinningBehaviorPinUntilNextPinHeader;
+    b1.headerTitle = @"b1 直到下一个吸顶的header前一直吸顶";
+    JTBComponent *b2 = [JTBComponent new];
+    b2.pinningBehavior = JTComponentHeaderPinningBehaviorAlwaysPin;
+    b2.headerTitle = @"b2 一直吸顶";
+    JTBComponent *b3 = [JTBComponent new];
+    b3.pinningBehavior = JTComponentHeaderPinningBehaviorNone;
+    b3.headerTitle = @"b3 不吸顶";
+    JTBComponent *b4 = [JTBComponent new];
+    b4.pinningBehavior = JTComponentHeaderPinningBehaviorPin;
+    b4.headerTitle = @"b4 吸顶";
+    
+    [componentAssemblyView assembleComponents:@[a1, b1, a2, b2, a3, b3, a4, b4]];
     __weak __typeof(self) weakSelf = self;
     [componentAssemblyView on:@"com.heikki.jumptoswiftexamplepage" callback:^(JTEventHubArgs * _Nonnull args) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         JTViewController *vc = [JTViewController new];
         [strongSelf.navigationController pushViewController:vc animated:YES];
     }];
-//    componentAssemblyView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    componentAssemblyView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
 //    componentAssemblyView.componentHeadersPinToVisibleBounds = YES;
 }
 

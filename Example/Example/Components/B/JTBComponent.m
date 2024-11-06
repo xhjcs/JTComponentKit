@@ -18,6 +18,10 @@
 
 @implementation JTBComponent
 
+- (JTComponentHeaderPinningBehavior)pinningBehaviorForHeader {
+    return self.pinningBehavior;
+}
+
 - (void)componentDidMount {
     __weak __typeof(self) weakSelf = self;
     [self on:@"com.heikki.example"
@@ -33,12 +37,15 @@
 }
 
 - (CGSize)headerSize {
-    return CGSizeMake(5, 5);
+    return CGSizeMake(30, 30);
 }
 
 - (__kindof UIView *)headerView {
-    JTBComponentHeaderView *header = [self dequeueReusableHeaderViewOfClass:[JTBComponentHeaderView class]];
-
+    UILabel *header = [self dequeueReusableHeaderViewOfClass:[UILabel class]];
+    header.textColor = [UIColor blackColor];
+    header.text = self.headerTitle;
+    header.textAlignment = NSTextAlignmentCenter;
+    header.numberOfLines = 0;
     header.backgroundColor = [UIColor cyanColor];
     return header;
 }
