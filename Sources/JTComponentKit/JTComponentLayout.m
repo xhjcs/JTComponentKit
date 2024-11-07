@@ -14,30 +14,69 @@
 }
 
 - (NSArray<__kindof UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
-    NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *attributes = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
-
-    NSArray<__kindof UICollectionViewLayoutAttributes *> *attachAttributes = [self additionalPinnedAttributesForHeaders:attributes];
-
-    if (attachAttributes.count > 0) {
-        [attributes insertObjects:attachAttributes atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, attachAttributes.count)]];
-    }
-
+    NSInteger sectionsCount = self.collectionView.numberOfSections;
     CGPoint offset = self.collectionView.contentOffset;
     BOOL isVertical = (self.scrollDirection == UICollectionViewScrollDirectionVertical);
+    // 存储所有需要吸顶的header
+    NSMutableArray *pinnedAttributes = [NSMutableArray new];
+    // 指向需要吸顶的非一直吸顶header，它同时只存在一个
+    UICollectionViewLayoutAttributes *lastPinnedHeaderAttribute = nil;
 
-    for (UICollectionViewLayoutAttributes *attr in attributes) {
-        if (attr.representedElementKind != UICollectionElementKindSectionHeader) {
-            continue;
-        }
-
-        NSInteger section = attr.indexPath.section;
+    for (NSInteger section = 0; section < sectionsCount; section++) {
         JTComponentHeaderPinningBehavior pinningBehavior = [self.delegate collectionView:self.collectionView pinningBehaviorForHeaderInSection:section];
 
         if (pinningBehavior == JTComponentHeaderPinningBehaviorNone) {
             continue;
         }
 
-        CGPoint adjustedPosition = attr.frame.origin;
+        UICollectionViewLayoutAttributes *headerAttr = [self layoutAttributesForHeaderAtSection:section];
+
+        if (!headerAttr) {
+            continue;
+        }
+
+        // 使zIndex从高到低分布，否则后面的header会盖住前面的header
+        headerAttr.zIndex = INT_MAX - section;
+        CGRect frame = headerAttr.frame;
+        CGFloat dimension = isVertical ? frame.size.height : frame.size.width;
+
+        if (isVertical) {
+            if (frame.origin.y > offset.y) {
+                // 判断最后一个非一直吸顶header是否会被下一个吸顶header挤走
+                if (lastPinnedHeaderAttribute) {
+                    CGRect lastPinHeaderFrame = lastPinnedHeaderAttribute.frame;
+                    CGFloat maxY = frame.origin.y - lastPinHeaderFrame.size.height;
+
+                    if (lastPinHeaderFrame.origin.y > maxY) {
+                        lastPinHeaderFrame.origin.y = maxY;
+                    }
+
+                    lastPinnedHeaderAttribute.frame = lastPinHeaderFrame;
+                }
+
+                // 后面的header都还没到该吸顶的位置，不用再处理了
+                break;
+            }
+        } else {
+            if (frame.origin.x > offset.x) {
+                // 判断最后一个非一直吸顶header是否会被下一个吸顶header挤走
+                if (lastPinnedHeaderAttribute) {
+                    CGRect lastPinHeaderFrame = lastPinnedHeaderAttribute.frame;
+                    CGFloat maxX = frame.origin.x - lastPinHeaderFrame.size.width;
+
+                    if (lastPinHeaderFrame.origin.x > maxX) {
+                        lastPinHeaderFrame.origin.x = maxX;
+                    }
+
+                    lastPinnedHeaderAttribute.frame = lastPinHeaderFrame;
+                }
+
+                // 后面的header都还没到该吸顶的位置，不用再处理了
+                break;
+            }
+        }
+
+        CGPoint adjustedPosition = frame.origin;
 
         if (adjustedPosition.x < offset.x) {
             adjustedPosition.x = offset.x;
@@ -47,117 +86,48 @@
             adjustedPosition.y = offset.y;
         }
 
-        CGRect updatedFrame = attr.frame;
-        CGFloat dimension = isVertical ? updatedFrame.size.height : updatedFrame.size.width;
-        switch (pinningBehavior) {
-            case JTComponentHeaderPinningBehaviorPin: {
-                UICollectionViewLayoutAttributes *nextSectionHeaderAttr = [self layoutAttributesForHeaderAtSection:section + 1];
-
-                // 避让下一个header
-                [self adjustPosition:&adjustedPosition nextPinnedHeaderAttr:nextSectionHeaderAttr isVertical:isVertical dimension:dimension];
-
-                break;
-            }
-
-            case JTComponentHeaderPinningBehaviorPinUntilNextPinHeader: {
-                NSInteger nextSection = section + 1;
-                NSInteger sectionCount = self.collectionView.numberOfSections;
-
-                // 找到下一个需要吸顶的header
-                while (nextSection < sectionCount && [self.delegate collectionView:self.collectionView pinningBehaviorForHeaderInSection:nextSection] == JTComponentHeaderPinningBehaviorNone) {
-                    nextSection++;
-                }
-
-                UICollectionViewLayoutAttributes *nextSectionHeaderAttr = [self layoutAttributesForHeaderAtSection:nextSection];
-
-                // 避让下一个header
-                [self adjustPosition:&adjustedPosition nextPinnedHeaderAttr:nextSectionHeaderAttr isVertical:isVertical dimension:dimension];
-                break;
-            }
-
-            case JTComponentHeaderPinningBehaviorAlwaysPin:{
-                // 由于它是一直吸顶的，所以其它吸顶header需要往下或往右偏移一些
-                if (isVertical) {
-                    offset.y += dimension;
-                } else {
-                    offset.x += dimension;
-                }
-
-                break;
-            }
-
-            default:
-                break;
-        }
-        updatedFrame.origin = adjustedPosition;
-        attr.frame = updatedFrame;
-        attr.zIndex = INT_MAX - section;
-    }
-
-    return attributes;
-}
-
-- (void)adjustPosition:(inout CGPoint *)position nextPinnedHeaderAttr:(UICollectionViewLayoutAttributes *)nextAttr isVertical:(BOOL)isVertical dimension:(CGFloat)dimension {
-    if (!nextAttr) {
-        return;
-    }
-
-    if (isVertical) {
-        CGFloat maxY = CGRectGetMinY(nextAttr.frame) - dimension;
-
-        if ((*position).y > maxY) {
-            (*position).y = maxY;
-        }
-    } else {
-        CGFloat maxX = CGRectGetMinX(nextAttr.frame) - dimension;
-
-        if ((*position).x > maxX) {
-            (*position).x = maxX;
-        }
-    }
-}
-
-- (nullable NSArray<__kindof UICollectionViewLayoutAttributes *> *)additionalPinnedAttributesForHeaders:(NSArray<__kindof UICollectionViewLayoutAttributes *> *)attributes {
-    UICollectionViewLayoutAttributes *firstAttr = nil;
-
-    for (UICollectionViewLayoutAttributes *attr in attributes) {
-        if (attr.representedElementKind == UICollectionElementKindSectionHeader) {
-            firstAttr = attr;
-            break;
-        }
-    }
-
-    NSInteger firstSection = firstAttr ? firstAttr.indexPath.section : self.collectionView.numberOfSections - 1;
-
-    if (firstSection <= 0) {
-        return nil;
-    }
-
-    NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *attachAttributes = [NSMutableArray new];
-    UICollectionViewLayoutAttributes *lastPinnedHeaderAttr = nil;
-
-    // 找到这个section前面需要一直吸顶的header和最后一个需要保持下个分区前吸顶的header
-    for (NSInteger i = 0; i < firstSection; i++) {
-        JTComponentHeaderPinningBehavior pinningBehavior = [self.delegate collectionView:self.collectionView pinningBehaviorForHeaderInSection:i];
+        frame.origin = adjustedPosition;
+        headerAttr.frame = frame;
 
         if (pinningBehavior == JTComponentHeaderPinningBehaviorAlwaysPin) {
-            UICollectionViewLayoutAttributes *attr = [self layoutAttributesForHeaderAtSection:i];
+            // 由于它是一直吸顶的，肯定需要加上
+            [pinnedAttributes addObject:headerAttr];
 
-            if (attr) {
-                [attachAttributes addObject:attr];
-                // 遇到一直展示的header，则在它之前的这种header一定不需要展示了
-                lastPinnedHeaderAttr = nil;
+            // 一直吸顶header，这里增加offset
+            if (isVertical) {
+                offset.y += dimension;
+            } else {
+                offset.x += dimension;
             }
-        } else if (pinningBehavior == JTComponentHeaderPinningBehaviorPinUntilNextPinHeader) {
-            lastPinnedHeaderAttr = [self layoutAttributesForHeaderAtSection:i];
+
+            // 当有一个一直吸顶的header时，它之前的非一直吸顶header一定不需要展示了
+            lastPinnedHeaderAttribute = nil;
+        } else if (pinningBehavior == JTComponentHeaderPinningBehaviorPin) {
+            lastPinnedHeaderAttribute = headerAttr;
         }
     }
 
-    if (lastPinnedHeaderAttr) {
-        [attachAttributes addObject:lastPinnedHeaderAttr];
+    if (lastPinnedHeaderAttribute) {
+        [pinnedAttributes addObject:lastPinnedHeaderAttribute];
     }
 
-    return attachAttributes;
+    NSArray<__kindof UICollectionViewLayoutAttributes *> *attributes = [super layoutAttributesForElementsInRect:rect];
+
+    if (pinnedAttributes.count <= 0) {
+        return attributes;
+    }
+
+    NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *visiableAttributes = pinnedAttributes;
+    NSMutableSet<__kindof UICollectionViewLayoutAttributes *> *seenElements = [NSMutableSet setWithArray:pinnedAttributes];
+
+    for (UICollectionViewLayoutAttributes *attr in attributes) {
+        if (![seenElements containsObject:attr]) {
+            [visiableAttributes addObject:attr];
+            [seenElements addObject:attr];
+        }
+    }
+
+    return visiableAttributes;
 }
 
 - (nullable UICollectionViewLayoutAttributes *)layoutAttributesForHeaderAtSection:(NSInteger)section {

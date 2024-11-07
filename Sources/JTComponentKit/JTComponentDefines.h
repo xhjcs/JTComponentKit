@@ -10,8 +10,7 @@
 
 typedef NS_ENUM(NSInteger, JTComponentHeaderPinningBehavior) {
     JTComponentHeaderPinningBehaviorNone = 0,   // 不吸顶
-    JTComponentHeaderPinningBehaviorPin,        // 吸顶
-    JTComponentHeaderPinningBehaviorPinUntilNextPinHeader, // 吸顶直到下一个吸顶 header
+    JTComponentHeaderPinningBehaviorPin,        // 吸顶直到下一个吸顶 header
     JTComponentHeaderPinningBehaviorAlwaysPin,  // 一直吸顶
 };
 

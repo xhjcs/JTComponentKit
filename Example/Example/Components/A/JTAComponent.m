@@ -12,6 +12,10 @@
 
 @implementation JTAComponent
 
+- (NSString *)description {
+    return self.headerTitle;
+}
+
 - (JTComponentHeaderPinningBehavior)pinningBehaviorForHeader {
     return self.pinningBehavior;
 }
@@ -32,7 +36,7 @@
 //        [strongSelf emit:@"com.heikki.jumptoswiftexamplepage" arg0:nil];
 //    };
     header.textColor = [UIColor blackColor];
-    header.text = self.headerTitle;
+    header.text = [NSString stringWithFormat:@"section: %@ - %@", [self valueForKey:@"section"], self.headerTitle];
     header.textAlignment = NSTextAlignmentCenter;
     header.numberOfLines = 0;
     header.backgroundColor = [UIColor yellowColor];
@@ -56,7 +60,7 @@
 }
 
 - (CGSize)footerSize {
-    return CGSizeMake(100, 100);
+    return CGSizeMake(80, 80);
 }
 
 - (__kindof UIView *)footerView {

@@ -36,6 +36,10 @@
     return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
+- (NSString *)description {
+    return self.headerTitle;
+}
+
 - (CGSize)headerSize {
     return self.headerTitle ? CGSizeMake(30, 30) : CGSizeZero;
 }
@@ -43,7 +47,7 @@
 - (__kindof UIView *)headerView {
     UILabel *header = [self dequeueReusableHeaderViewOfClass:[UILabel class]];
     header.textColor = [UIColor blackColor];
-    header.text = self.headerTitle;
+    header.text = [NSString stringWithFormat:@"section: %@ - %@", [self valueForKey:@"section"], self.headerTitle];;
     header.textAlignment = NSTextAlignmentCenter;
     header.numberOfLines = 0;
     header.backgroundColor = [UIColor cyanColor];
