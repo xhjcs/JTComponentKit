@@ -79,7 +79,7 @@ class AComponent: JTComponent {
     
     override func itemView(for index: Int) -> UIView {
         let item = dequeueReusableItemView(of: UIView.self, for: index)
-        item.backgroundColor = .red
+        item.backgroundColor = .black
         return item
     }
 }
