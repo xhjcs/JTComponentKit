@@ -13,6 +13,7 @@
 		D20D3EEE2CC363AE00A67D78 /* JTAComponentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D20D3EED2CC363AE00A67D78 /* JTAComponentHeaderView.m */; };
 		D20D3EF12CC3704000A67D78 /* JTAComponentItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = D20D3EF02CC3704000A67D78 /* JTAComponentItemView.m */; };
 		D20D3EF42CC3706E00A67D78 /* JTAComponentFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = D20D3EF32CC3706E00A67D78 /* JTAComponentFooterView.m */; };
+		D227BBD62CDD056A007D62D5 /* JTCComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D227BBD52CDD056A007D62D5 /* JTCComponent.swift */; };
 		D25AEABD2CBD111E00A0BBDA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D25AEABC2CBD111E00A0BBDA /* AppDelegate.m */; };
 		D25AEAC32CBD111E00A0BBDA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D25AEAC22CBD111E00A0BBDA /* ViewController.m */; };
 		D25AEAC62CBD111E00A0BBDA /* Base in Resources */ = {isa = PBXBuildFile; fileRef = D25AEAC52CBD111E00A0BBDA /* Base */; };
@@ -62,6 +63,7 @@
 		D20D3EF02CC3704000A67D78 /* JTAComponentItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTAComponentItemView.m; sourceTree = "<group>"; };
 		D20D3EF22CC3706E00A67D78 /* JTAComponentFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTAComponentFooterView.h; sourceTree = "<group>"; };
 		D20D3EF32CC3706E00A67D78 /* JTAComponentFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTAComponentFooterView.m; sourceTree = "<group>"; };
+		D227BBD52CDD056A007D62D5 /* JTCComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JTCComponent.swift; sourceTree = "<group>"; };
 		D25AEAB82CBD111E00A0BBDA /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D25AEABB2CBD111E00A0BBDA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D25AEABC2CBD111E00A0BBDA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -143,6 +145,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D227BBD42CDD054F007D62D5 /* C */ = {
+			isa = PBXGroup;
+			children = (
+				D227BBD52CDD056A007D62D5 /* JTCComponent.swift */,
+			);
+			path = C;
+			sourceTree = "<group>";
+		};
 		D25AEAAF2CBD111E00A0BBDA = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +214,7 @@
 		D27696532CBEA63A00B425B5 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				D227BBD42CDD054F007D62D5 /* C */,
 				D285AADE2CC66F22006687BF /* A */,
 				D285AADF2CC66FB8006687BF /* B */,
 			);
@@ -508,6 +519,7 @@
 				D25AEABD2CBD111E00A0BBDA /* AppDelegate.m in Sources */,
 				D25AEACE2CBD111F00A0BBDA /* main.m in Sources */,
 				D20D3EF42CC3706E00A67D78 /* JTAComponentFooterView.m in Sources */,
+				D227BBD62CDD056A007D62D5 /* JTCComponent.swift in Sources */,
 				D285AAE82CC67002006687BF /* JTBComponentItemView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

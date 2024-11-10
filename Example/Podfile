@@ -8,6 +8,7 @@ target 'Example' do
   # Pods for Example
   pod 'JTComponentKit', :path => '../'
   pod 'Masonry'
+  pod 'SnapKit'
 
   target 'ExampleTests' do
     inherit! :search_paths

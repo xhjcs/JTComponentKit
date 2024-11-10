@@ -81,4 +81,10 @@
     return footer;
 }
 
+- (__kindof UIView *)backgroundView {
+    UIView *backgroundView = [self dequeueReusableBackgroundViewOfClass:[UIView class]];
+    backgroundView.backgroundColor = [UIColor orangeColor];
+    return backgroundView;
+}
+
 @end

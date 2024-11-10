@@ -8,9 +8,9 @@
 #import "JTComponent.h"
 #import "JTComponent_Private.h"
 #import "JTComponentCell.h"
+#import "JTComponentLayout.h"
 #import "JTComponentReusableView.h"
 #import "JTComponentsAssemblyView.h"
-#import "JTComponentLayout.h"
 
 @interface JTComponentsAssemblyView (Pin) <JTComponentLayoutDelegate>
 
@@ -23,7 +23,7 @@
     UICollectionViewDelegateFlowLayout
 >
 
-@property (nonatomic) UICollectionViewFlowLayout *layout;
+@property (nonatomic) JTComponentLayout *layout;
 @property (nonatomic) UICollectionView *collectionView;
 
 @property (nonatomic) JTEventHub *eventHub;
@@ -51,6 +51,7 @@
 
 - (void)setupViews {
     JTComponentLayout *layout = [JTComponentLayout new];
+
     layout.delegate = self;
     self.layout = layout;
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:self.layout];
@@ -86,6 +87,10 @@
 }
 
 - (void)assembleComponents:(NSArray<JTComponent *> *)components {
+#if DEBUG
+    NSSet<JTComponent *> *uniqueElements = [NSSet setWithArray:components];
+    NSCAssert(uniqueElements.count == components.count, @"不要传入相同的两个Component对象");
+#endif
     [components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         [component componentWillUnmount];
     }];
@@ -103,9 +108,8 @@
 - (JTComponentCell *)findCellFromRenderView:(UIView *)renderView {
     UIView *currentView = renderView.superview;
 
-    while (![currentView isMemberOfClass:[JTComponentCell class]]) {
+    while (![currentView isMemberOfClass:[JTComponentCell class]])
         currentView = currentView.superview;
-    }
     return (JTComponentCell *)currentView;
 }
 
@@ -150,15 +154,24 @@
 
     if (elementKind == UICollectionElementKindSectionHeader) {
         [component willDisplayHeaderView];
-    } else {
+    } else if (elementKind == UICollectionElementKindSectionFooter) {
         [component willDisplayFooterView];
     }
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
-    UIView *renderView = kind == UICollectionElementKindSectionHeader ? [component headerViewForIndex:indexPath.item] : [component footerViewForIndex:indexPath.item];
+    UIView *renderView = nil;
 
+    if (kind == UICollectionElementKindSectionHeader) {
+        renderView = [component headerViewForIndex:indexPath.item];
+    } else if (kind == UICollectionElementKindSectionFooter) {
+        renderView = [component footerViewForIndex:indexPath.item];
+    } else if (kind == JTComponentElementKindSectionBackground) {
+        renderView = [component backgroundViewForIndex:indexPath.item];
+    }
+
+    NSCParameterAssert(renderView);
     return (JTComponentReusableView *)renderView.superview;
 }
 
@@ -167,7 +180,7 @@
 
     if (elementKind == UICollectionElementKindSectionHeader) {
         [component didEndDisplayingHeaderView];
-    } else {
+    } else if (elementKind == UICollectionElementKindSectionFooter) {
         [component didEndDisplayingFooterView];
     }
 }
@@ -265,7 +278,7 @@
 @implementation JTComponentsAssemblyView (Scroll)
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         if ([component respondsToSelector:@selector(scrollViewDidScroll:)]) {
             [component scrollViewDidScroll:scrollView];
         }
@@ -273,7 +286,7 @@
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         if ([component respondsToSelector:@selector(scrollViewWillBeginDragging:)]) {
             [component scrollViewWillBeginDragging:scrollView];
         }
@@ -281,23 +294,26 @@
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         if ([component respondsToSelector:@selector(scrollViewWillEndDragging:withVelocity:targetContentOffset:)]) {
-            [component scrollViewWillEndDragging:scrollView withVelocity:velocity targetContentOffset:targetContentOffset];
+            [component scrollViewWillEndDragging:scrollView
+                                    withVelocity:velocity
+                             targetContentOffset:targetContentOffset];
         }
     }];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         if ([component respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:)]) {
-            [component scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+            [component scrollViewDidEndDragging:scrollView
+                                 willDecelerate:decelerate];
         }
     }];
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         if ([component respondsToSelector:@selector(scrollViewWillBeginDecelerating:)]) {
             [component scrollViewWillBeginDecelerating:scrollView];
         }
@@ -305,7 +321,7 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         if ([component respondsToSelector:@selector(scrollViewDidEndDecelerating:)]) {
             [component scrollViewDidEndDecelerating:scrollView];
         }
@@ -313,7 +329,7 @@
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         if ([component respondsToSelector:@selector(scrollViewDidEndScrollingAnimation:)]) {
             [component scrollViewDidEndScrollingAnimation:scrollView];
         }
@@ -321,7 +337,7 @@
 }
 
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         if ([component respondsToSelector:@selector(scrollViewDidScrollToTop:)]) {
             [component scrollViewDidScrollToTop:scrollView];
         }
@@ -329,7 +345,7 @@
 }
 
 - (void)scrollViewDidChangeAdjustedContentInset:(UIScrollView *)scrollView {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         if ([component respondsToSelector:@selector(scrollViewDidChangeAdjustedContentInset:)]) {
             [component scrollViewDidChangeAdjustedContentInset:scrollView];
         }
@@ -342,7 +358,20 @@
 
 - (JTComponentHeaderPinningBehavior)collectionView:(UICollectionView *)collectionView pinningBehaviorForHeaderInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
+
     return [component pinningBehaviorForHeader];
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView insetForBackgroundViewInSection:(NSInteger)section {
+    JTComponent *component = self.components[section];
+
+    return [component insetForBackgroundView];
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView zIndexForBackgroundViewInSection:(NSInteger)section {
+    JTComponent *component = self.components[section];
+
+    return [component zIndexForBackgroundView];
 }
 
 @end

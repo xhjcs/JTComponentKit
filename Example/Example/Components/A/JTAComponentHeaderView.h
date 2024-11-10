@@ -11,6 +11,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JTAComponentHeaderView : UIView
 
+
+@property (nonatomic) UILabel *titleLabel;
+
 @property (nonatomic, copy) dispatch_block_t onClickHandler;
 
 @end

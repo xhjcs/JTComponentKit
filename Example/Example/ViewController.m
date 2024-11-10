@@ -62,7 +62,7 @@
     b4.headerTitle = @"b4 吸顶";
     JTBComponent *b5 = [JTBComponent new];
 
-    NSArray *components = @[a2, a3, b2, a1, b1, b5, a2, a5, b3, a4, b4];
+    NSArray *components = @[a2, a3, [JTCComponent new], b2, a1, b1, b5, a5, b3, a4, b4, [ExampleComponent1 new]];
     components = [self shuffleArray:components];
     [componentAssemblyView assembleComponents:components];
     __weak __typeof(self) weakSelf = self;
@@ -74,7 +74,6 @@
                                                    animated:YES];
     }];
 //    componentAssemblyView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-//    componentAssemblyView.componentHeadersPinToVisibleBounds = YES;
 }
 
 - (NSArray *)shuffleArray:(NSArray *)array {

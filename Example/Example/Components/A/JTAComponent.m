@@ -29,17 +29,13 @@
 }
 
 - (__kindof UIView *)headerView {
-    UILabel *header = [self dequeueReusableHeaderViewOfClass:[UILabel class]];
-//    __weak __typeof(self) weakSelf = self;
-//    header.onClickHandler = ^{
-//        __strong __typeof(weakSelf) strongSelf = weakSelf;
-//        [strongSelf emit:@"com.heikki.jumptoswiftexamplepage" arg0:nil];
-//    };
-    header.textColor = [UIColor blackColor];
-    header.text = [NSString stringWithFormat:@"section: %@ - %@", [self valueForKey:@"section"], self.headerTitle];
-    header.textAlignment = NSTextAlignmentCenter;
-    header.numberOfLines = 0;
-    header.backgroundColor = [UIColor yellowColor];
+    JTAComponentHeaderView *header = [self dequeueReusableHeaderViewOfClass:[JTAComponentHeaderView class]];
+    __weak __typeof(self) weakSelf = self;
+    header.onClickHandler = ^{
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf emit:@"com.heikki.jumptoswiftexamplepage" arg0:nil];
+    };
+    header.titleLabel.text = [NSString stringWithFormat:@"section: %@ - %@", [self valueForKey:@"section"], self.headerTitle];
     return header;
 }
 
@@ -65,6 +61,16 @@
 
 - (__kindof UIView *)footerView {
     return [self dequeueReusableFooterViewOfClass:[JTAComponentFooterView class]];
+}
+
+- (UIEdgeInsets)insetForBackgroundView {
+    return UIEdgeInsetsMake(-50, 5, -50, 5);
+}
+
+- (__kindof UIView *)backgroundView {
+    UIView *backgroundView = [self dequeueReusableBackgroundViewOfClass:[UIView class]];
+    backgroundView.backgroundColor = [UIColor magentaColor];
+    return backgroundView;
 }
 
 @end

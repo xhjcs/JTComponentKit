@@ -14,9 +14,14 @@
 
 @property (nonatomic) NSInteger headerIndex;
 @property (nonatomic) BOOL isRegistedHeader;
+
 @property (nonatomic) NSMutableSet<Class> *registedCells;
+
 @property (nonatomic) NSInteger footerIndex;
 @property (nonatomic) BOOL isRegistedFooter;
+
+@property (nonatomic) NSInteger backgroundViewIndex;
+@property (nonatomic) BOOL isRegistedBackgroundView;
 
 @property (nonatomic) NSMutableSet<NSString *> *eventHubIdentifiers;
 
@@ -55,36 +60,7 @@
 }
 
 - (void)scrollToSelf:(BOOL)animated {
-    UICollectionViewLayoutAttributes *headerAttributes = [self.collectionView.collectionViewLayout layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader atIndexPath:[NSIndexPath indexPathForRow:0 inSection:self.section]];
-
-    if (!headerAttributes) {
-        NSCAssert(NO, @"headerAttributes is nil");
-        return;
-    }
-
-    CGPoint offset = headerAttributes.frame.origin;
-
-    if (self.layout.scrollDirection == UICollectionViewScrollDirectionVertical) {
-        CGFloat maxY = self.collectionView.contentSize.height - self.size.height;
-
-        if (maxY <= 0.0) {
-            return;
-        }
-
-        if (offset.y > maxY) {
-            offset.y = maxY;
-        }
-    } else {
-        CGFloat maxX = self.collectionView.contentSize.width - self.size.width;
-
-        if (maxX <= 0.0) {
-            return;
-        }
-
-        if (offset.x > maxX) {
-            offset.x = maxX;
-        }
-    }
+    CGPoint offset = [self.layout offsetForSection:self.section];
 
     [self.collectionView setContentOffset:offset animated:animated];
 }
@@ -217,6 +193,41 @@
 }
 
 - (void)didEndDisplayingFooterView {
+}
+
+#pragma mark - Background
+- (UIEdgeInsets)insetForBackgroundView {
+    return UIEdgeInsetsZero;
+}
+
+- (NSInteger)zIndexForBackgroundView {
+    return -1;
+}
+
+- (__kindof UIView *)dequeueReusableBackgroundViewOfClass:(Class)viewClass {
+    NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
+
+    if (!self.isRegistedBackgroundView) {
+        [self.collectionView registerClass:[JTComponentReusableView class] forSupplementaryViewOfKind:JTComponentElementKindSectionBackground withReuseIdentifier:NSStringFromClass(viewClass)];
+        self.isRegistedBackgroundView = YES;
+    }
+
+    JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:JTComponentElementKindSectionBackground withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:self.backgroundViewIndex inSection:self.section]];
+
+    if (!reusableView.renderView) {
+        reusableView.renderView = [viewClass new];
+    }
+
+    return reusableView.renderView;
+}
+
+- (__kindof UIView *)backgroundViewForIndex:(NSInteger)index {
+    self.backgroundViewIndex = index;
+    return [self backgroundView];
+}
+
+- (__kindof UIView *)backgroundView {
+    return [self dequeueReusableBackgroundViewOfClass:[UIView class]];
 }
 
 #pragma mark - Private

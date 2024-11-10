@@ -6,6 +6,7 @@
 //
 
 #import "JTComponent.h"
+#import "JTComponentLayout.h"
 #import "JTEventHub.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -15,11 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) JTEventHub *eventHub;
 
 @property (nonatomic) NSInteger section;
-@property (nonatomic) UICollectionViewFlowLayout *layout;
+@property (nonatomic) JTComponentLayout *layout;
 @property (nonatomic) UICollectionView *collectionView;
 
 - (__kindof UIView *)headerViewForIndex:(NSInteger)index;
 - (__kindof UIView *)footerViewForIndex:(NSInteger)index;
+- (__kindof UIView *)backgroundViewForIndex:(NSInteger)index;
 
 @end
 

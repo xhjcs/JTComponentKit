@@ -14,11 +14,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (JTComponentHeaderPinningBehavior)collectionView:(UICollectionView *)collectionView pinningBehaviorForHeaderInSection:(NSInteger)section;
 
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView insetForBackgroundViewInSection:(NSInteger)section;
+- (NSInteger)collectionView:(UICollectionView *)collectionView zIndexForBackgroundViewInSection:(NSInteger)section;
+
 @end
 
 @interface JTComponentLayout : UICollectionViewFlowLayout
 
 @property (nonatomic, weak) id<JTComponentLayoutDelegate> delegate;
+
+- (CGPoint)offsetForSection:(NSInteger)section;
 
 @end
 

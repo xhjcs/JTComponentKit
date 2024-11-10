@@ -51,6 +51,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (__kindof UIView *)footerView;
 - (void)didEndDisplayingFooterView;
 
+#pragma mark - Background
+- (UIEdgeInsets)insetForBackgroundView;
+- (NSInteger)zIndexForBackgroundView;
+- (__kindof UIView *)dequeueReusableBackgroundViewOfClass:(Class)viewClass;
+- (__kindof UIView *)backgroundView;
+
 @end
 
 @interface JTComponent (Communication) <JTCommunicationProtocol>
