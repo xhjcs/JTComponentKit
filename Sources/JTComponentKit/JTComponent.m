@@ -207,12 +207,15 @@
 - (__kindof UIView *)dequeueReusableBackgroundViewOfClass:(Class)viewClass {
     NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
 
+    // 由于大部分情况BackgroundView都是同一个class类，这里防止不同Component之间互相复用
+    NSString *reuseIdentifier = [NSString stringWithFormat:@"%@-%@", NSStringFromClass([self class]), NSStringFromClass(viewClass)];
+
     if (!self.isRegistedBackgroundView) {
-        [self.collectionView registerClass:[JTComponentReusableView class] forSupplementaryViewOfKind:JTComponentElementKindSectionBackground withReuseIdentifier:NSStringFromClass(viewClass)];
+        [self.collectionView registerClass:[JTComponentReusableView class] forSupplementaryViewOfKind:JTComponentElementKindSectionBackground withReuseIdentifier:reuseIdentifier];
         self.isRegistedBackgroundView = YES;
     }
 
-    JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:JTComponentElementKindSectionBackground withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:self.backgroundViewIndex inSection:self.section]];
+    JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:JTComponentElementKindSectionBackground withReuseIdentifier:reuseIdentifier forIndexPath:[NSIndexPath indexPathForItem:self.backgroundViewIndex inSection:self.section]];
 
     if (!reusableView.renderView) {
         reusableView.renderView = [viewClass new];
