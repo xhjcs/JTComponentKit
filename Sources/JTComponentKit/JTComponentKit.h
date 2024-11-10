@@ -9,4 +9,5 @@
 #import <JTComponentKit/JTComponent.h>
 #import <JTComponentKit/JTComponentDefines.h>
 #import <JTComponentKit/JTComponentsAssemblyView.h>
+#import <JTComponentKit/JTSpacingComponent.h>
 #import <UIKit/UIKit.h>
