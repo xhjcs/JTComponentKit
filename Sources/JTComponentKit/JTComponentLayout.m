@@ -265,23 +265,6 @@
 
     NSIndexPath *firstIndexPath = [NSIndexPath indexPathForRow:0 inSection:section];
     UICollectionViewLayoutAttributes *firstAttr = [self.collectionView.collectionViewLayout layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader atIndexPath:firstIndexPath];
-    // 因section内边距，需要偏移的量
-    CGPoint dimension = CGPointZero;
-    BOOL isVertical = (self.scrollDirection == UICollectionViewScrollDirectionVertical);
-
-    if (!firstAttr && [self.collectionView numberOfItemsInSection:section] > 0) {
-        UIEdgeInsets inset = [self insetForSection:section];
-        firstAttr = [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:firstIndexPath];
-        dimension.x = inset.left;
-        dimension.y = inset.top;
-    }
-
-    if (!firstAttr) {
-        UIEdgeInsets inset = [self insetForSection:section];
-        firstAttr = [self.collectionView.collectionViewLayout layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionFooter atIndexPath:firstIndexPath];
-        dimension.x = inset.left + inset.right;
-        dimension.y = inset.top + inset.bottom;
-    }
 
     if (!firstAttr) {
         NSCParameterAssert(firstAttr);
@@ -290,11 +273,9 @@
 
     CGPoint origin = firstAttr.frame.origin;
 
-    if (isVertical) {
+    if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
         origin.x = 0;
-        origin.y -= dimension.y;
     } else {
-        origin.x -= dimension.x;
         origin.y = 0;
     }
 
