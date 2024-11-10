@@ -68,6 +68,13 @@
          [self.collectionView.topAnchor constraintEqualToAnchor:self.topAnchor],
          [self.collectionView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor]
     ]];
+    
+    self.backgroundColor = [UIColor whiteColor];
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    [super setBackgroundColor:backgroundColor];
+    self.collectionView.backgroundColor = backgroundColor;
 }
 
 - (void)setShouldEstimateItemSize:(BOOL)shouldEstimateItemSize {
