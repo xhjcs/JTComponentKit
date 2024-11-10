@@ -136,6 +136,17 @@ class ExampleComponent2: JTComponent {
         item.backgroundColor = .green
         return item
     }
+    
+    override func insetForBackgroundView() -> UIEdgeInsets {
+        return .init(top: 36, left: 10, bottom: 36, right: 10)
+    }
+    
+    override func backgroundView() -> UIView {
+        let backgroundView = dequeueReusableBackgroundView(of: UIView.self)
+        backgroundView.backgroundColor = .lightGray
+        backgroundView.layer.cornerRadius = 8
+        return backgroundView
+    }
 }
 
 class ExampleComponent3: JTComponent {
