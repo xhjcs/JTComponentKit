@@ -56,7 +56,9 @@
 }
 
 - (void)reloadData {
-    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:self.section]];
+    [UIView performWithoutAnimation:^{
+        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:self.section]];
+    }];
 }
 
 - (void)scrollToSelf:(BOOL)animated {
