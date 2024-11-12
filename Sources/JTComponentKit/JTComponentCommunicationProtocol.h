@@ -1,5 +1,5 @@
 //
-//  JTCommunicationProtocol.h
+//  JTComponentCommunicationProtocol.h
 //  Pods
 //
 //  Created by xinghanjie on 2024/10/26.
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol JTCommunicationProtocol <NSObject>
+@protocol JTComponentCommunicationProtocol <NSObject>
 
 - (void)on:(NSString *)event callback:(void (^)(JTEventHubArgs *args))callback;
 

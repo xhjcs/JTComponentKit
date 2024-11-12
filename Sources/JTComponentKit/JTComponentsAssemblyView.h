@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JTCommunicationProtocol.h"
+#import "JTComponentCommunicationProtocol.h"
 #import "JTComponent.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface JTComponentsAssemblyView (Communication) <JTCommunicationProtocol>
+@interface JTComponentsAssemblyView (Communication) <JTComponentCommunicationProtocol>
 
 @end
 
