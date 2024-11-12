@@ -72,7 +72,7 @@
 }
 
 - (UIEdgeInsets)insetForBackgroundView {
-    return UIEdgeInsetsMake(-50, 5, -50, 5);
+    return UIEdgeInsetsMake(115, 5, 115, 5);
 }
 
 - (__kindof UIView *)backgroundView {
