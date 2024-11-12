@@ -10,6 +10,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 UIKIT_EXTERN NSString *const JTComponentElementKindSectionBackground;
+UIKIT_EXTERN NSString *const JTComponentElementKindSectionHeader;
+UIKIT_EXTERN NSString *const JTComponentFakeHeaderReuseIdentifier;
 
 typedef NS_ENUM(NSInteger, JTComponentHeaderPinningBehavior) {
     JTComponentHeaderPinningBehaviorNone = 0,   // 不吸顶

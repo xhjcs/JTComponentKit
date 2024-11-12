@@ -55,12 +55,14 @@
     layout.delegate = self;
     self.layout = layout;
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:self.layout];
+    self.collectionView.backgroundColor = [UIColor clearColor];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     self.collectionView.showsVerticalScrollIndicator = NO;
     self.collectionView.showsHorizontalScrollIndicator = NO;
     self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     self.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.collectionView registerClass:[JTComponentReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:JTComponentFakeHeaderReuseIdentifier];
     [self addSubview:self.collectionView];
     [NSLayoutConstraint activateConstraints:@[
          [self.collectionView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
@@ -68,13 +70,6 @@
          [self.collectionView.topAnchor constraintEqualToAnchor:self.topAnchor],
          [self.collectionView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor]
     ]];
-    
-    self.backgroundColor = [UIColor whiteColor];
-}
-
-- (void)setBackgroundColor:(UIColor *)backgroundColor {
-    [super setBackgroundColor:backgroundColor];
-    self.collectionView.backgroundColor = backgroundColor;
 }
 
 - (void)setShouldEstimateItemSize:(BOOL)shouldEstimateItemSize {
@@ -157,25 +152,32 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
-    JTComponent *component = self.components[indexPath.section];
-
-    if (elementKind == UICollectionElementKindSectionHeader) {
+    if (elementKind == JTComponentElementKindSectionHeader) {
+        JTComponent *component = self.components[indexPath.section];
         [component willDisplayHeaderView];
     } else if (elementKind == UICollectionElementKindSectionFooter) {
+        JTComponent *component = self.components[indexPath.section];
         [component willDisplayFooterView];
     }
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    if (kind == UICollectionElementKindSectionHeader) {
+        return [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:JTComponentFakeHeaderReuseIdentifier forIndexPath:indexPath];
+    }
+
     JTComponent *component = self.components[indexPath.section];
     UIView *renderView = nil;
 
-    if (kind == UICollectionElementKindSectionHeader) {
+    if (kind == JTComponentElementKindSectionHeader) {
         renderView = [component headerViewForIndex:indexPath.item];
     } else if (kind == UICollectionElementKindSectionFooter) {
         renderView = [component footerViewForIndex:indexPath.item];
     } else if (kind == JTComponentElementKindSectionBackground) {
         renderView = [component backgroundViewForIndex:indexPath.item];
+    } else {
+        NSString *desc = [NSString stringWithFormat:@"有未处理的补充视图类型：%@", kind];
+        NSCAssert(NO, desc);
     }
 
     NSCParameterAssert(renderView);
@@ -183,11 +185,11 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingSupplementaryView:(UICollectionReusableView *)view forElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
-    JTComponent *component = self.components[indexPath.section];
-
-    if (elementKind == UICollectionElementKindSectionHeader) {
+    if (elementKind == JTComponentElementKindSectionHeader) {
+        JTComponent *component = self.components[indexPath.section];
         [component didEndDisplayingHeaderView];
     } else if (elementKind == UICollectionElementKindSectionFooter) {
+        JTComponent *component = self.components[indexPath.section];
         [component didEndDisplayingFooterView];
     }
 }
@@ -247,9 +249,7 @@
 
     NSCParameterAssert(identifier);
 
-    if (identifier) {
-        [self.eventHubIdentifiers addObject:identifier];
-    }
+    if (identifier) [self.eventHubIdentifiers addObject:identifier];
 }
 
 - (void)emit:(NSString *)event arg0:(nullable id)arg0 {

@@ -87,15 +87,13 @@
     NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
 
     if (!self.isRegistedHeader) {
-        [self.collectionView registerClass:[JTComponentReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass(viewClass)];
+        [self.collectionView registerClass:[JTComponentReusableView class] forSupplementaryViewOfKind:JTComponentElementKindSectionHeader withReuseIdentifier:NSStringFromClass(viewClass)];
         self.isRegistedHeader = YES;
     }
 
-    JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:self.headerIndex inSection:self.section]];
+    JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:JTComponentElementKindSectionHeader withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:self.headerIndex inSection:self.section]];
 
-    if (!reusableView.renderView) {
-        reusableView.renderView = [viewClass new];
-    }
+    if (!reusableView.renderView) reusableView.renderView = [viewClass new];
 
     return reusableView.renderView;
 }
@@ -131,16 +129,12 @@
     if (![self.registedCells containsObject:viewClass]) {
         [self.collectionView registerClass:[JTComponentCell class] forCellWithReuseIdentifier:NSStringFromClass(viewClass)];
 
-        if (viewClass) {
-            [self.registedCells addObject:viewClass];
-        }
+        if (viewClass) [self.registedCells addObject:viewClass];
     }
 
     JTComponentCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:index inSection:self.section]];
 
-    if (!cell.renderView) {
-        cell.renderView = [viewClass new];
-    }
+    if (!cell.renderView) cell.renderView = [viewClass new];
 
     return cell.renderView;
 }
@@ -173,9 +167,7 @@
 
     JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:self.footerIndex inSection:self.section]];
 
-    if (!reusableView.renderView) {
-        reusableView.renderView = [viewClass new];
-    }
+    if (!reusableView.renderView) reusableView.renderView = [viewClass new];
 
     return reusableView.renderView;
 }
@@ -217,9 +209,7 @@
 
     JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:JTComponentElementKindSectionBackground withReuseIdentifier:reuseIdentifier forIndexPath:[NSIndexPath indexPathForItem:self.backgroundViewIndex inSection:self.section]];
 
-    if (!reusableView.renderView) {
-        reusableView.renderView = [viewClass new];
-    }
+    if (!reusableView.renderView) reusableView.renderView = [viewClass new];
 
     return reusableView.renderView;
 }
@@ -250,9 +240,7 @@
 
     NSCParameterAssert(identifier);
 
-    if (identifier) {
-        [self.eventHubIdentifiers addObject:identifier];
-    }
+    if (identifier) [self.eventHubIdentifiers addObject:identifier];
 }
 
 - (void)emit:(NSString *)event arg0:(nullable id)arg0 {

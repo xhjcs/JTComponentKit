@@ -8,3 +8,5 @@
 #import "JTComponentDefines.h"
 
 NSString *const JTComponentElementKindSectionBackground = @"JTComponentElementKindSectionBackground";
+NSString *const JTComponentElementKindSectionHeader = @"JTComponentElementKindSectionHeader";
+NSString *const JTComponentFakeHeaderReuseIdentifier = @"JTComponentFakeHeaderReuseIdentifier";
