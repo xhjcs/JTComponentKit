@@ -10,7 +10,13 @@
 #import "JTAComponentHeaderView.h"
 #import "JTAComponentItemView.h"
 
-@implementation JTAComponent
+@implementation JTAComponent {
+    NSInteger _itemsCount;
+}
+
+- (void)componentDidMount {
+    _itemsCount = 20;
+}
 
 - (NSString *)description {
     return self.headerTitle;
@@ -40,7 +46,7 @@
 }
 
 - (NSInteger)numberOfItems {
-    return 20;
+    return _itemsCount;
 }
 
 - (CGSize)sizeForItemAtIndex:(NSInteger)index {
@@ -53,6 +59,8 @@
 
 - (void)didSelectItemAtIndex:(NSInteger)index {
     [self emit:@"com.heikki.example" arg0:@(index).stringValue];
+    _itemsCount += 20;
+    [self reloadData];
 }
 
 - (CGSize)footerSize {
