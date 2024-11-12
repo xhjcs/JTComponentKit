@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "JTComponentCommunicationProtocol.h"
 #import "JTComponentDefines.h"
+#import "JTComponentPageLifeCycleProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -60,6 +61,10 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface JTComponent (Communication) <JTComponentCommunicationProtocol>
+
+@end
+
+@interface JTComponent (PageLifeCycle) <JTComponentPageLifeCycleProtocol>
 
 @end
 

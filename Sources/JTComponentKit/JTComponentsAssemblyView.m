@@ -361,6 +361,34 @@
 
 @end
 
+@implementation JTComponentsAssemblyView (PageLifeCycle)
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
+        [component viewWillAppear:animated];
+    }];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
+        [component viewDidAppear:animated];
+    }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
+        [component viewWillDisappear:animated];
+    }];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
+        [component viewDidDisappear:animated];
+    }];
+}
+
+@end
+
 @implementation JTComponentsAssemblyView (Pin)
 
 - (JTComponentHeaderPinningBehavior)collectionView:(UICollectionView *)collectionView pinningBehaviorForHeaderInSection:(NSInteger)section {
