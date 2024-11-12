@@ -11,6 +11,28 @@ import JTComponentKit
 import SnapKit
 
 class AComponent: JTComponent {
+    
+    
+    override func pageWillAppear(_ animated: Bool) {
+        super.pageWillAppear(animated)
+        print("pageWillAppear")
+    }
+    
+    override func pageDidAppear(_ animated: Bool) {
+        super.pageDidAppear(animated)
+        print("pageDidAppear")
+    }
+    
+    override func pageWillDisappear(_ animated: Bool) {
+        super.pageWillDisappear(animated)
+        print("pageWillDisappear")
+    }
+    
+    override func pageDidDisappear(_ animated: Bool) {
+        super.pageDidDisappear(animated)
+        print("pageDidDisappear")
+    }
+    
     override func inset() -> UIEdgeInsets {
         return .init(top: 10, left: 10, bottom: 10, right: 10)
     }
@@ -204,16 +226,38 @@ class ExampleComponent3: JTComponent {
 }
 
 @objc class JTViewController: UIViewController {
+    
+    let componentsAssemblyView = JTComponentsAssemblyView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.title = "Swift Example"
-        let componentsAssemblyView = JTComponentsAssemblyView()
         view.addSubview(componentsAssemblyView)
         componentsAssemblyView.snp.makeConstraints { make in
             make.edges.equalTo(self.view.safeAreaLayoutGuide.snp.edges)
         }
         componentsAssemblyView.assembleComponents([JTSpacingComponent(spacing: 100), AComponent(), JTCComponent(), ExampleComponent1(), JTSpacingComponent(spacing: 25), ExampleComponent2(), JTSpacingComponent(spacing: 50), ExampleComponent3(), JTBComponent()])
 //        componentsAssemblyView.scrollDirection = .horizontal
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        componentsAssemblyView.pageWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        componentsAssemblyView.pageDidAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        componentsAssemblyView.pageWillDisappear(animated)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        componentsAssemblyView.pageDidDisappear(animated)
     }
 }

@@ -363,27 +363,27 @@
 
 @implementation JTComponentsAssemblyView (PageLifeCycle)
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)pageWillAppear:(BOOL)animated {
     [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
-        [component viewWillAppear:animated];
+        [component pageWillAppear:animated];
     }];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)pageDidAppear:(BOOL)animated {
     [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
-        [component viewDidAppear:animated];
+        [component pageDidAppear:animated];
     }];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)pageWillDisappear:(BOOL)animated {
     [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
-        [component viewWillDisappear:animated];
+        [component pageWillDisappear:animated];
     }];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
+- (void)pageDidDisappear:(BOOL)animated {
     [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
-        [component viewDidDisappear:animated];
+        [component pageDidDisappear:animated];
     }];
 }
 

@@ -273,19 +273,19 @@
 
 @implementation JTComponent (PageLifeCycle)
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)pageWillAppear:(BOOL)animated {
     
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)pageDidAppear:(BOOL)animated {
     
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)pageWillDisappear:(BOOL)animated {
     
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
+- (void)pageDidDisappear:(BOOL)animated {
     
 }
 

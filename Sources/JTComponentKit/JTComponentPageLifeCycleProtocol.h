@@ -9,10 +9,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol JTComponentPageLifeCycleProtocol <NSObject>
 
-- (void)viewWillAppear:(BOOL)animated;
-- (void)viewDidAppear:(BOOL)animated;
-- (void)viewWillDisappear:(BOOL)animated;
-- (void)viewDidDisappear:(BOOL)animated;
+- (void)pageWillAppear:(BOOL)animated;
+- (void)pageDidAppear:(BOOL)animated;
+- (void)pageWillDisappear:(BOOL)animated;
+- (void)pageDidDisappear:(BOOL)animated;
 
 @end
 
