@@ -142,7 +142,7 @@
             newLastPinnedHeaderAttribute = headerAttr;
         }
 
-        // 当有一个一直吸顶的header时，它之前的非一直吸顶header一定不需要展示了,把它的frame设置到屏幕外，然后指控指针不再处理
+        // 当有一个一直吸顶的header时，它之前的非一直吸顶header一定不需要展示了,把它的frame设置到屏幕外，然后置空指针不再处理
         if (lastPinnedHeaderAttribute) {
             CGRect lastPinnedHeaderFrame = lastPinnedHeaderAttribute.frame;
 
@@ -153,7 +153,6 @@
             }
 
             lastPinnedHeaderAttribute.frame = lastPinnedHeaderFrame;
-            lastPinnedHeaderAttribute = nil;
         }
 
         lastPinnedHeaderAttribute = newLastPinnedHeaderAttribute;
