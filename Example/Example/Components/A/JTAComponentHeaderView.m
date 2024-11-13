@@ -34,6 +34,10 @@
     return self;
 }
 
+- (void)prepareForReuse {
+    
+}
+
 - (void)onTap:(UITapGestureRecognizer *)sender {
     if (self.onClickHandler) {
         self.onClickHandler();
