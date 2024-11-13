@@ -70,6 +70,8 @@
 - (void)prepareHeadersLayout {
     const NSInteger sectionsCount = _fakeHeadersLayoutAttributes.count;
     NSCAssert(_headersLayoutAttributes.count == sectionsCount, @"两者必须相等");
+    if (_headersLayoutAttributes.count != sectionsCount) return;
+    
     const CGSize collectionViewSize = self.collectionView.bounds.size;
     CGPoint offset = self.collectionView.contentOffset;
     // 当前可见区域右下角的点
@@ -165,6 +167,7 @@
     if (_backgroundViewsLayoutAttributes.count >= sectionsCount) return;
     
     NSCAssert(_backgroundViewsLayoutAttributes.count == 0, @"代码走到这里_backgroundViewsLayoutAttributes必然被清空");
+    if (_backgroundViewsLayoutAttributes.count != 0) return;
     
     const CGSize collectionViewSize = self.collectionView.bounds.size;
     const BOOL isVertical = (self.scrollDirection == UICollectionViewScrollDirectionVertical);
