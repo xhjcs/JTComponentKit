@@ -179,7 +179,7 @@
         CGPoint origin = CGPointZero;
 
         if (section >= sectionsCount) {
-            origin = isVertical ? CGPointMake(0, self.collectionView.contentSize.height) : CGPointMake(self.collectionView.contentSize.width, 0);
+            origin = isVertical ? CGPointMake(0, self.collectionViewContentSize.height) : CGPointMake(self.collectionViewContentSize.width, 0);
         } else {
             origin = [self originForSection:section];
             attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:JTComponentElementKindSectionBackground withIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
@@ -243,12 +243,12 @@
 
     if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
         offset.y -= pinnedHeadersSize.height;
-        CGFloat maxY = self.collectionView.contentSize.height - self.collectionView.bounds.size.height;
+        CGFloat maxY = self.collectionViewContentSize.height - self.collectionView.bounds.size.height;
         if (maxY <= 0.0) return self.collectionView.contentOffset;
         if (offset.y > maxY) offset.y = maxY;
     } else {
         offset.x -= pinnedHeadersSize.width;
-        CGFloat maxX = self.collectionView.contentSize.width - self.collectionView.bounds.size.width;
+        CGFloat maxX = self.collectionViewContentSize.width - self.collectionView.bounds.size.width;
         if (maxX <= 0.0) return self.collectionView.contentOffset;
         if (offset.x > maxX) offset.x = maxX;
     }
