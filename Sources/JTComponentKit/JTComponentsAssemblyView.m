@@ -72,14 +72,6 @@
     ]];
 }
 
-- (void)setShouldEstimateItemSize:(BOOL)shouldEstimateItemSize {
-    self.layout.estimatedItemSize = shouldEstimateItemSize ? UICollectionViewFlowLayoutAutomaticSize : CGSizeZero;
-}
-
-- (BOOL)shouldEstimateItemSize {
-    return !CGSizeEqualToSize(self.layout.estimatedItemSize, CGSizeZero);
-}
-
 - (void)setScrollDirection:(UICollectionViewScrollDirection)scrollDirection {
     self.layout.scrollDirection = scrollDirection;
 }
