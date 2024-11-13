@@ -32,7 +32,7 @@
     }];
 }
 
-- (UIEdgeInsets)inset {
+- (UIEdgeInsets)insets {
     return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 

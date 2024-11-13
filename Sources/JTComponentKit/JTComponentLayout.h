@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (JTComponentHeaderPinningBehavior)collectionView:(UICollectionView *)collectionView pinningBehaviorForHeaderInSection:(NSInteger)section;
 
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView insetForBackgroundViewInSection:(NSInteger)section;
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView insetsForBackgroundViewInSection:(NSInteger)section;
 - (NSInteger)collectionView:(UICollectionView *)collectionView zIndexForBackgroundViewInSection:(NSInteger)section;
 
 @end

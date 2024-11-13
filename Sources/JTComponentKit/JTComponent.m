@@ -68,7 +68,7 @@
 }
 
 #pragma mark - Section
-- (UIEdgeInsets)inset {
+- (UIEdgeInsets)insets {
     return UIEdgeInsetsZero;
 }
 
@@ -190,7 +190,7 @@
 }
 
 #pragma mark - Background
-- (UIEdgeInsets)insetForBackgroundView {
+- (UIEdgeInsets)insetsForBackgroundView {
     return UIEdgeInsetsZero;
 }
 

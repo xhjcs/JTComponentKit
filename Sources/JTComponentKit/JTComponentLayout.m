@@ -131,7 +131,7 @@
     // 当前可见区域右下角的点
     const CGPoint maxPoint = CGPointMake(offset.x + collectionViewSize.width, offset.y + collectionViewSize.height);
     const BOOL isVertical = (self.scrollDirection == UICollectionViewScrollDirectionVertical);
-    UIEdgeInsets lastInset = UIEdgeInsetsZero;
+    UIEdgeInsets lastInsets = UIEdgeInsetsZero;
     UICollectionViewLayoutAttributes *lastAttr = nil;
     
     for (NSInteger section = 0; section <= sectionsCount; section++) {
@@ -157,7 +157,7 @@
                 lastFrame.size = CGSizeMake(origin.x - lastFrame.origin.x, collectionViewSize.height);
             }
 
-            lastAttr.frame = UIEdgeInsetsInsetRect(lastFrame, lastInset);
+            lastAttr.frame = UIEdgeInsetsInsetRect(lastFrame, lastInsets);
             [self.visibleBackgroundViewsAttributes addObject:lastAttr];
         }
 
@@ -170,7 +170,7 @@
 
         if (attr) {
             lastAttr = attr;
-            lastInset = [self.delegate collectionView:self.collectionView insetForBackgroundViewInSection:section];
+            lastInsets = [self.delegate collectionView:self.collectionView insetsForBackgroundViewInSection:section];
         }
     }
 }
@@ -256,7 +256,7 @@
     return origin;
 }
 
-- (UIEdgeInsets)insetForSection:(NSInteger)section {
+- (UIEdgeInsets)insetsForSection:(NSInteger)section {
     id<UICollectionViewDelegateFlowLayout> delegate = (id<UICollectionViewDelegateFlowLayout>)self.collectionView.delegate;
 
     if (![delegate respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) return UIEdgeInsetsZero;

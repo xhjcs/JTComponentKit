@@ -26,7 +26,7 @@
     return self.pinningBehavior;
 }
 
-- (UIEdgeInsets)inset {
+- (UIEdgeInsets)insets {
     return UIEdgeInsetsMake(20, 20, 20, 20);
 }
 
@@ -71,7 +71,7 @@
     return [self dequeueReusableFooterViewOfClass:[JTAComponentFooterView class]];
 }
 
-- (UIEdgeInsets)insetForBackgroundView {
+- (UIEdgeInsets)insetsForBackgroundView {
     return UIEdgeInsetsMake(115, 5, 115, 5);
 }
 

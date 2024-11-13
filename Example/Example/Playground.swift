@@ -33,7 +33,7 @@ class AComponent: JTComponent {
         print("pageDidDisappear")
     }
     
-    override func inset() -> UIEdgeInsets {
+    override func insets() -> UIEdgeInsets {
         return .init(top: 10, left: 10, bottom: 10, right: 10)
     }
     
@@ -67,7 +67,7 @@ class AComponent: JTComponent {
         return .none
     }
     
-    override func inset() -> UIEdgeInsets {
+    override func insets() -> UIEdgeInsets {
         return .init(top: 15, left: 15, bottom: 15, right: 15)
     }
     
@@ -121,7 +121,7 @@ class ExampleComponent2: JTComponent {
         return .alwaysPin
     }
     
-    override func inset() -> UIEdgeInsets {
+    override func insets() -> UIEdgeInsets {
         return .init(top: 20, left: 20, bottom: 20, right: 20)
     }
     
@@ -150,7 +150,7 @@ class ExampleComponent2: JTComponent {
     }
     
     override func sizeForItem(at index: Int) -> CGSize {
-        return .init(width: size.width - inset().left - inset().right, height: 60)
+        return .init(width: size.width - insets().left - insets().right, height: 60)
     }
     
     override func itemView(for index: Int) -> UIView {
@@ -159,7 +159,7 @@ class ExampleComponent2: JTComponent {
         return item
     }
     
-    override func insetForBackgroundView() -> UIEdgeInsets {
+    override func insetsForBackgroundView() -> UIEdgeInsets {
         return .init(top: 36, left: 10, bottom: 36, right: 10)
     }
     
@@ -182,7 +182,7 @@ class ExampleComponent3: JTComponent {
         }
     }
     
-    override func inset() -> UIEdgeInsets {
+    override func insets() -> UIEdgeInsets {
         return .init(top: 25, left: 25, bottom: 25, right: 25)
     }
     
@@ -215,7 +215,7 @@ class ExampleComponent3: JTComponent {
     }
     
     override func sizeForItem(at index: Int) -> CGSize {
-        return .init(width: (size.width - inset().left - inset().right) / 2 - 10, height: 60)
+        return .init(width: (size.width - insets().left - insets().right) / 2 - 10, height: 60)
     }
     
     override func itemView(for index: Int) -> UIView {

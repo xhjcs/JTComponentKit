@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)componentWillUnmount;
 
 #pragma mark - Section
-- (UIEdgeInsets)inset;
+- (UIEdgeInsets)insets;
 - (CGFloat)minimumLineSpacing;
 - (CGFloat)minimumInteritemSpacing;
 
@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)didEndDisplayingFooterView;
 
 #pragma mark - Background
-- (UIEdgeInsets)insetForBackgroundView;
+- (UIEdgeInsets)insetsForBackgroundView;
 - (NSInteger)zIndexForBackgroundView;
 - (__kindof UIView *)dequeueReusableBackgroundViewOfClass:(Class)viewClass;
 - (__kindof UIView *)backgroundView;

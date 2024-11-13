@@ -123,7 +123,7 @@
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     JTComponent *component = self.components[section];
 
-    return [component inset];
+    return [component insets];
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
@@ -397,10 +397,10 @@
     return [component pinningBehaviorForHeader];
 }
 
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView insetForBackgroundViewInSection:(NSInteger)section {
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView insetsForBackgroundViewInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
 
-    return [component insetForBackgroundView];
+    return [component insetsForBackgroundView];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView zIndexForBackgroundViewInSection:(NSInteger)section {

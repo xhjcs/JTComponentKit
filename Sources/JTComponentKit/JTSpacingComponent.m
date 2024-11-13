@@ -27,7 +27,7 @@
     return self;
 }
 
-- (UIEdgeInsets)inset {
+- (UIEdgeInsets)insets {
     return UIEdgeInsetsMake(self.spacing, self.spacing, 0.0, 0.0);
 }
 
