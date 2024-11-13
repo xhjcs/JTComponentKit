@@ -171,6 +171,12 @@ class ExampleComponent2: JTComponent {
     }
 }
 
+class ExampleView3: UIView {
+    @objc func prepareForReuse() {
+        
+    }
+}
+
 class ExampleComponent3: JTComponent {
     override func componentDidMount() {
         super.componentDidMount()
@@ -219,7 +225,7 @@ class ExampleComponent3: JTComponent {
     }
     
     override func itemView(for index: Int) -> UIView {
-        let item = dequeueReusableItemView(of: UIView.self, for: index)
+        let item = dequeueReusableItemView(of: ExampleView3.self, for: index)
         item.backgroundColor = .blue
         return item
     }
