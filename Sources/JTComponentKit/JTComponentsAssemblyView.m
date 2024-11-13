@@ -50,10 +50,8 @@
 }
 
 - (void)setupViews {
-    JTComponentLayout *layout = [JTComponentLayout new];
-
-    layout.delegate = self;
-    self.layout = layout;
+    self.layout = [JTComponentLayout new];
+    self.layout.delegate = self;
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:self.layout];
     self.collectionView.backgroundColor = [UIColor clearColor];
     self.collectionView.delegate = self;
