@@ -8,13 +8,13 @@
 #import "JTComponentLayout.h"
 
 @implementation JTComponentLayout {
-    /// 存储所有假header得布局信息，提高查询效率
+    /// 存储所有假header的布局信息，提高查询效率
     NSMutableArray <__kindof UICollectionViewLayoutAttributes *> *_fakeHeadersLayoutAttributes;
     
     /// 记录当前需要显示header的游标，游标之后的header，不需要展示
     NSInteger _visibleHeadersCursor;
     
-    /// 存储header得布局信息
+    /// 存储header的布局信息
     NSMutableArray <__kindof UICollectionViewLayoutAttributes *> *_headersLayoutAttributes;
     
     /// 存储背景视图的布局信息
