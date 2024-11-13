@@ -256,12 +256,4 @@
     return origin;
 }
 
-- (UIEdgeInsets)insetsForSection:(NSInteger)section {
-    id<UICollectionViewDelegateFlowLayout> delegate = (id<UICollectionViewDelegateFlowLayout>)self.collectionView.delegate;
-
-    if (![delegate respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) return UIEdgeInsetsZero;
-
-    return [delegate collectionView:self.collectionView layout:self insetForSectionAtIndex:section];
-}
-
 @end
