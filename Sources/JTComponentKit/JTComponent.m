@@ -195,7 +195,7 @@
 }
 
 - (NSInteger)zIndexForBackgroundView {
-    return -1;
+    return NSIntegerMin;
 }
 
 - (__kindof UIView *)dequeueReusableBackgroundViewOfClass:(Class)viewClass {
