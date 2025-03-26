@@ -25,38 +25,39 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)componentWillUnmount;
 
 #pragma mark - Section
-- (UIEdgeInsets)insets;
-- (CGFloat)minimumLineSpacing;
-- (CGFloat)minimumInteritemSpacing;
+- (NSInteger)numberOfSections;
+- (UIEdgeInsets)insetForSection:(NSInteger)section;
+- (CGFloat)minimumLineSpacingInSection:(NSInteger)section;
+- (CGFloat)minimumInteritemSpacingInSection:(NSInteger)section;
 
 #pragma mark - Header
-- (CGSize)headerSize;
-- (__kindof UIView *)dequeueReusableHeaderViewOfClass:(Class)viewClass;
-- (void)willDisplayHeaderView;
-- (__kindof UIView *)headerView;
-- (void)didEndDisplayingHeaderView;
+- (CGSize)sizeForHeaderInSection:(NSInteger)section;
+- (__kindof UIView *)dequeueReusableHeaderViewWithClass:(Class)viewClass forSection:(NSInteger)section;
+- (void)willDisplayHeaderView:(__kindof UIView *)view forSection:(NSInteger)section;
+- (__kindof UIView *)headerViewForSection:(NSInteger)section;
+- (void)didEndDisplayingHeaderView:(__kindof UIView *)view forSection:(NSInteger)section;
 
 #pragma mark - Item
-- (NSInteger)numberOfItems;
-- (CGSize)sizeForItemAtIndex:(NSInteger)index;
-- (__kindof UIView *)dequeueReusableItemViewOfClass:(Class)viewClass forIndex:(NSInteger)index;
-- (void)willDisplayItemView;
-- (__kindof UIView *)itemViewForIndex:(NSInteger)index;
-- (void)didSelectItemAtIndex:(NSInteger)index;
-- (void)didEndDisplayingItemView;
+- (NSInteger)numberOfItemsInSection:(NSInteger)section;
+- (CGSize)sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
+- (__kindof UIView *)dequeueReusableItemViewWithClass:(Class)viewClass forIndexPath:(NSIndexPath *)indexPath;
+- (void)willDisplayItemView:(__kindof UIView *)view atIndexPath:(NSIndexPath *)indexPath;
+- (__kindof UIView *)viewForItemAtIndexPath:(NSIndexPath *)indexPath;
+- (void)didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
+- (void)didEndDisplayingItemView:(__kindof UIView *)view atIndexPath:(NSIndexPath *)indexPath;
 
 #pragma mark - Footer
-- (CGSize)footerSize;
-- (__kindof UIView *)dequeueReusableFooterViewOfClass:(Class)viewClass;
-- (void)willDisplayFooterView;
-- (__kindof UIView *)footerView;
-- (void)didEndDisplayingFooterView;
+- (CGSize)sizeForFooterInSection:(NSInteger)section;
+- (__kindof UIView *)dequeueReusableFooterViewWithClass:(Class)viewClass forSection:(NSInteger)section;
+- (void)willDisplayFooterView:(__kindof UIView *)view forSection:(NSInteger)section;
+- (__kindof UIView *)footerViewForSection:(NSInteger)section;
+- (void)didEndDisplayingFooterView:(__kindof UIView *)view forSection:(NSInteger)section;
 
 #pragma mark - Background
-- (UIEdgeInsets)insetsForBackgroundView;
-- (NSInteger)zIndexForBackgroundView;
-- (__kindof UIView *)dequeueReusableBackgroundViewOfClass:(Class)viewClass;
-- (__kindof UIView *)backgroundView;
+- (UIEdgeInsets)insetForBackgroundViewInSection:(NSInteger)section;
+- (NSInteger)zIndexForBackgroundViewInSection:(NSInteger)section;
+- (__kindof UIView *)dequeueReusableBackgroundViewWithClass:(Class)viewClass forSection:(NSInteger)section;
+- (__kindof UIView *)backgroundViewForSection:(NSInteger)section;
 
 @end
 
