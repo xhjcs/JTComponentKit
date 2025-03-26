@@ -83,17 +83,21 @@
     NSSet<JTComponent *> *uniqueElements = [NSSet setWithArray:components];
     NSCAssert(uniqueElements.count == components.count, @"不要传入相同的两个Component对象");
 #endif
-    [components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
+    for (JTComponent *component in self.components) {
         [component componentWillUnmount];
-    }];
+    }
+    
+    NSInteger currentSectionCursor = 0;
     self.components = [components copy];
-    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
-        component.section = idx;
+    for (JTComponent *component in self.components) {
+        component.sectionCursor = currentSectionCursor;
+        component.numberOfSections = [component numberOfSections];
+        currentSectionCursor += component.numberOfSections;
         component.layout = self.layout;
         component.collectionView = self.collectionView;
         component.eventHub = self.eventHub;
         [component componentDidMount];
-    }];
+    }
     [self.collectionView reloadData];
 }
 
@@ -107,38 +111,38 @@
 
 #pragma mark - Section
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return self.components.count;
+    JTComponent *lastComponent = self.components.lastObject;
+    return lastComponent.sectionCursor + lastComponent.numberOfSections;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     JTComponent *component = self.components[section];
-
-    return [component insets];
+    return [component insetForSection:section - component.sectionCursor];
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     JTComponent *component = self.components[section];
 
-    return [component minimumLineSpacing];
+    return [component minimumLineSpacingInSection:section - component.sectionCursor];
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     JTComponent *component = self.components[section];
 
-    return [component minimumInteritemSpacing];
+    return [component minimumInteritemSpacingInSection:section - component.sectionCursor];
 }
 
 #pragma mark - Header & Footer
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
 
-    return [component headerSize];
+    return [component sizeForHeaderInSection:section - component.sectionCursor];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
 
-    return [component footerSize];
+    return [component sizeForFooterInSection:section - component.sectionCursor];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {

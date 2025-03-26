@@ -31,7 +31,8 @@ Pod::Spec.new do |s|
   s.private_header_files = "Sources/#{s.name}/**/*_Private.h",
                             "JTComponentCell.h",
                             "JTComponentReusableView.h",
-                            "JTComponentLayout.h"
+                            "JTComponentLayout.h",
+                            "JTComponentSectionsInfo.h"
 
   s.requires_arc = true
 

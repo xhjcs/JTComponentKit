@@ -8,6 +8,7 @@
 #import "JTComponent.h"
 #import "JTComponentLayout.h"
 #import "JTEventHub.h"
+#import "JTComponentSectionsInfo.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,7 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) JTEventHub *eventHub;
 
-@property (nonatomic) NSInteger section;
+@property (nonatomic, nullable) JTComponentSectionsInfo *sectionsInfo;
+
+@property (nonatomic) NSInteger numberOfSections;
+@property (nonatomic) NSInteger sectionCursor;
+
 @property (nonatomic) JTComponentLayout *layout;
 @property (nonatomic) UICollectionView *collectionView;
 
