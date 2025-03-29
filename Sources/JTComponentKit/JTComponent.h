@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)scrollToSelf:(BOOL)animated;
 
 #pragma mark - Life Cycle
+- (void)setup;
 - (void)componentDidMount;
 - (void)componentWillUnmount;
 
@@ -32,25 +33,25 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Header
 - (CGSize)headerSize;
 - (__kindof UIView *)dequeueReusableHeaderViewOfClass:(Class)viewClass;
-- (void)willDisplayHeaderView;
+- (void)willDisplayHeaderView:(__kindof UIView *)headerView;
 - (__kindof UIView *)headerView;
-- (void)didEndDisplayingHeaderView;
+- (void)didEndDisplayingHeaderView:(__kindof UIView *)headerView;
 
 #pragma mark - Item
 - (NSInteger)numberOfItems;
 - (CGSize)sizeForItemAtIndex:(NSInteger)index;
 - (__kindof UIView *)dequeueReusableItemViewOfClass:(Class)viewClass forIndex:(NSInteger)index;
-- (void)willDisplayItemView;
+- (void)willDisplayItemView:(__kindof UIView *)itemView atIndex:(NSInteger)index;
 - (__kindof UIView *)itemViewForIndex:(NSInteger)index;
 - (void)didSelectItemAtIndex:(NSInteger)index;
-- (void)didEndDisplayingItemView;
+- (void)didEndDisplayingItemView:(__kindof UIView *)itemView atIndex:(NSInteger)index;
 
 #pragma mark - Footer
 - (CGSize)footerSize;
 - (__kindof UIView *)dequeueReusableFooterViewOfClass:(Class)viewClass;
-- (void)willDisplayFooterView;
+- (void)willDisplayFooterView:(__kindof UIView *)footerView;
 - (__kindof UIView *)footerView;
-- (void)didEndDisplayingFooterView;
+- (void)didEndDisplayingFooterView:(__kindof UIView *)footerView;
 
 #pragma mark - Background
 - (UIEdgeInsets)insetsForBackgroundView;

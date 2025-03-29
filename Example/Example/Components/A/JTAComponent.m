@@ -14,7 +14,7 @@
     NSInteger _itemsCount;
 }
 
-- (void)componentDidMount {
+- (void)setup {
     _itemsCount = 20;
 }
 
@@ -75,10 +75,38 @@
     return UIEdgeInsetsMake(115, 5, 115, 5);
 }
 
+- (NSInteger)zIndexForBackgroundView {
+    return -10;
+}
+
 - (__kindof UIView *)backgroundView {
     UIView *backgroundView = [self dequeueReusableBackgroundViewOfClass:[UIView class]];
     backgroundView.backgroundColor = [UIColor magentaColor];
     return backgroundView;
+}
+
+- (void)willDisplayHeaderView:(__kindof UIView *)headerView {
+    NSLog(@"willDisplayHeaderView: %@", headerView.class);
+}
+
+- (void)didEndDisplayingHeaderView:(__kindof UIView *)headerView {
+    NSLog(@"didEndDisplayingHeaderView: %@", headerView.class);
+}
+
+- (void)willDisplayItemView:(__kindof UIView *)itemView atIndex:(NSInteger)index {
+    NSLog(@"willDisplayItemView: %@ atIndex: %ld", itemView.class, index);
+}
+
+- (void)didEndDisplayingItemView:(__kindof UIView *)itemView atIndex:(NSInteger)index {
+    NSLog(@"didEndDisplayingItemView: %@ atIndex: %ld", itemView.class, index);
+}
+
+- (void)willDisplayFooterView:(__kindof UIView *)footerView {
+    NSLog(@"willDisplayHeaderView: %@", footerView.class);
+}
+
+- (void)didEndDisplayingFooterView:(__kindof UIView *)footerView {
+    NSLog(@"didEndDisplayingFooterView: %@", footerView.class);
 }
 
 @end

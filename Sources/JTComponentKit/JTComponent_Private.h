@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JTComponent ()
 
+@property (nonatomic) BOOL hasSetup;
+
 @property (nonatomic) JTEventHub *eventHub;
 
 @property (nonatomic) NSInteger section;

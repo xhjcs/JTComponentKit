@@ -81,6 +81,10 @@
     return footer;
 }
 
+- (NSInteger)zIndexForBackgroundView {
+    return -1;
+}
+
 - (__kindof UIView *)backgroundView {
     UIView *backgroundView = [self dequeueReusableBackgroundViewOfClass:[UIView class]];
     backgroundView.backgroundColor = [UIColor orangeColor];
