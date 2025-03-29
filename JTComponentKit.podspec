@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "JTComponentKit"
-  s.version      = "1.0.9"
+  s.version      = "2.0.1"
   s.summary      = "A modular framework for abstracting sections of UICollectionView into individual components, enabling better decoupling and reusability in iOS applications."
 
   s.description  = <<-DESC
