@@ -13,15 +13,8 @@
 @interface JTComponent ()
 
 @property (nonatomic) NSInteger headerIndex;
-@property (nonatomic) BOOL isRegistedHeader;
-
-@property (nonatomic) NSMutableSet<Class> *registedCells;
-
 @property (nonatomic) NSInteger footerIndex;
-@property (nonatomic) BOOL isRegistedFooter;
-
 @property (nonatomic) NSInteger backgroundViewIndex;
-@property (nonatomic) BOOL isRegistedBackgroundView;
 
 @property (nonatomic) NSMutableSet<NSString *> *eventHubIdentifiers;
 
@@ -32,7 +25,6 @@
 #pragma mark - Life Cycle
 - (instancetype)init {
     if (self = [super init]) {
-        _registedCells = [NSMutableSet new];
         _eventHubIdentifiers = [NSMutableSet new];
     }
 
@@ -91,11 +83,6 @@
 - (__kindof UIView *)dequeueReusableHeaderViewOfClass:(Class)viewClass {
     NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
 
-    if (!self.isRegistedHeader) {
-        [self.collectionView registerClass:[JTComponentReusableView class] forSupplementaryViewOfKind:JTComponentElementKindSectionHeader withReuseIdentifier:NSStringFromClass(viewClass)];
-        self.isRegistedHeader = YES;
-    }
-
     JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:JTComponentElementKindSectionHeader withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:self.headerIndex inSection:self.section]];
 
     if (!reusableView.renderView) reusableView.renderView = [viewClass new];
@@ -131,12 +118,6 @@
 - (__kindof UIView *)dequeueReusableItemViewOfClass:(Class)viewClass forIndex:(NSInteger)index {
     NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
 
-    if (![self.registedCells containsObject:viewClass]) {
-        [self.collectionView registerClass:[JTComponentCell class] forCellWithReuseIdentifier:NSStringFromClass(viewClass)];
-
-        if (viewClass) [self.registedCells addObject:viewClass];
-    }
-
     JTComponentCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:index inSection:self.section]];
 
     if (!cell.renderView) cell.renderView = [viewClass new];
@@ -164,11 +145,6 @@
 
 - (__kindof UIView *)dequeueReusableFooterViewOfClass:(Class)viewClass {
     NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
-
-    if (!self.isRegistedFooter) {
-        [self.collectionView registerClass:[JTComponentReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:NSStringFromClass(viewClass)];
-        self.isRegistedFooter = YES;
-    }
 
     JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:self.footerIndex inSection:self.section]];
 
@@ -203,11 +179,6 @@
 
 - (__kindof UIView *)dequeueReusableBackgroundViewOfClass:(Class)viewClass {
     NSCAssert([viewClass isSubclassOfClass:[UIView class]], @"必须是一个View类");
-
-    if (!self.isRegistedBackgroundView) {
-        [self.collectionView registerClass:[JTComponentReusableView class] forSupplementaryViewOfKind:JTComponentElementKindSectionBackground withReuseIdentifier:NSStringFromClass(viewClass)];
-        self.isRegistedBackgroundView = YES;
-    }
 
     JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:JTComponentElementKindSectionBackground withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:self.backgroundViewIndex inSection:self.section]];
 

@@ -230,14 +230,14 @@
     for (UICollectionViewLayoutAttributes *attr in _headersLayoutAttributes) {
         if (idx < _visibleHeadersCursor) {
             const CGFloat dimension = isVertical ? attr.size.height : attr.size.width;
-            if (dimension > 0.0 && CGRectIntersectsRect(attr.frame, rect)) [attributes addObject:attr];
+            if (dimension > 0.0 && CGRectIntersectsRect(rect, attr.frame)) [attributes addObject:attr];
         }
 
         idx++;
     }
 
     for (UICollectionViewLayoutAttributes *attr in _backgroundViewsLayoutAttributes) {
-        if (attr.zIndex < 0 && CGRectIntersectsRect(attr.frame, rect)) [attributes addObject:attr];
+        if (attr.zIndex < 0 && CGRectIntersectsRect(rect, attr.frame)) [attributes addObject:attr];
     }
 
     return [attributes copy];

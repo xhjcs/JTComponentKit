@@ -5,6 +5,7 @@
 //  Created by xinghanjie on 2024/10/16.
 //
 
+#import "JTCollectionView.h"
 #import "JTComponent.h"
 #import "JTComponent_Private.h"
 #import "JTComponentCell.h"
@@ -52,7 +53,7 @@
 - (void)setupViews {
     self.layout = [JTComponentLayout new];
     self.layout.delegate = self;
-    self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:self.layout];
+    self.collectionView = [[JTCollectionView alloc] initWithFrame:self.bounds collectionViewLayout:self.layout];
     self.collectionView.backgroundColor = [UIColor clearColor];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
