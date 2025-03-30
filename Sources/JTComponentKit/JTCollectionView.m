@@ -34,16 +34,16 @@
 
 - (__kindof UICollectionReusableView *)dequeueReusableSupplementaryViewOfKind:(NSString *)elementKind withReuseIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath {
     if (elementKind != UICollectionElementKindSectionHeader) {
-        NSMutableSet<NSString *> *registeredSupplementaryViewReuseIds = _registeredSupplementaryReuseIdsMap[elementKind];
+        NSMutableSet<NSString *> *registeredSupplementaryReuseIds = _registeredSupplementaryReuseIdsMap[elementKind];
 
-        if (!registeredSupplementaryViewReuseIds) {
-            registeredSupplementaryViewReuseIds = [NSMutableSet new];
-            _registeredSupplementaryReuseIdsMap[elementKind] = registeredSupplementaryViewReuseIds;
+        if (!registeredSupplementaryReuseIds) {
+            registeredSupplementaryReuseIds = [NSMutableSet new];
+            _registeredSupplementaryReuseIdsMap[elementKind] = registeredSupplementaryReuseIds;
         }
 
-        if (![registeredSupplementaryViewReuseIds containsObject:identifier]) {
+        if (![registeredSupplementaryReuseIds containsObject:identifier]) {
             [self registerClass:[JTComponentReusableView class] forSupplementaryViewOfKind:elementKind withReuseIdentifier:identifier];
-            [registeredSupplementaryViewReuseIds addObject:identifier];
+            [registeredSupplementaryReuseIds addObject:identifier];
         }
     }
 
