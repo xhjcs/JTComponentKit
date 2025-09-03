@@ -38,11 +38,17 @@
 }
 
 - (void)invalidateLayoutWithContext:(UICollectionViewLayoutInvalidationContext *)context {
-    if (context.invalidateDataSourceCounts || context.invalidateEverything) {
-        [_fakeHeadersLayoutAttributes removeAllObjects];
-        _visibleHeadersCursor = 0;
-        [_headersLayoutAttributes removeAllObjects];
-        [_backgroundViewsLayoutAttributes removeAllObjects];
+    if ([context isKindOfClass:[UICollectionViewFlowLayoutInvalidationContext class]]) {
+        UICollectionViewFlowLayoutInvalidationContext *flowLayoutInvalidationContext = (UICollectionViewFlowLayoutInvalidationContext *)context;
+
+        if (flowLayoutInvalidationContext.invalidateEverything
+            || flowLayoutInvalidationContext.invalidateDataSourceCounts
+            || flowLayoutInvalidationContext.invalidateFlowLayoutAttributes) {
+            _visibleHeadersCursor = 0;
+            [_fakeHeadersLayoutAttributes removeAllObjects];
+            [_headersLayoutAttributes removeAllObjects];
+            [_backgroundViewsLayoutAttributes removeAllObjects];
+        }
     }
 
     [super invalidateLayoutWithContext:context];
