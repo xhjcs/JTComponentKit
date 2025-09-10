@@ -65,6 +65,34 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface JTComponent (Movable)
+
+/// 判断指定位置的 item 是否允许被移动
+/// @param index item 在当前 component 中的位置
+/// @return YES 表示该位置的 item 可以被移动，NO 表示不允许。默认NO
+- (BOOL)canMoveItemAtIndex:(NSInteger)index;
+
+/// 判断能不能移动到目标位置
+/// @param destinationIndex item 在当前 component 中的目标位置
+/// @param sourceComponent 原始 component
+/// @param sourceIndex     item 在原始 component 中的位置
+/// @return YES 表示可以接收该 item 到目标位置，NO 表示不允许。默认仅允许自身模块内的 item
+- (BOOL)canMoveItemToIndex:(NSInteger)destinationIndex
+             fromComponent:(JTComponent *)sourceComponent
+                   atIndex:(NSInteger)sourceIndex;
+
+/// 当当前 component 内的某个 item 被移动走时触发
+/// @param index 被移动的 item 在当前 component 中的位置
+/// @return 被移走的对象（供目标 component 接收时使用）
+- (id)didMoveItemFromIndex:(NSInteger)index;
+
+/// 当有一个 item 被移动到当前 component 后触发
+/// @param item 被移动的对象
+/// @param index 插入到当前 component 的位置
+- (void)didMoveItem:(id)item toIndex:(NSInteger)index;
+
+@end
+
 @interface JTComponent (PageLifeCycle) <JTComponentPageLifeCycleProtocol>
 
 @end

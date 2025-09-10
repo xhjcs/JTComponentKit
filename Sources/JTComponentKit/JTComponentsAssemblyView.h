@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) UICollectionViewScrollDirection scrollDirection;
 
+/// 是否允许 item 移动顺序
+@property (nonatomic) BOOL allowsInteractiveMovement;
+
 @property (nonatomic, readonly) UICollectionView *collectionView;
 
 - (void)assembleComponents:(NSArray<JTComponent *> *)components;

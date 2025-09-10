@@ -32,9 +32,14 @@
 
 @property (nonatomic) NSMutableSet<NSString *> *eventHubIdentifiers;
 
+@property (nonatomic) UILongPressGestureRecognizer *interactiveMovementGesture;
+@property (nonatomic) CGPoint interactiveMovementGestureTouchOffset;
+
 @end
 
 @implementation JTComponentsAssemblyView
+
+@synthesize allowsInteractiveMovement = _allowsInteractiveMovement;
 
 - (void)dealloc {
     [self offEvents];
@@ -246,7 +251,9 @@
 
     NSCParameterAssert(identifier);
 
-    if (identifier) [self.eventHubIdentifiers addObject:identifier];
+    if (identifier) {
+        [self.eventHubIdentifiers addObject:identifier];
+    }
 }
 
 - (void)emit:(NSString *)event arg0:(nullable id)arg0 {
@@ -354,6 +361,96 @@
             [component scrollViewDidChangeAdjustedContentInset:scrollView];
         }
     }];
+}
+
+@end
+
+@interface JTComponentsAssemblyView (Movable)
+
+@end
+
+@implementation JTComponentsAssemblyView (Movable)
+
+- (void)setAllowsInteractiveMovement:(BOOL)allowsInteractiveMovement {
+    _allowsInteractiveMovement = allowsInteractiveMovement;
+
+    if (allowsInteractiveMovement) {
+        self.interactiveMovementGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleInteractiveMovementGesture:)];
+        [self.collectionView addGestureRecognizer:self.interactiveMovementGesture];
+    } else {
+        [self.collectionView removeGestureRecognizer:self.interactiveMovementGesture];
+        self.interactiveMovementGesture = nil;
+    }
+}
+
+- (BOOL)allowsInteractiveMovement {
+    return _allowsInteractiveMovement;
+}
+
+- (void)handleInteractiveMovementGesture:(UILongPressGestureRecognizer *)sender {
+    switch (sender.state) {
+        case UIGestureRecognizerStateBegan: {
+            NSIndexPath *selectedIndexPath = [self.collectionView indexPathForItemAtPoint:[sender locationInView:sender.view]];
+
+            if (selectedIndexPath) {
+                UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:selectedIndexPath];
+
+                if (cell) {
+                    CGPoint touchInCell = [sender locationInView:cell];
+                    self.interactiveMovementGestureTouchOffset = CGPointMake(cell.bounds.size.width / 2 - touchInCell.x,
+                                                                             cell.bounds.size.height / 2 - touchInCell.y);
+                }
+
+                [self.collectionView beginInteractiveMovementForItemAtIndexPath:selectedIndexPath];
+            }
+        }
+        break;
+
+        case UIGestureRecognizerStateChanged: {
+            CGPoint location = [sender locationInView:sender.view];
+            CGPoint touchOffset = self.interactiveMovementGestureTouchOffset;
+            CGPoint adjustedLocation = CGPointMake(location.x + touchOffset.x,
+                                                   location.y + touchOffset.y);
+            [self.collectionView updateInteractiveMovementTargetPosition:adjustedLocation];
+        }
+        break;
+
+        case UIGestureRecognizerStateEnded: {
+            [self.collectionView endInteractiveMovement];
+        }
+        break;
+
+        default: {
+            [self.collectionView cancelInteractiveMovement];
+        }
+        break;
+    }
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
+    JTComponent *component = self.components[indexPath.section];
+
+    return [component canMoveItemAtIndex:indexPath.item];
+}
+
+- (NSIndexPath *)collectionView:(UICollectionView *)collectionView targetIndexPathForMoveOfItemFromOriginalIndexPath:(NSIndexPath *)originalIndexPath atCurrentIndexPath:(NSIndexPath *)currentIndexPath toProposedIndexPath:(NSIndexPath *)proposedIndexPath {
+    JTComponent *fromComponent = self.components[originalIndexPath.section];
+    JTComponent *toComponent = self.components[proposedIndexPath.section];
+
+    if ([toComponent canMoveItemToIndex:proposedIndexPath.item fromComponent:fromComponent atIndex:originalIndexPath.item]) {
+        return proposedIndexPath;
+    }
+
+    return nil;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    JTComponent *fromComponent = self.components[sourceIndexPath.section];
+    JTComponent *toComponent = self.components[destinationIndexPath.section];
+
+    id data = [fromComponent didMoveItemFromIndex:sourceIndexPath.item];
+
+    [toComponent didMoveItem:data toIndex:destinationIndexPath.item];
 }
 
 @end

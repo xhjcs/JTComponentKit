@@ -85,7 +85,9 @@
 
     JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:JTComponentElementKindSectionHeader withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:self.headerIndex inSection:self.section]];
 
-    if (!reusableView.renderView) reusableView.renderView = [viewClass new];
+    if (!reusableView.renderView) {
+        reusableView.renderView = [viewClass new];
+    }
 
     return reusableView.renderView;
 }
@@ -120,7 +122,9 @@
 
     JTComponentCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:index inSection:self.section]];
 
-    if (!cell.renderView) cell.renderView = [viewClass new];
+    if (!cell.renderView) {
+        cell.renderView = [viewClass new];
+    }
 
     return cell.renderView;
 }
@@ -148,7 +152,9 @@
 
     JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:self.footerIndex inSection:self.section]];
 
-    if (!reusableView.renderView) reusableView.renderView = [viewClass new];
+    if (!reusableView.renderView) {
+        reusableView.renderView = [viewClass new];
+    }
 
     return reusableView.renderView;
 }
@@ -182,7 +188,9 @@
 
     JTComponentReusableView *reusableView = [self.collectionView dequeueReusableSupplementaryViewOfKind:JTComponentElementKindSectionBackground withReuseIdentifier:NSStringFromClass(viewClass) forIndexPath:[NSIndexPath indexPathForItem:self.backgroundViewIndex inSection:self.section]];
 
-    if (!reusableView.renderView) reusableView.renderView = [viewClass new];
+    if (!reusableView.renderView) {
+        reusableView.renderView = [viewClass new];
+    }
 
     return reusableView.renderView;
 }
@@ -213,7 +221,9 @@
 
     NSCParameterAssert(identifier);
 
-    if (identifier) [self.eventHubIdentifiers addObject:identifier];
+    if (identifier) {
+        [self.eventHubIdentifiers addObject:identifier];
+    }
 }
 
 - (void)emit:(NSString *)event arg0:(nullable id)arg0 {
@@ -238,6 +248,27 @@
 
 - (void)emit:(NSString *)event arg0:(nullable id)arg0 arg1:(nullable id)arg1 arg2:(nullable id)arg2 arg3:(nullable id)arg3 arg4:(nullable id)arg4 arg5:(nullable id)arg5 {
     [self.eventHub emit:event arg0:arg0 arg1:arg1 arg2:arg2 arg3:arg3 arg4:arg4 arg5:arg5];
+}
+
+@end
+
+@implementation JTComponent (Movable)
+
+- (BOOL)canMoveItemAtIndex:(NSInteger)index {
+    return NO;
+}
+
+- (BOOL)canMoveItemToIndex:(NSInteger)destinationIndex
+             fromComponent:(JTComponent *)sourceComponent
+                   atIndex:(NSInteger)sourceIndex {
+    return self == sourceComponent;
+}
+
+- (id)didMoveItemFromIndex:(NSInteger)index {
+    return nil;
+}
+
+- (void)didMoveItem:(id)item toIndex:(NSInteger)index {
 }
 
 @end
