@@ -63,8 +63,10 @@
     JTBComponent *b5 = [JTBComponent new];
 
     NSArray *components = @[a2, [JTSpacingComponent componentWithSpacing:100], a3, [JTCComponent new], b2, a1, b1, b5, a5, b3, a4, b4, [ExampleComponent1 new]];
-    components = [self shuffleArray:components];
+//    components = [self shuffleArray:components];
     [componentAssemblyView assembleComponents:components];
+    componentAssemblyView.allowsInteractiveMovement = YES;
+//    componentAssemblyView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     __weak __typeof(self) weakSelf = self;
     [componentAssemblyView on:@"com.heikki.jumptoswiftexamplepage"
                      callback:^(JTEventHubArgs *_Nonnull args) {

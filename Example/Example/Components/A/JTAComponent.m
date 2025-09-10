@@ -11,11 +11,14 @@
 #import "JTAComponentItemView.h"
 
 @implementation JTAComponent {
-    NSInteger _itemsCount;
+    NSMutableArray<NSString *> *_items;
 }
 
 - (void)setup {
-    _itemsCount = 20;
+    _items = [NSMutableArray new];
+    for (NSInteger i = 0; i < 20; i++) {
+        [_items addObject:@(i).stringValue];
+    }
 }
 
 - (NSString *)description {
@@ -46,20 +49,26 @@
 }
 
 - (NSInteger)numberOfItems {
-    return _itemsCount;
+    return _items.count;
 }
 
 - (CGSize)sizeForItemAtIndex:(NSInteger)index {
-    return CGSizeMake(50, 50);
+    return CGSizeMake(100, 100);
 }
 
 - (__kindof UIView *)itemViewForIndex:(NSInteger)index {
-    return [self dequeueReusableItemViewOfClass:[JTAComponentItemView class] forIndex:index];
+    UILabel *label = [self dequeueReusableItemViewOfClass:[UILabel class] forIndex:index];
+    label.backgroundColor = [UIColor redColor];
+    label.text = _items[index];
+    return label;
 }
 
 - (void)didSelectItemAtIndex:(NSInteger)index {
     [self emit:@"com.heikki.example" arg0:@(index).stringValue];
-    _itemsCount += 20;
+    NSInteger count = _items.count;
+    for (NSInteger i = count; i < count + 20; i++) {
+        [_items addObject:@(i).stringValue];
+    }
     [self reloadData];
 }
 
@@ -107,6 +116,24 @@
 
 - (void)didEndDisplayingFooterView:(__kindof UIView *)footerView {
     NSLog(@"didEndDisplayingFooterView: %@", footerView.class);
+}
+
+- (BOOL)canMoveItemAtIndex:(NSInteger)index {
+    return index != 1;
+}
+
+- (BOOL)canMoveItemToIndex:(NSInteger)destinationIndex fromComponent:(JTComponent *)sourceComponent atIndex:(NSInteger)sourceIndex {
+    return destinationIndex != 18;
+}
+
+- (id)didMoveItemFromIndex:(NSInteger)index {
+    NSString *data = _items[index];
+    [_items removeObjectAtIndex:index];
+    return data;
+}
+
+- (void)didMoveItem:(id)item toIndex:(NSInteger)index {
+    [_items insertObject:item atIndex:index];
 }
 
 @end
