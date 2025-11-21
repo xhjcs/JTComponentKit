@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) CGSize size;
 @property (nonatomic, readonly) UICollectionView *collectionView;
 - (void)reloadData;
+- (void)reloadData:(BOOL)animated;
 - (void)scrollToSelf:(BOOL)animated;
 
 #pragma mark - Life Cycle
