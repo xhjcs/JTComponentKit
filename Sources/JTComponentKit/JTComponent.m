@@ -51,20 +51,9 @@
 }
 
 - (void)reloadData {
-    [self reloadData:NO];
-}
-
-- (void)reloadData:(BOOL)animated {
-    if (!animated) {
-        [CATransaction begin];
-        [CATransaction setDisableActions:YES];
-    }
-
-    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:self.section]];
-
-    if (!animated) {
-        [CATransaction commit];
-    }
+    [UIView performWithoutAnimation:^{
+        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:self.section]];
+    }];
 }
 
 - (void)scrollToSelf:(BOOL)animated {
