@@ -28,7 +28,7 @@
 @property (nonatomic) UICollectionView *collectionView;
 
 @property (nonatomic) JTEventHub *eventHub;
-@property (nonatomic) NSArray<JTComponent *> *components;
+@property (nonatomic, copy) NSArray<JTComponent *> *components;
 
 @property (nonatomic) NSMutableSet<NSString *> *eventHubIdentifiers;
 
@@ -92,7 +92,7 @@
     [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         [component componentWillUnmount];
     }];
-    self.components = [components copy];
+    self.components = components;
     [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         component.section = idx;
         component.layout = self.layout;

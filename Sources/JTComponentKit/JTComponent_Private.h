@@ -15,11 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) BOOL hasSetup;
 
-@property (nonatomic) JTEventHub *eventHub;
+@property (nonatomic, weak) JTEventHub *eventHub;
 
 @property (nonatomic) NSInteger section;
-@property (nonatomic) JTComponentLayout *layout;
-@property (nonatomic) UICollectionView *collectionView;
+@property (nonatomic, weak) JTComponentLayout *layout;
+@property (nonatomic, weak) UICollectionView *collectionView;
 
 - (__kindof UIView *)headerViewForIndex:(NSInteger)index;
 - (__kindof UIView *)footerViewForIndex:(NSInteger)index;
