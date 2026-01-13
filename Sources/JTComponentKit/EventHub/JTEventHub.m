@@ -30,7 +30,9 @@
     NSCParameterAssert(event);
     NSCParameterAssert(callback);
 
-    if (!event) return nil;
+    if (!event) {
+        return nil;
+    }
 
     NSMutableDictionary<NSString *, void (^)(JTEventHubArgs *args)> *callbacks = self.eventCallbacks[event];
 
@@ -47,13 +49,17 @@
 - (void)offByIdentifier:(NSString *)identifier {
     NSCParameterAssert(identifier);
 
-    if (!identifier) return;
+    if (!identifier) {
+        return;
+    }
 
     NSMutableSet<NSString *> *shouldRemoveEvents = [NSMutableSet new];
     [self.eventCallbacks enumerateKeysAndObjectsUsingBlock:^(NSString *_Nonnull event, NSMutableDictionary<NSString *, void (^)(JTEventHubArgs *)> *_Nonnull callback, BOOL *_Nonnull stop) {
         callback[identifier] = nil;
 
-        if (callback.count <= 0) [shouldRemoveEvents addObject:event];
+        if (callback.count <= 0) {
+            [shouldRemoveEvents addObject:event];
+        }
     }];
     [shouldRemoveEvents enumerateObjectsUsingBlock:^(NSString *_Nonnull event, BOOL *_Nonnull stop) {
         self.eventCallbacks[event] = nil;

@@ -1,5 +1,5 @@
 PODS:
-  - JTComponentKit (2.1.0)
+  - JTComponentKit (2.1.1)
   - Masonry (1.1.0)
   - SnapKit (5.6.0)
 
@@ -18,7 +18,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  JTComponentKit: c512333beef9b5ffde5acd4bb8e40c4a28dfc551
+  JTComponentKit: 4c333ba49de76e222ff1611b6323118e63681217
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 

@@ -110,7 +110,7 @@
 }
 
 - (JTComponentCell *)findCellFromRenderView:(UIView *)renderView {
-    UIView *currentView = renderView.superview;
+    UIView *currentView = renderView.superview.superview;
 
     while (![currentView isMemberOfClass:[JTComponentCell class]])
         currentView = currentView.superview;

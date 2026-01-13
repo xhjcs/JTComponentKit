@@ -82,7 +82,10 @@
     const NSInteger sectionsCount = _fakeHeadersLayoutAttributes.count;
 
     NSCAssert(_headersLayoutAttributes.count == sectionsCount, @"两者必须相等");
-    if (_headersLayoutAttributes.count != sectionsCount) return;
+
+    if (_headersLayoutAttributes.count != sectionsCount) {
+        return;
+    }
 
     const CGSize collectionViewSize = self.collectionView.bounds.size;
     CGPoint offset = self.collectionView.contentOffset;
@@ -100,9 +103,13 @@
 
         // 超出可见区域，不处理
         if (isVertical) {
-            if (frame.origin.y > maxPoint.y) break;
+            if (frame.origin.y > maxPoint.y) {
+                break;
+            }
         } else {
-            if (frame.origin.x > maxPoint.x) break;
+            if (frame.origin.x > maxPoint.x) {
+                break;
+            }
         }
 
         UICollectionViewLayoutAttributes *headerAttr = _headersLayoutAttributes[section];
@@ -118,7 +125,10 @@
                 if (lastPinnedHeaderAttribute) {
                     CGRect lastPinnedHeaderFrame = lastPinnedHeaderAttribute.frame;
                     const CGFloat lastPinnedHeaderMaxY = frame.origin.y - lastPinnedHeaderFrame.size.height;
-                    if (lastPinnedHeaderFrame.origin.y > lastPinnedHeaderMaxY) lastPinnedHeaderFrame.origin.y = lastPinnedHeaderMaxY;
+
+                    if (lastPinnedHeaderFrame.origin.y > lastPinnedHeaderMaxY) {
+                        lastPinnedHeaderFrame.origin.y = lastPinnedHeaderMaxY;
+                    }
 
                     lastPinnedHeaderAttribute.frame = lastPinnedHeaderFrame;
                 }
@@ -130,7 +140,10 @@
                 if (lastPinnedHeaderAttribute) {
                     CGRect lastPinnedHeaderFrame = lastPinnedHeaderAttribute.frame;
                     const CGFloat lastPinnedHeaderMaxX = frame.origin.x - lastPinnedHeaderFrame.size.width;
-                    if (lastPinnedHeaderFrame.origin.x > lastPinnedHeaderMaxX) lastPinnedHeaderFrame.origin.x = lastPinnedHeaderMaxX;
+
+                    if (lastPinnedHeaderFrame.origin.x > lastPinnedHeaderMaxX) {
+                        lastPinnedHeaderFrame.origin.x = lastPinnedHeaderMaxX;
+                    }
 
                     lastPinnedHeaderAttribute.frame = lastPinnedHeaderFrame;
                 }
@@ -141,8 +154,14 @@
 
         CGFloat dimension = isVertical ? frame.size.height : frame.size.width;
         CGPoint adjustedPosition = frame.origin;
-        if (adjustedPosition.x < offset.x) adjustedPosition.x = offset.x;
-        if (adjustedPosition.y < offset.y) adjustedPosition.y = offset.y;
+
+        if (adjustedPosition.x < offset.x) {
+            adjustedPosition.x = offset.x;
+        }
+
+        if (adjustedPosition.y < offset.y) {
+            adjustedPosition.y = offset.y;
+        }
 
         frame.origin = adjustedPosition;
         headerAttr.frame = frame;
@@ -181,10 +200,16 @@
 
 - (void)prepareBackgoundViewsLayout {
     const NSInteger sectionsCount = _fakeHeadersLayoutAttributes.count;
-    if (_backgroundViewsLayoutAttributes.count >= sectionsCount) return;
+
+    if (_backgroundViewsLayoutAttributes.count >= sectionsCount) {
+        return;
+    }
 
     NSCAssert(_backgroundViewsLayoutAttributes.count == 0, @"代码走到这里_backgroundViewsLayoutAttributes必然被清空");
-    if (_backgroundViewsLayoutAttributes.count != 0) return;
+
+    if (_backgroundViewsLayoutAttributes.count != 0) {
+        return;
+    }
 
     const CGSize collectionViewSize = self.collectionView.bounds.size;
     const BOOL isVertical = (self.scrollDirection == UICollectionViewScrollDirectionVertical);
@@ -236,14 +261,19 @@
     for (UICollectionViewLayoutAttributes *attr in _headersLayoutAttributes) {
         if (idx < _visibleHeadersCursor) {
             const CGFloat dimension = isVertical ? attr.size.height : attr.size.width;
-            if (dimension > 0.0 && CGRectIntersectsRect(rect, attr.frame)) [attributes addObject:attr];
+
+            if (dimension > 0.0 && CGRectIntersectsRect(rect, attr.frame)) {
+                [attributes addObject:attr];
+            }
         }
 
         idx++;
     }
 
     for (UICollectionViewLayoutAttributes *attr in _backgroundViewsLayoutAttributes) {
-        if (attr.zIndex < 0 && CGRectIntersectsRect(rect, attr.frame)) [attributes addObject:attr];
+        if (attr.zIndex < 0 && CGRectIntersectsRect(rect, attr.frame)) {
+            [attributes addObject:attr];
+        }
     }
 
     return [attributes copy];
@@ -253,9 +283,13 @@
     NSInteger idx = indexPath.section;
 
     if (elementKind == JTComponentElementKindSectionHeader) {
-        if (idx < _visibleHeadersCursor && idx < _headersLayoutAttributes.count) return _headersLayoutAttributes[idx];
+        if (idx < _visibleHeadersCursor && idx < _headersLayoutAttributes.count) {
+            return _headersLayoutAttributes[idx];
+        }
     } else if (elementKind == JTComponentElementKindSectionBackground) {
-        if (idx < _backgroundViewsLayoutAttributes.count) return _backgroundViewsLayoutAttributes[idx];
+        if (idx < _backgroundViewsLayoutAttributes.count) {
+            return _backgroundViewsLayoutAttributes[idx];
+        }
     }
 
     return [super layoutAttributesForSupplementaryViewOfKind:elementKind atIndexPath:indexPath];
@@ -269,13 +303,25 @@
     if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
         offset.y -= pinnedHeadersSize.height;
         CGFloat maxY = self.collectionViewContentSize.height - self.collectionView.bounds.size.height;
-        if (maxY <= 0.0) return self.collectionView.contentOffset;
-        if (offset.y > maxY) offset.y = maxY;
+
+        if (maxY <= 0.0) {
+            return self.collectionView.contentOffset;
+        }
+
+        if (offset.y > maxY) {
+            offset.y = maxY;
+        }
     } else {
         offset.x -= pinnedHeadersSize.width;
         CGFloat maxX = self.collectionViewContentSize.width - self.collectionView.bounds.size.width;
-        if (maxX <= 0.0) return self.collectionView.contentOffset;
-        if (offset.x > maxX) offset.x = maxX;
+
+        if (maxX <= 0.0) {
+            return self.collectionView.contentOffset;
+        }
+
+        if (offset.x > maxX) {
+            offset.x = maxX;
+        }
     }
 
     return offset;
@@ -289,7 +335,10 @@
 
     for (NSInteger i = 0; i < sectionsCount && i < section; i++) {
         JTComponentHeaderPinningBehavior pinningBehavior = [self.delegate collectionView:self.collectionView pinningBehaviorForHeaderInSection:i];
-        if (pinningBehavior != JTComponentHeaderPinningBehaviorAlwaysPin) continue;
+
+        if (pinningBehavior != JTComponentHeaderPinningBehaviorAlwaysPin) {
+            continue;
+        }
 
         UICollectionViewLayoutAttributes *headerAttr = _fakeHeadersLayoutAttributes[i];
         CGRect frame = headerAttr.frame;
@@ -308,7 +357,9 @@
 
 // 获取该分区原点的位置
 - (CGPoint)originForSection:(NSInteger)section {
-    if (section >= _fakeHeadersLayoutAttributes.count) return CGPointZero;
+    if (section >= _fakeHeadersLayoutAttributes.count) {
+        return CGPointZero;
+    }
 
     UICollectionViewLayoutAttributes *firstAttr = _fakeHeadersLayoutAttributes[section];
     CGPoint origin = firstAttr.frame.origin;
