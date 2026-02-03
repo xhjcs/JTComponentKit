@@ -7,13 +7,13 @@
 
 #import <Foundation/Foundation.h>
 #import "JTEventHubArgs.h"
+#import "JTEventHubSubscription.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface JTEventHub : NSObject
 
-- (NSString *)on:(NSString *)event callback:(void (^)(JTEventHubArgs *args))callback;
-- (void)offByIdentifier:(NSString *)identifier;
+- (JTEventHubSubscription *)on:(NSString *)event callback:(void (^)(JTEventHubArgs *args))callback;
 
 - (void)emit:(NSString *)event arg0:(nullable id)arg0;
 - (void)emit:(NSString *)event arg0:(nullable id)arg0 arg1:(nullable id)arg1;

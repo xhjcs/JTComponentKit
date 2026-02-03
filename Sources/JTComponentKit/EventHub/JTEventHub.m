@@ -7,10 +7,11 @@
 
 #import "JTEventHub.h"
 #import "JTEventHubArgs_Private.h"
+#import "JTEventHubSubscription_Private.h"
 
 @interface JTEventHub ()
 
-@property (nonatomic) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, void (^)(JTEventHubArgs *args)> *> *eventCallbacks;
+@property (nonatomic) NSMutableDictionary<NSString *, NSMutableArray<void (^)(JTEventHubArgs *args)> *> *eventCallbacks;
 
 @end
 
@@ -26,43 +27,25 @@
     return self;
 }
 
-- (NSString *)on:(NSString *)event callback:(void (^)(JTEventHubArgs *args))callback {
+- (JTEventHubSubscription *)on:(NSString *)event callback:(void (^)(JTEventHubArgs *args))callback {
     NSCParameterAssert(event);
     NSCParameterAssert(callback);
 
-    if (!event) {
+    if (!event || !callback) {
         return nil;
     }
 
-    NSMutableDictionary<NSString *, void (^)(JTEventHubArgs *args)> *callbacks = self.eventCallbacks[event];
+    NSMutableArray<void (^)(JTEventHubArgs *args)> *callbacks = self.eventCallbacks[event];
 
     if (!callbacks) {
-        callbacks = [NSMutableDictionary new];
+        callbacks = [NSMutableArray new];
         self.eventCallbacks[event] = callbacks;
     }
 
-    NSString *identifier = [[NSUUID UUID] UUIDString];
-    callbacks[identifier] = callback;
-    return identifier;
-}
+    [callbacks addObject:callback];
 
-- (void)offByIdentifier:(NSString *)identifier {
-    NSCParameterAssert(identifier);
-
-    if (!identifier) {
-        return;
-    }
-
-    NSMutableSet<NSString *> *shouldRemoveEvents = [NSMutableSet new];
-    [self.eventCallbacks enumerateKeysAndObjectsUsingBlock:^(NSString *_Nonnull event, NSMutableDictionary<NSString *, void (^)(JTEventHubArgs *)> *_Nonnull callback, BOOL *_Nonnull stop) {
-        callback[identifier] = nil;
-
-        if (callback.count <= 0) {
-            [shouldRemoveEvents addObject:event];
-        }
-    }];
-    [shouldRemoveEvents enumerateObjectsUsingBlock:^(NSString *_Nonnull event, BOOL *_Nonnull stop) {
-        self.eventCallbacks[event] = nil;
+    return [JTEventHubSubscription subscriptionWithHandler:^{
+        [callbacks removeObject:callback];
     }];
 }
 
@@ -95,7 +78,7 @@
     args.arg3 = arg3;
     args.arg4 = arg4;
     args.arg5 = arg5;
-    NSArray *callbacks = self.eventCallbacks[event].allValues;
+    NSArray *callbacks = self.eventCallbacks[event];
 
     for (void (^callback)(JTEventHubArgs *args) in callbacks) {
         callback(args);

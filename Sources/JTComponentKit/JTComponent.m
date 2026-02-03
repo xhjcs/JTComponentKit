@@ -16,7 +16,7 @@
 @property (nonatomic) NSInteger footerIndex;
 @property (nonatomic) NSInteger backgroundViewIndex;
 
-@property (nonatomic) NSMutableSet<NSString *> *eventHubIdentifiers;
+@property (nonatomic) NSMutableSet<JTEventHubSubscription *> *eventSubscriptions;
 
 @end
 
@@ -25,7 +25,7 @@
 #pragma mark - Life Cycle
 - (instancetype)init {
     if (self = [super init]) {
-        _eventHubIdentifiers = [NSMutableSet new];
+        _eventSubscriptions = [NSMutableSet new];
     }
 
     return self;
@@ -204,10 +204,10 @@
 
 #pragma mark - Private
 - (void)offEvents {
-    [self.eventHubIdentifiers enumerateObjectsUsingBlock:^(NSString *_Nonnull identifier, BOOL *_Nonnull stop) {
-        [self.eventHub offByIdentifier:identifier];
+    [self.eventSubscriptions enumerateObjectsUsingBlock:^(JTEventHubSubscription *_Nonnull subscription, BOOL *_Nonnull stop) {
+        [subscription remove];
     }];
-    [self.eventHubIdentifiers removeAllObjects];
+    [self.eventSubscriptions removeAllObjects];
 }
 
 @end
@@ -215,12 +215,12 @@
 @implementation JTComponent (Communication)
 
 - (void)on:(NSString *)event callback:(void (^)(JTEventHubArgs *_Nonnull))callback {
-    NSString *identifier = [self.eventHub on:event callback:callback];
+    JTEventHubSubscription *subscription = [self.eventHub on:event callback:callback];
 
-    NSCParameterAssert(identifier);
+    NSCParameterAssert(subscription);
 
-    if (identifier) {
-        [self.eventHubIdentifiers addObject:identifier];
+    if (subscription) {
+        [self.eventSubscriptions addObject:subscription];
     }
 }
 

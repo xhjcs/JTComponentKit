@@ -30,7 +30,7 @@
 @property (nonatomic) JTEventHub *eventHub;
 @property (nonatomic, copy) NSArray<JTComponent *> *components;
 
-@property (nonatomic) NSMutableSet<NSString *> *eventHubIdentifiers;
+@property (nonatomic) NSMutableSet<JTEventHubSubscription *> *eventSubscriptions;
 
 @property (nonatomic) UILongPressGestureRecognizer *interactiveMovementGesture;
 @property (nonatomic) CGPoint interactiveMovementGestureTouchOffset;
@@ -48,7 +48,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         _eventHub = [JTEventHub new];
-        _eventHubIdentifiers = [NSMutableSet new];
+        _eventSubscriptions = [NSMutableSet new];
         [self setupViews];
     }
 
@@ -236,10 +236,10 @@
 
 #pragma mark - Private
 - (void)offEvents {
-    [self.eventHubIdentifiers enumerateObjectsUsingBlock:^(NSString *_Nonnull identifier, BOOL *_Nonnull stop) {
-        [self.eventHub offByIdentifier:identifier];
+    [self.eventSubscriptions enumerateObjectsUsingBlock:^(JTEventHubSubscription *_Nonnull subscription, BOOL *_Nonnull stop) {
+        [subscription remove];
     }];
-    [self.eventHubIdentifiers removeAllObjects];
+    [self.eventSubscriptions removeAllObjects];
 }
 
 @end
@@ -247,12 +247,12 @@
 @implementation JTComponentsAssemblyView (Communication)
 
 - (void)on:(NSString *)event callback:(void (^)(JTEventHubArgs *_Nonnull))callback {
-    NSString *identifier = [self.eventHub on:event callback:callback];
+    JTEventHubSubscription *subscription = [self.eventHub on:event callback:callback];
 
-    NSCParameterAssert(identifier);
+    NSCParameterAssert(subscription);
 
-    if (identifier) {
-        [self.eventHubIdentifiers addObject:identifier];
+    if (subscription) {
+        [self.eventSubscriptions addObject:subscription];
     }
 }
 
