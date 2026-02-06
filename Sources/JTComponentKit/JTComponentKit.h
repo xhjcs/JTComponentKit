@@ -10,5 +10,6 @@
 #import <JTComponentKit/JTComponentDefines.h>
 #import <JTComponentKit/JTComponentPageLifeCycleProtocol.h>
 #import <JTComponentKit/JTComponentsAssemblyView.h>
+#import <JTComponentKit/JTEventHub.h>
 #import <JTComponentKit/JTSpacingComponent.h>
 #import <UIKit/UIKit.h>
