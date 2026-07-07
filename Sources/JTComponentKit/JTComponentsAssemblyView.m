@@ -37,6 +37,8 @@
 
 @end
 
+static const CGFloat kJTComponentMinimumItemDimension = 0.01;
+
 @implementation JTComponentsAssemblyView
 
 @synthesize allowsInteractiveMovement = _allowsInteractiveMovement;
@@ -203,10 +205,23 @@
     return [component numberOfItems];
 }
 
+/// FlowLayout 不支持零或负尺寸；用极小正值规避部分系统版本的布局空白 bug。
+- (CGSize)sanitizedItemSize:(CGSize)size {
+    if (!(size.width > 0.0)) {
+        size.width = kJTComponentMinimumItemDimension;
+    }
+
+    if (!(size.height > 0.0)) {
+        size.height = kJTComponentMinimumItemDimension;
+    }
+
+    return size;
+}
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
 
-    return [component sizeForItemAtIndex:indexPath.item];
+    return [self sanitizedItemSize:[component sizeForItemAtIndex:indexPath.item]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -254,6 +269,10 @@
     if (subscription) {
         [self.eventSubscriptions addObject:subscription];
     }
+}
+
+- (void)emit:(NSString *)event {
+    [self.eventHub emit:event];
 }
 
 - (void)emit:(NSString *)event arg0:(nullable id)arg0 {

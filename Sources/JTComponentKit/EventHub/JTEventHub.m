@@ -49,6 +49,10 @@
     }];
 }
 
+- (void)emit:(NSString *)event {
+    [self emit:event arg0:nil arg1:nil arg2:nil arg3:nil arg4:nil arg5:nil];
+}
+
 - (void)emit:(NSString *)event arg0:(nullable id)arg0 {
     [self emit:event arg0:arg0 arg1:nil arg2:nil arg3:nil arg4:nil arg5:nil];
 }

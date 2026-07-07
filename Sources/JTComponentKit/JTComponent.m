@@ -224,6 +224,10 @@
     }
 }
 
+- (void)emit:(NSString *)event {
+    [self.eventHub emit:event];
+}
+
 - (void)emit:(NSString *)event arg0:(nullable id)arg0 {
     [self.eventHub emit:event arg0:arg0];
 }

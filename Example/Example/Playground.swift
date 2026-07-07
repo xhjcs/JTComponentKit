@@ -243,7 +243,7 @@ class ExampleComponent3: JTComponent {
         componentsAssemblyView.snp.makeConstraints { make in
             make.edges.equalTo(self.view.safeAreaLayoutGuide.snp.edges)
         }
-        componentsAssemblyView.assembleComponents([JTSpacingComponent(spacing: 100), AComponent(), JTCComponent(), ExampleComponent1(), JTSpacingComponent(spacing: 25), ExampleComponent2(), JTSpacingComponent(spacing: 50), ExampleComponent3(), JTBComponent()])
+        componentsAssemblyView.assembleComponents([JTSpacingComponent(spacingInsets: .init(top: 100, left: 100, bottom: 0, right: 0)), AComponent(), JTCComponent(), ExampleComponent1(), JTSpacingComponent(spacingInsets: .init(top: 25, left: 25, bottom: 0, right: 0)), ExampleComponent2(), JTSpacingComponent(spacingInsets: .init(top: 50, left: 50, bottom: 0, right: 0)), ExampleComponent3(), JTBComponent()])
 //        componentsAssemblyView.scrollDirection = .horizontal
     }
     

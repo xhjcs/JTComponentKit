@@ -327,28 +327,57 @@
     return offset;
 }
 
-// 滑动到该分区时，所有的一直吸顶的header的大小，用来辅助计算滑动到该分区的偏移量，因为滑动到该分区时，该分区需要定位到所有一直吸顶的header下面
+// 滑动到该分区时，吸顶 header 的总大小，用来辅助计算滑动到该分区的偏移量。
+// 计算规则：
+// 1. 所有 .alwaysPin 的 header 都会一直吸顶，全部累加；
+// 2. .pin 的 header 会被后续任意吸顶 header（.pin 或 .alwaysPin）顶走，因此只保留
+//    目标分区之前最后一个 .pin 的高度；
+// 3. 若目标分区自身是吸顶的（.pin 或 .alwaysPin），它会把前一个 .pin 顶走，因此
+//    不再计入该 .pin 的高度（目标分区的 header 会停在顶部）。
 - (CGSize)pinnedHeadersSizeForSection:(NSInteger)section {
     CGSize size = CGSizeZero;
     const BOOL isVertical = (self.scrollDirection == UICollectionViewScrollDirectionVertical);
     const NSInteger sectionsCount = _fakeHeadersLayoutAttributes.count;
+    // 记录遍历过程中最后一个尚未被顶走的 .pin 的尺寸
+    CGFloat lastPinDimension = 0.0;
+    BOOL hasLastPin = NO;
 
     for (NSInteger i = 0; i < sectionsCount && i < section; i++) {
         JTComponentHeaderPinningBehavior pinningBehavior = [self.delegate collectionView:self.collectionView pinningBehaviorForHeaderInSection:i];
-
-        if (pinningBehavior != JTComponentHeaderPinningBehaviorAlwaysPin) {
-            continue;
-        }
-
         UICollectionViewLayoutAttributes *headerAttr = _fakeHeadersLayoutAttributes[i];
         CGRect frame = headerAttr.frame;
 
+        if (pinningBehavior == JTComponentHeaderPinningBehaviorAlwaysPin) {
+            // 一直吸顶的 header 会把之前的 .pin 顶走
+            lastPinDimension = 0.0;
+            hasLastPin = NO;
+
+            if (isVertical) {
+                size.width = frame.size.width;
+                size.height += frame.size.height;
+            } else {
+                size.width += frame.size.width;
+                size.height = frame.size.height;
+            }
+        } else if (pinningBehavior == JTComponentHeaderPinningBehaviorPin) {
+            // .pin 会被后续的 .pin / .alwaysPin 顶走，只保留最后一个
+            lastPinDimension = isVertical ? frame.size.height : frame.size.width;
+            hasLastPin = YES;
+        }
+    }
+
+    // 目标分区自身若为吸顶 header，会把前一个 .pin 顶走，不再计入
+    BOOL targetWillPushLastPin = NO;
+    if (section < sectionsCount) {
+        JTComponentHeaderPinningBehavior targetBehavior = [self.delegate collectionView:self.collectionView pinningBehaviorForHeaderInSection:section];
+        targetWillPushLastPin = (targetBehavior != JTComponentHeaderPinningBehaviorNone);
+    }
+
+    if (hasLastPin && !targetWillPushLastPin) {
         if (isVertical) {
-            size.width = frame.size.width;
-            size.height += frame.size.height;
+            size.height += lastPinDimension;
         } else {
-            size.width += frame.size.width;
-            size.height = frame.size.height;
+            size.width += lastPinDimension;
         }
     }
 

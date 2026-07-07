@@ -7,28 +7,61 @@
 
 #import "JTSpacingComponent.h"
 
-@interface JTSpacingComponent ()
-
-@property (nonatomic) CGFloat spacing;
-
-@end
-
 @implementation JTSpacingComponent
 
 + (instancetype)componentWithSpacing:(CGFloat)spacing {
-    return [[self alloc] initWithSpacing:spacing];
+    return [[self alloc] initWithSpacingInsets:UIEdgeInsetsMake(spacing, spacing, 0.0, 0.0)];
 }
 
-- (instancetype)initWithSpacing:(CGFloat)spacing {
++ (instancetype)componentWithSpacingInsets:(UIEdgeInsets)spacingInsets {
+    return [[self alloc] initWithSpacingInsets:spacingInsets];
+}
+
++ (instancetype)componentWithSpacing:(CGFloat)spacing backgroundColor:(UIColor *)backgroundColor {
+    JTSpacingComponent *component = [[self alloc] initWithSpacingInsets:UIEdgeInsetsMake(spacing, spacing, 0.0, 0.0)];
+    component.backgroundColor = backgroundColor;
+    return component;
+}
+
+- (instancetype)init {
+    return [self initWithSpacingInsets:UIEdgeInsetsZero];
+}
+
+- (instancetype)initWithSpacingInsets:(UIEdgeInsets)spacingInsets {
     if (self = [super init]) {
-        _spacing = spacing;
+        _spacingInsets = spacingInsets;
+        _backgroundInsets = UIEdgeInsetsZero;
     }
 
     return self;
 }
 
+#pragma mark - Section
+
 - (UIEdgeInsets)insets {
-    return UIEdgeInsetsMake(self.spacing, self.spacing, 0.0, 0.0);
+    return self.spacingInsets;
+}
+
+#pragma mark - Background
+
+- (UIEdgeInsets)insetsForBackgroundView {
+    return self.backgroundInsets;
+}
+
+- (NSInteger)zIndexForBackgroundView {
+    return self.backgroundColor ? -1 : 0;
+}
+
+- (__kindof UIView *)backgroundView {
+    if (!self.backgroundColor) {
+        return [super backgroundView];
+    }
+
+    UIView *backgroundView = [self dequeueReusableBackgroundViewOfClass:[UIView class]];
+    backgroundView.backgroundColor = self.backgroundColor;
+    backgroundView.layer.cornerRadius = self.cornerRadius;
+    backgroundView.layer.masksToBounds = self.cornerRadius > 0.0;
+    return backgroundView;
 }
 
 @end
