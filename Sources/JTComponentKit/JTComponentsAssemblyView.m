@@ -29,6 +29,7 @@
 
 @property (nonatomic) JTEventHub *eventHub;
 @property (nonatomic, copy) NSArray<JTComponent *> *components;
+@property (nonatomic, copy) NSArray<JTComponent *> *scrollObserverComponents;
 
 @property (nonatomic) NSMutableSet<JTEventHubSubscription *> *eventSubscriptions;
 
@@ -95,11 +96,17 @@ static const CGFloat kJTComponentMinimumItemDimension = 0.01;
         [component componentWillUnmount];
     }];
     self.components = components;
+    NSMutableArray<JTComponent *> *scrollObservers = [NSMutableArray array];
+
     [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         component.section = idx;
         component.layout = self.layout;
         component.collectionView = self.collectionView;
         component.eventHub = self.eventHub;
+
+        if ([component observesScrollEvents]) {
+            [scrollObservers addObject:component];
+        }
 
         if (!component.hasSetup) {
             [component setup];
@@ -108,6 +115,7 @@ static const CGFloat kJTComponentMinimumItemDimension = 0.01;
 
         [component componentDidMount];
     }];
+    self.scrollObserverComponents = [scrollObservers copy];
     [self.collectionView reloadData];
 }
 
@@ -117,6 +125,14 @@ static const CGFloat kJTComponentMinimumItemDimension = 0.01;
     while (![currentView isMemberOfClass:[JTComponentCell class]])
         currentView = currentView.superview;
     return (JTComponentCell *)currentView;
+}
+
+- (void)broadcastScrollEvent:(SEL)selector toComponentsUsingBlock:(void (^)(JTComponent *component))block {
+    [self.scrollObserverComponents enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
+        if ([component respondsToSelector:selector]) {
+            block(component);
+        }
+    }];
 }
 
 #pragma mark - Section
@@ -185,17 +201,26 @@ static const CGFloat kJTComponentMinimumItemDimension = 0.01;
     }
 
     NSCParameterAssert(renderView);
-    return (JTComponentReusableView *)renderView.superview;
+    JTComponentReusableView *reusableView = (JTComponentReusableView *)renderView.superview;
+    reusableView.component = component;
+    return reusableView;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingSupplementaryView:(UICollectionReusableView *)view forElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
-    if (elementKind == JTComponentElementKindSectionHeader) {
-        JTComponent *component = self.components[indexPath.section];
-        [component didEndDisplayingHeaderView:((JTComponentReusableView *)view).renderView];
-    } else if (elementKind == UICollectionElementKindSectionFooter) {
-        JTComponent *component = self.components[indexPath.section];
-        [component didEndDisplayingFooterView:((JTComponentReusableView *)view).renderView];
+    JTComponentReusableView *reusableView = (JTComponentReusableView *)view;
+    JTComponent *component = reusableView.component;
+
+    if (!component) {
+        return;
     }
+
+    if (elementKind == JTComponentElementKindSectionHeader) {
+        [component didEndDisplayingHeaderView:reusableView.renderView];
+    } else if (elementKind == UICollectionElementKindSectionFooter) {
+        [component didEndDisplayingFooterView:reusableView.renderView];
+    }
+
+    reusableView.component = nil;
 }
 
 #pragma mark - Cell
@@ -233,8 +258,11 @@ static const CGFloat kJTComponentMinimumItemDimension = 0.01;
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     JTComponent *component = self.components[indexPath.section];
     UIView *renderView = [component itemViewForIndex:indexPath.item];
+    JTComponentCell *cell = [self findCellFromRenderView:renderView];
 
-    return [self findCellFromRenderView:renderView];
+    cell.component = component;
+    cell.displayIndex = indexPath.item;
+    return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -244,9 +272,15 @@ static const CGFloat kJTComponentMinimumItemDimension = 0.01;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    JTComponent *component = self.components[indexPath.section];
+    JTComponentCell *componentCell = (JTComponentCell *)cell;
+    JTComponent *component = componentCell.component;
 
-    [component didEndDisplayingItemView:((JTComponentCell *)cell).renderView atIndex:indexPath.item];
+    if (!component) {
+        return;
+    }
+
+    [component didEndDisplayingItemView:componentCell.renderView atIndex:componentCell.displayIndex];
+    componentCell.component = nil;
 }
 
 #pragma mark - Private
@@ -308,77 +342,59 @@ static const CGFloat kJTComponentMinimumItemDimension = 0.01;
 @implementation JTComponentsAssemblyView (Scroll)
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
-        if ([component respondsToSelector:@selector(scrollViewDidScroll:)]) {
-            [component scrollViewDidScroll:scrollView];
-        }
+    [self broadcastScrollEvent:@selector(scrollViewDidScroll:) toComponentsUsingBlock:^(JTComponent *component) {
+        [component scrollViewDidScroll:scrollView];
     }];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
-        if ([component respondsToSelector:@selector(scrollViewWillBeginDragging:)]) {
-            [component scrollViewWillBeginDragging:scrollView];
-        }
+    [self broadcastScrollEvent:@selector(scrollViewWillBeginDragging:) toComponentsUsingBlock:^(JTComponent *component) {
+        [component scrollViewWillBeginDragging:scrollView];
     }];
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
-        if ([component respondsToSelector:@selector(scrollViewWillEndDragging:withVelocity:targetContentOffset:)]) {
-            [component scrollViewWillEndDragging:scrollView
-                                    withVelocity:velocity
-                             targetContentOffset:targetContentOffset];
-        }
+    [self broadcastScrollEvent:@selector(scrollViewWillEndDragging:withVelocity:targetContentOffset:) toComponentsUsingBlock:^(JTComponent *component) {
+        [component scrollViewWillEndDragging:scrollView
+                                withVelocity:velocity
+                         targetContentOffset:targetContentOffset];
     }];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
-        if ([component respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:)]) {
-            [component scrollViewDidEndDragging:scrollView
-                                 willDecelerate:decelerate];
-        }
+    [self broadcastScrollEvent:@selector(scrollViewDidEndDragging:willDecelerate:) toComponentsUsingBlock:^(JTComponent *component) {
+        [component scrollViewDidEndDragging:scrollView
+                             willDecelerate:decelerate];
     }];
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
-        if ([component respondsToSelector:@selector(scrollViewWillBeginDecelerating:)]) {
-            [component scrollViewWillBeginDecelerating:scrollView];
-        }
+    [self broadcastScrollEvent:@selector(scrollViewWillBeginDecelerating:) toComponentsUsingBlock:^(JTComponent *component) {
+        [component scrollViewWillBeginDecelerating:scrollView];
     }];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
-        if ([component respondsToSelector:@selector(scrollViewDidEndDecelerating:)]) {
-            [component scrollViewDidEndDecelerating:scrollView];
-        }
+    [self broadcastScrollEvent:@selector(scrollViewDidEndDecelerating:) toComponentsUsingBlock:^(JTComponent *component) {
+        [component scrollViewDidEndDecelerating:scrollView];
     }];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
-        if ([component respondsToSelector:@selector(scrollViewDidEndScrollingAnimation:)]) {
-            [component scrollViewDidEndScrollingAnimation:scrollView];
-        }
+    [self broadcastScrollEvent:@selector(scrollViewDidEndScrollingAnimation:) toComponentsUsingBlock:^(JTComponent *component) {
+        [component scrollViewDidEndScrollingAnimation:scrollView];
     }];
 }
 
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
-        if ([component respondsToSelector:@selector(scrollViewDidScrollToTop:)]) {
-            [component scrollViewDidScrollToTop:scrollView];
-        }
+    [self broadcastScrollEvent:@selector(scrollViewDidScrollToTop:) toComponentsUsingBlock:^(JTComponent *component) {
+        [component scrollViewDidScrollToTop:scrollView];
     }];
 }
 
 - (void)scrollViewDidChangeAdjustedContentInset:(UIScrollView *)scrollView {
-    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
-        if ([component respondsToSelector:@selector(scrollViewDidChangeAdjustedContentInset:)]) {
-            [component scrollViewDidChangeAdjustedContentInset:scrollView];
-        }
+    [self broadcastScrollEvent:@selector(scrollViewDidChangeAdjustedContentInset:) toComponentsUsingBlock:^(JTComponent *component) {
+        [component scrollViewDidChangeAdjustedContentInset:scrollView];
     }];
 }
 

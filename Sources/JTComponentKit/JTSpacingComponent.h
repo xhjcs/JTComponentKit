@@ -5,7 +5,7 @@
 //  Created by xinghanjie on 2024/11/10.
 //
 
-#import <JTComponentKit/JTComponentKit.h>
+#import "JTComponent.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithSpacingInsets:(UIEdgeInsets)spacingInsets NS_DESIGNATED_INITIALIZER;
 
 + (instancetype)componentWithSpacing:(CGFloat)spacing;
+/// 便捷构造：spacing 仅作用于 top 与 left，bottom/right 为 0。
 + (instancetype)componentWithSpacingInsets:(UIEdgeInsets)spacingInsets;
 + (instancetype)componentWithSpacing:(CGFloat)spacing backgroundColor:(nullable UIColor *)backgroundColor;
 

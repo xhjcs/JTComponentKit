@@ -293,6 +293,10 @@
 
 @implementation JTComponent (Scroll)
 
+- (BOOL)observesScrollEvents {
+    return NO;
+}
+
 @end
 
 @implementation JTComponent (Pin)

@@ -7,11 +7,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class JTComponent;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface JTComponentReusableView : UICollectionReusableView
 
 @property (nonatomic) UIView *renderView;
+@property (nonatomic, weak, nullable) JTComponent *component;
 
 @end
 
