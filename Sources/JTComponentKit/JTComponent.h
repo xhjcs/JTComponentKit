@@ -84,12 +84,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// 当当前 component 内的某个 item 被移动走时触发
 /// @param index 被移动的 item 在当前 component 中的位置
 /// @return 被移走的对象（供目标 component 接收时使用）
-- (id)didMoveItemFromIndex:(NSInteger)index;
+- (nullable id)didMoveItemFromIndex:(NSInteger)index;
 
 /// 当有一个 item 被移动到当前 component 后触发
 /// @param item 被移动的对象
 /// @param index 插入到当前 component 的位置
-- (void)didMoveItem:(id)item toIndex:(NSInteger)index;
+- (void)didMoveItem:(nullable id)item toIndex:(NSInteger)index;
 
 @end
 
