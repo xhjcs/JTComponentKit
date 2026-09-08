@@ -17,6 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Public
 @property (nonatomic, readonly) CGSize size;
 @property (nonatomic, weak, readonly) UICollectionView *collectionView;
+
+/// 组件是否可用。为 NO 时组件对应的 section 不展示任何内容（Item 数返回 0、Header/Footer/Background 尺寸返回 0）。默认 YES。
+- (BOOL)enabled;
+
 - (void)reloadData;
 - (void)scrollToSelf:(BOOL)animated;
 

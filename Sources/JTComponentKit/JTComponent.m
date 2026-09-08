@@ -34,6 +34,10 @@
 - (void)setup {
 }
 
+- (BOOL)enabled {
+    return YES;
+}
+
 - (void)componentDidMount {
 }
 

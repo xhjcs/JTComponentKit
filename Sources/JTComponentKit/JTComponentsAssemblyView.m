@@ -143,17 +143,29 @@ static const CGFloat kJTComponentMinimumItemDimension = 0.01;
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     JTComponent *component = self.components[section];
 
+    if (!component.enabled) {
+        return UIEdgeInsetsZero;
+    }
+
     return [component insets];
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     JTComponent *component = self.components[section];
 
+    if (!component.enabled) {
+        return 0.0;
+    }
+
     return [component minimumLineSpacing];
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     JTComponent *component = self.components[section];
+
+    if (!component.enabled) {
+        return 0.0;
+    }
 
     return [component minimumInteritemSpacing];
 }
@@ -162,11 +174,19 @@ static const CGFloat kJTComponentMinimumItemDimension = 0.01;
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
 
+    if (!component.enabled) {
+        return CGSizeZero;
+    }
+
     return [component headerSize];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
+
+    if (!component.enabled) {
+        return CGSizeZero;
+    }
 
     return [component footerSize];
 }
@@ -226,6 +246,10 @@ static const CGFloat kJTComponentMinimumItemDimension = 0.01;
 #pragma mark - Cell
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
+
+    if (!component.enabled) {
+        return 0;
+    }
 
     return [component numberOfItems];
 }
@@ -523,17 +547,29 @@ static const CGFloat kJTComponentMinimumItemDimension = 0.01;
 - (JTComponentHeaderPinningBehavior)collectionView:(UICollectionView *)collectionView pinningBehaviorForHeaderInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
 
+    if (!component.enabled) {
+        return JTComponentHeaderPinningBehaviorNone;
+    }
+
     return [component pinningBehaviorForHeader];
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView insetsForBackgroundViewInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
 
+    if (!component.enabled) {
+        return UIEdgeInsetsZero;
+    }
+
     return [component insetsForBackgroundView];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView zIndexForBackgroundViewInSection:(NSInteger)section {
     JTComponent *component = self.components[section];
+
+    if (!component.enabled) {
+        return 0;
+    }
 
     return [component zIndexForBackgroundView];
 }
