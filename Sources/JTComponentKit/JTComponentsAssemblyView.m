@@ -29,7 +29,6 @@
 
 @property (nonatomic) JTEventHub *eventHub;
 @property (nonatomic, copy) NSArray<JTComponent *> *components;
-@property (nonatomic, copy) NSArray<JTComponent *> *scrollObserverComponents;
 
 @property (nonatomic) NSMutableSet<JTEventHubSubscription *> *eventSubscriptions;
 
@@ -96,17 +95,12 @@ static const CGFloat kJTComponentMinimumItemDimension = 0.01;
         [component componentWillUnmount];
     }];
     self.components = components;
-    NSMutableArray<JTComponent *> *scrollObservers = [NSMutableArray array];
 
     [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
         component.section = idx;
         component.layout = self.layout;
         component.collectionView = self.collectionView;
         component.eventHub = self.eventHub;
-
-        if ([component observesScrollEvents]) {
-            [scrollObservers addObject:component];
-        }
 
         if (!component.hasSetup) {
             [component setup];
@@ -115,7 +109,6 @@ static const CGFloat kJTComponentMinimumItemDimension = 0.01;
 
         [component componentDidMount];
     }];
-    self.scrollObserverComponents = [scrollObservers copy];
     [self.collectionView reloadData];
 }
 
@@ -128,8 +121,8 @@ static const CGFloat kJTComponentMinimumItemDimension = 0.01;
 }
 
 - (void)broadcastScrollEvent:(SEL)selector toComponentsUsingBlock:(void (^)(JTComponent *component))block {
-    [self.scrollObserverComponents enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
-        if ([component respondsToSelector:selector]) {
+    [self.components enumerateObjectsUsingBlock:^(JTComponent *_Nonnull component, NSUInteger idx, BOOL *_Nonnull stop) {
+        if (component.observesScrollEvents && [component respondsToSelector:selector]) {
             block(component);
         }
     }];

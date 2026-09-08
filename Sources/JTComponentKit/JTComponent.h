@@ -103,8 +103,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JTComponent (Scroll) <UIScrollViewDelegate>
 
-/// 返回 YES 时才会收到 scroll 回调；默认 NO，避免全量广播开销。
-- (BOOL)observesScrollEvents;
+/// 是否接收页面 scroll 回调。默认 NO，避免全量广播开销；可在组件 mount 后动态修改。
+@property (nonatomic) BOOL observesScrollEvents;
 
 @end
 

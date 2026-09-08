@@ -16,6 +16,8 @@
 @property (nonatomic) NSInteger footerIndex;
 @property (nonatomic) NSInteger backgroundViewIndex;
 
+@property (nonatomic) BOOL observesScrollEvents;
+
 @property (nonatomic) NSMutableSet<JTEventHubSubscription *> *eventSubscriptions;
 
 @end
@@ -296,10 +298,6 @@
 @end
 
 @implementation JTComponent (Scroll)
-
-- (BOOL)observesScrollEvents {
-    return NO;
-}
 
 @end
 
